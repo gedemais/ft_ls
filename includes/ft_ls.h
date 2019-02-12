@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/11 08:54:45 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/12 05:16:05 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include <sys/ioctl.h>
 # include <time.h>
 # include <errno.h>
+# include <pwd.h>
+# include <grp.h>
 
 typedef struct	s_file t_file;
 
@@ -38,7 +40,15 @@ struct		s_file
 	char	*name;
 	int		name_len;
 	char	*perms;
+	char	*uid;
+	char	*gid;
 	int		dir;
+	int		nlinks;
+	int		size;
+	int		blocksize;
+	char	*date;
+	int		day;
+	int		year;
 	t_file	*next;
 };
 
@@ -64,9 +74,9 @@ char	**ft_get_params(int ac, char **av, char **data, int i);
 char	**ft_parse_input(int ac, char **av, int *mask);
 
 // ft_quicksort.c
-void	ft_swap_nodes(t_file *n1, t_file *n2);
+void	ft_swap_nodes(t_file *n1, t_file *n2, int mask);
 void	**ft_addresses (t_file *lst, int len);
-int		ft_ls_quicksort(void **add, int start, int end);
+int		ft_ls_quicksort(void **add, int start, int end, int mask);
 
 // fts.c
 int		ft_tablen(char **tab);
@@ -74,5 +84,7 @@ char	**ft_tabdel(char **tab);
 int		ft_add_mask(int mask, char c);
 int		ft_get_screen_length(void);
 int		ft_find_biggest(void **add);
+int		ft_find_longest(void **add);
+int		ft_find_fattest(void **add);
 
 #endif

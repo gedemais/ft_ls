@@ -6,13 +6,13 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/11 06:50:28 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/12 04:19:42 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	ft_swap_nodes(t_file *n1, t_file *n2)
+void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 {
 	char	*tmp;
 	int		temp;
@@ -27,6 +27,33 @@ void	ft_swap_nodes(t_file *n1, t_file *n2)
 	dir = n1->dir;
 	n1->dir = n2->dir;
 	n2->dir = dir;
+	if (mask & O_L)
+	{
+		tmp = n1->perms; // Permissions
+		n1->perms = n2->perms;
+		n2->perms = tmp;
+
+		tmp = n1->uid; // UID
+		n1->uid = n2->uid;
+		n2->uid = tmp;
+
+		tmp = n1->gid; // GID
+		n1->gid = n2->gid;
+		n2->gid = tmp;
+
+		tmp = n1->date; // Date
+		n1->date = n2->date;
+		n2->date = tmp;
+
+		temp = n1->size; // Size
+		n1->size = n2->size;
+		n2->size = temp;
+
+		temp = n1->nlinks; // Nombre de liens
+		n1->nlinks = n2->nlinks;
+		n2->nlinks = temp;
+
+	}
 }
 
 void	**ft_addresses(t_file *lst, int len)
@@ -49,7 +76,7 @@ void	**ft_addresses(t_file *lst, int len)
 	return (add);
 }
 
-int		ft_ls_partition(void **add, int start, int end)
+int		ft_ls_partition(void **add, int start, int end, int mask)
 {
 	int		i;
 	int		j;
@@ -61,7 +88,7 @@ int		ft_ls_partition(void **add, int start, int end)
 	if (end - start == 2)
 	{
 		if (ft_strcmp(((t_file*)add[start])->name, ((t_file*)add[end - 1])->name) > 0)
-			ft_swap_nodes(((t_file*)add[start]), ((t_file*)add[end - 1]));
+			ft_swap_nodes(((t_file*)add[start]), ((t_file*)add[end - 1]), mask);
 		return (0);
 	}
 	while (i < end - 1 && j < end - 1)
@@ -69,23 +96,23 @@ int		ft_ls_partition(void **add, int start, int end)
 		if (ft_strcmp(((t_file*)add[j])->name, ((t_file*)add[pivot])->name) < 0)
 		{
 			i++;
-			ft_swap_nodes(((t_file*)add[i]), ((t_file*)add[j]));
+			ft_swap_nodes(((t_file*)add[i]), ((t_file*)add[j]), mask);
 		}
 		j++;
 	}
-	ft_swap_nodes(((t_file*)add[i + 1]), ((t_file*)add[pivot]));
+	ft_swap_nodes(((t_file*)add[i + 1]), ((t_file*)add[pivot]), mask);
 	return (i + 1);
 }
 
-int			ft_ls_quicksort(void **add, int start, int end)
+int			ft_ls_quicksort(void **add, int start, int end, int mask)
 {
 	int		j;
 
 	if (start < end - 1)
 	{
-		j = ft_ls_partition(add, start, end);
-		ft_ls_quicksort((&add[start]), 0, j);
-		ft_ls_quicksort((&add[j + 1]), 0, (end - j - 1));
+		j = ft_ls_partition(add, start, end, mask);
+		ft_ls_quicksort((&add[start]), 0, j, mask);
+		ft_ls_quicksort((&add[j + 1]), 0, (end - j - 1), mask);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:35:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/09 04:30:37 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/12 05:15:54 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,40 @@ int		ft_find_biggest(void **add)
 	ret = 0;
 	while (add[i])
 	{
-		if ((temp = ft_strlen(((t_file*)add[i])->name)) > ret)
+		if ((temp = ft_strlen(TF->name)) > ret)
 			ret = temp;
+		i++;
+	}
+	return (ret);
+}
+
+int		ft_find_longest(void **add)
+{
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (add[i])
+	{
+		if (TF->nlinks > ret)
+			ret = TF->nlinks;
+		i++;
+	}
+	return (ret);
+}
+
+int		ft_find_fattest(void **add)
+{
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (add[i])
+	{
+		if (TF->size > ret)
+			ret = TF->size;
 		i++;
 	}
 	return (ret);

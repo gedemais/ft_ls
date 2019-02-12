@@ -36,20 +36,160 @@ int		ft_flags(void **add, int i, int mask)
 
 // --------------------------------------DISPLAY_LINES--------------------------------
 
-int		ft_getsize_lines(int mask, void **add, int nbf, int minw)
+int		ft_getsize_lines(int mask, void **add, int nbf, int maxs[2])
 {
 	int		size;
+	int		total;
+	int		i;
 
-	size = 17 * nbf;
-//	size += 
+	size = 0;
+	total = 0;
+	i = 0;
+	printf("%d\n", maxs[0]);
+	printf("%d\n", maxs[1]);
+	nbf = ((mask & O_A)) ? nbf : ft_nohiddens(nbf, add);
+	while (i < nbf)
+	{
+		size += 11;// Permissions
+		size += 2; // Pad pre-links
+		size += maxs[0]; // Nb links
+		size += 1; // Pad pre UID
+		size += ft_strlen(TF->uid);
+		size += 2; // Pad pre GID
+		size += ft_strlen(TF->gid);
+		size += 2; // Pad pre size
+		size += maxs[1]; // size
+		size += 1; // pad pre mois
+		size += 3; // mois
+		size += 1; // pad pre jour
+		size += 2; // jour
+		size += 1; // pad pre h/y
+		size += 5; // h/y
+		size += 1; // pad pre nom
+		size += TF->name_len;
+		i++;
+	}
+	return (size);
 }
 
-int		ft_display_lines(int mask, void **add, int nbf, int minw)
+char	*ft_add_base(char *out, char *str, int *k)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		out[*k] = str[i];
+		*k = *k + 1;
+		i++;
+	}
+	return (out);
+}
+
+char	*ft_add_links(char *out, int nb, int max, int *k)
+{
+	char	*tmp;
+	int		len;
+	int		i;
+
+	len = ft_nb_len(nb);
+	while (len < max)
+	{
+		out[*k] = ' ';
+		*k = *k + 1;
+		len++;
+	}
+	i = 0;
+	tmp = ft_itoa(nb);
+	while (tmp[i])
+	{
+		out[*k] = tmp[i];
+		*k = *k + 1;
+		i++;
+	}
+	return (out);
+}
+
+
+char	*ft_add_date(char *out, char *date, int *k)
+{
+	out[*k] = date[4];
+	out[*k + 1] = date[5];
+	out[*k + 2] = date[6];
+	out[*k + 3] = date[7];
+	out[*k + 4] = date[8];
+	out[*k + 5] = date[9];
+	out[*k + 6] = date[10];
+	out[*k + 7] = date[11];
+	out[*k + 8] = date[12];
+	out[*k + 9] = date[13];
+	out[*k + 10] = date[14];
+	out[*k + 11] = date[15];
+	*k += 12;
+	return (out);
+}
+
+/*
+char	*ft_add_(char *out, , int *k)
+{
+	
+}
+char	*ft_add_(char *out, , int *k)
+{
+	
+}
+char	*ft_add_(char *out, , int *k)
+{
+	
+}
+char	*ft_add_(char *out, , int *k)
+{
+	
+}*/
+
+int		ft_display_lines(int mask, void **add, int nbf)
 {
 	char	*out;
+	int		maxs[2];
+	time_t	t;
+	int		i;
+	int		j;
+	int		k;
 
-//	if (!(out = (char*)malloc(sizeof(char) *  + )))
-//		return ();
+	i = -1;
+	j = 0;
+	k = 0;
+	(void)mask;
+	t = time(NULL);
+	maxs[0] = ft_nb_len(ft_find_longest(add));
+	maxs[1] = ft_nb_len(ft_find_fattest(add));
+	printf("Malloc = %d\n", ft_getsize_lines(mask, add, nbf, maxs));
+	if (!(out = ft_strnew(ft_getsize_lines(mask, add, nbf, maxs))))
+		return (-1);
+	while (++i < nbf)
+	{
+		out = ft_add_base(out, TF->perms, &k);
+		out[k++] = ' ';
+		out[k++] = ' ';
+		out = ft_add_links(out, TF->nlinks, maxs[0], &k);
+		out[k++] = ' ';
+		out = ft_add_base(out, TF->uid, &k);
+		out[k++] = ' ';
+		out[k++] = ' ';
+		out = ft_add_base(out, TF->gid, &k);
+		out[k++] = ' ';
+		out[k++] = ' ';
+		out = ft_add_links(out, TF->size, maxs[1], &k);
+		out[k++] = ' ';
+		out = ft_add_date(out, TF->date, &k);
+		out[k++] = ' ';
+		ft_add_base(out, TF->name, &k);
+		out[k] = '\n';
+		k++;
+	}
+	out[k] = '\0';
+	printf("Write = %d\n", k);
+	write(1, out, k);
 	return (0);
 }
 
@@ -207,10 +347,11 @@ void	ft_run(char *path, int mask, int nbf, void **add)
 	int		t_len;
 	int		minw;
 
-
 	t_len = ft_get_screen_length();
 	minw = ft_find_biggest(add) + 1;
-	if (minw * (ft_nohiddens(nbf, add) - 1) + ((t_file*)add[nbf - 1])->name_len + 1 <= t_len)
+	if (mask & O_L)
+		ft_display_lines(mask, add, nbf);
+	else if (minw * (ft_nohiddens(nbf, add) - 1) + ((t_file*)add[nbf - 1])->name_len + 1 <= t_len)
 		ft_display_line(mask, add, nbf, minw);
 	else
 		ft_display_cols(mask, add, nbf, minw);
