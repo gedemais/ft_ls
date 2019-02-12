@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/12 04:31:08 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/12 07:05:01 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 				return (NULL);
 
 		new->nlinks = (int)file.st_nlink; // nombre de liens
-		new->size = (int)file.st_size; // Taille en octets
-		new->date = ctime(&file.st_ctime); // Date
+		new->size = file.st_size; // Taille en octets
+		new->date = ft_strdup(ctime(&file.st_ctime)); // Date
 //		new->blocksize = (int)file.st_blocks;
 	}
 	new->dir = (S_ISDIR(file.st_mode)) ? 1 : 0;

@@ -45,8 +45,6 @@ int		ft_getsize_lines(int mask, void **add, int nbf, int maxs[2])
 	size = 0;
 	total = 0;
 	i = 0;
-	printf("%d\n", maxs[0]);
-	printf("%d\n", maxs[1]);
 	nbf = ((mask & O_A)) ? nbf : ft_nohiddens(nbf, add);
 	while (i < nbf)
 	{
@@ -129,24 +127,6 @@ char	*ft_add_date(char *out, char *date, int *k)
 	return (out);
 }
 
-/*
-char	*ft_add_(char *out, , int *k)
-{
-	
-}
-char	*ft_add_(char *out, , int *k)
-{
-	
-}
-char	*ft_add_(char *out, , int *k)
-{
-	
-}
-char	*ft_add_(char *out, , int *k)
-{
-	
-}*/
-
 int		ft_display_lines(int mask, void **add, int nbf)
 {
 	char	*out;
@@ -163,7 +143,7 @@ int		ft_display_lines(int mask, void **add, int nbf)
 	t = time(NULL);
 	maxs[0] = ft_nb_len(ft_find_longest(add));
 	maxs[1] = ft_nb_len(ft_find_fattest(add));
-	printf("Malloc = %d\n", ft_getsize_lines(mask, add, nbf, maxs));
+//	printf("Malloc = %d\n", ft_getsize_lines(mask, add, nbf, maxs));
 	if (!(out = ft_strnew(ft_getsize_lines(mask, add, nbf, maxs))))
 		return (-1);
 	while (++i < nbf)
@@ -188,7 +168,7 @@ int		ft_display_lines(int mask, void **add, int nbf)
 		k++;
 	}
 	out[k] = '\0';
-	printf("Write = %d\n", k);
+//	printf("Write = %d\n", k);
 	write(1, out, k);
 	return (0);
 }

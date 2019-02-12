@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/12 04:19:42 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/12 06:57:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	dir = n1->dir;
 	n1->dir = n2->dir;
 	n2->dir = dir;
-	if (mask & O_L)
-	{
+	(void)mask;
+//	if (mask & O_L)
+//	{
 		tmp = n1->perms; // Permissions
 		n1->perms = n2->perms;
 		n2->perms = tmp;
@@ -53,7 +54,7 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 		n1->nlinks = n2->nlinks;
 		n2->nlinks = temp;
 
-	}
+//	}
 }
 
 void	**ft_addresses(t_file *lst, int len)
