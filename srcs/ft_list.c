@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/12 07:05:01 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/12 07:58:01 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 	if (!(new = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	new->name_len = ft_strlen(name);
-	if (!(new->name = (char*)malloc(sizeof(char) * new->name_len)))
+	if (!(new->name = ft_strnew(new->name_len)))
 		return (NULL);
 	new->name = ft_strcpy(new->name, name);
 	if (!(file_path = ft_strjoin(path, new->name)))
