@@ -14,7 +14,8 @@
 # define FT_LS_H
 
 # define TF ((t_file*)add[i])
-# define TF1 ((t_file*)add[i - 1])
+
+# define DEBUG ft_putstr("There\n");
 
 # define O_L 1
 # define O_RMAJ 2

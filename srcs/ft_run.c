@@ -131,7 +131,6 @@ int		ft_display_lines(int mask, void **add, int nbf)
 {
 	char	*out;
 	int		maxs[2];
-	time_t	t;
 	int		i;
 	int		j;
 	int		k;
@@ -140,11 +139,10 @@ int		ft_display_lines(int mask, void **add, int nbf)
 	j = 0;
 	k = 0;
 	(void)mask;
-	t = time(NULL);
 	maxs[0] = ft_nb_len(ft_find_longest(add));
 	maxs[1] = ft_nb_len(ft_find_fattest(add));
 //	printf("Malloc = %d\n", ft_getsize_lines(mask, add, nbf, maxs));
-	if (!(out = ft_strnew(ft_getsize_lines(mask, add, nbf, maxs))))
+	if (!(out = (char*)malloc(sizeof(char) * (ft_getsize_lines(mask, add, nbf, maxs)))))
 		return (-1);
 	while (++i < nbf)
 	{
@@ -164,12 +162,12 @@ int		ft_display_lines(int mask, void **add, int nbf)
 		out = ft_add_date(out, TF->date, &k);
 		out[k++] = ' ';
 		ft_add_base(out, TF->name, &k);
-		out[k] = '\n';
-		k++;
+		out[k++] = '\n';
 	}
 	out[k] = '\0';
 //	printf("Write = %d\n", k);
 	write(1, out, k);
+	ft_strdel(&out);
 	return (0);
 }
 
@@ -217,6 +215,7 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 	j = 0;
 	k = 0;
 	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
+//	printf("Malloc = %d\n", minw * (nbf2 - 1) + ((t_file*)add[nbf - 1])->name_len + 1);
 	if (!(out = (char*)malloc(sizeof(char) * minw * (nbf2 - 1) + ((t_file*)add[nbf - 1])->name_len + 1)))
 		return (-1);
 	while (++i < nbf)
@@ -228,8 +227,9 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 			j++;
 		}
 	out[k] = '\n';
-	out[k + 1] = '\n';
-	write(1, out, k + 2);
+//	printf("Write : %d\n", k + 1);
+	write(1, out, k + 1);
+	ft_strdel(&out);
 	return (0);
 }
 
@@ -255,25 +255,24 @@ int		ft_getless(void **add, int nbf, int npl, int minw)
 int		ft_display_cols(int mask, void **add, int nbf, int minw)
 {
 	char	*out;
-	int		i;
-	int		j;
-	int		k;
-	int		l;
-	int		less;
-	int		t_len;
-	int		npl;
-	int		nbf2;
+	int	i;
+	int	j;
+	int	k;
+	int	l;
+	int	less;
+	int	t_len;
+	int	npl;
+	int	nbf2;
 
 	t_len = ft_get_screen_length();
 	npl = t_len / minw;
 	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
 	less = ft_getless(add, nbf2, npl, minw);
-	if (!(out = ft_strnew(nbf2 * minw)))
+	if (!(out = (char*)malloc(sizeof(char) * (nbf2 * minw) + 1)))
 		return (-1);
 	i = 0;
 	j = -1;
 	k = 0;
-
 //	printf("Malloc = %d\n", (nbf2 * minw));
 	while (++j <= nbf2 / npl + 1)
 	{
@@ -289,12 +288,12 @@ int		ft_display_cols(int mask, void **add, int nbf, int minw)
 				l++;
 			}
 		}
-		out[k] = '\n';
+		out[k] = (j == nbf2 / npl + 1) ? '\0' : '\n';
 		k++;
 	}
-//	printf("Write = %d\n", k - 1);
+//	printf("Write = %d\n", k);
 	if (k < nbf * minw)
-		ft_bzero(&out[k], (nbf * minw) - k - 1);
+		ft_bzero(&out[k], (nbf * minw) - k + 1);
 	write(1, out, k);
 	ft_strdel(&out);
 	return (0);

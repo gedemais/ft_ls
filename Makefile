@@ -48,7 +48,7 @@ clean :
 	@rm -rf $(OBJS)
 	@make clean -C $(LIB_PATH)
 
-fclean :
+fclean : clean
 	@make fclean -C $(LIB_PATH)
 	@rm -rf $(NAME)
 

@@ -41,6 +41,7 @@ int		ft_ls(char **params, int mask, char *path)
 	void	**add;
 	int		len;
 
+	
 	lst = ft_make_list(params, path, mask);
 	len = ft_lstlen(lst);
 	if (!(add = ft_addresses(lst, len)))
