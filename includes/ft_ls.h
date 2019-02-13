@@ -39,49 +39,71 @@ typedef struct	s_file t_file;
 struct		s_file
 {
 	char	*name;
-	int		name_len;
+	int	name_len;
 	char	*perms;
 	char	*uid;
 	char	*gid;
-	int		dir;
-	int		nlinks;
-	int		size;
-	int		blocksize;
+	int	dir;
+	int	nlinks;
+	int	size;
+	int	blocksize;
 	char	*date;
-	int		day;
-	int		year;
+	int	day;
+	int	year;
 	t_file	*next;
 };
 
 // main.c
 int		ft_ls(char **params, int mask, char *path);
-void	ft_usage(int type, char wrong, char *wrong_name, int usage);
+void		ft_usage(int type, char wrong, char *wrong_name, int usage);
+
+// display_fts.c
+int		ft_nohiddens(int nbf, void **add);
+int		ft_flags(void **add, int i, int mask);
+char		*ft_add_links(char *out, int nb, int max, int *k);
+char		*ft_add_base(char *out, char *str, int *k);
+char		*ft_add_date(char *out, char *date, int *k);
 
 // ft_run.c
-void	ft_run(char *path, int mask, int nbf, void **add);
+void		ft_run(char *path, int mask, int nbf, void **add);
 
 // ft_list.c
 int		ft_lstlen(t_file *lst);
-void	ft_display_ls_lst(t_file *top);
-t_file	*ft_ls_lstnew(char *path, char *name, int mask);
+void		ft_display_ls_lst(t_file *top);
+t_file		*ft_ls_lstnew(char *path, char *name, int mask);
 int		ft_ls_pushfront(t_file **file, t_file *new);
-t_file	*ft_make_list(char **params, char *path, int mask);
+t_file		*ft_make_list(char **params, char *path, int mask);
 
 // ft_parsing.c
 int		ft_is_flag(char c);
 int		ft_count(int argc, char **argv);
 int		ft_get_options(int ac, char **av, int *i, int mask);
-char	**ft_get_params(int ac, char **av, char **data, int i);
-char	**ft_parse_input(int ac, char **av, int *mask);
+char		**ft_get_params(int ac, char **av, char **data, int i);
+char		**ft_parse_input(int ac, char **av, int *mask);
 
 // ft_quicksort.c
-void	ft_swap_nodes(t_file *n1, t_file *n2, int mask);
-void	**ft_addresses (t_file *lst, int len);
+void		ft_swap_nodes(t_file *n1, t_file *n2, int mask);
+void		**ft_addresses (t_file *lst, int len);
 int		ft_ls_quicksort(void **add, int start, int end, int mask);
+
+// ft_display_lines.c
+int		ft_getsize_lines(int mask, void **add, int nbf, int maxs[2]);
+int		ft_display_lines(int mask, void **add, int nbf);
+
+// ft_display_cols.c
+int		ft_getless(void **add, int nbf, int npl, int minw);
+int		ft_display_cols(int mask, void **add, int nbf, int minw);
+
+// ft_display_line.c
+char		*ft_cpy_string_a(char *out, char *name, int *k);
+char		*ft_pad_string_a(char *out, int minw, int name_len, int *k);
+int		ft_display_line(int mask, void **add, int nbf, int minw);
+
+
 
 // fts.c
 int		ft_tablen(char **tab);
-char	**ft_tabdel(char **tab);
+char		**ft_tabdel(char **tab);
 int		ft_add_mask(int mask, char c);
 int		ft_get_screen_length(void);
 int		ft_find_biggest(void **add);

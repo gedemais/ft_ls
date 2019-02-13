@@ -20,12 +20,16 @@ LIB_PATH = libft/
 
 LIB = libft/libft.a
 
-SRCS_NAME = main.c \
-			ft_run.c \
-			ft_list.c  \
-			ft_parsing.c \
-			ft_quicksort.c \
-			fts.c
+SRCS_NAME = 	fts.c\
+		main.c \
+		ft_run.c \
+		ft_list.c \
+		ft_parsing.c \
+		display_fts.c \
+		ft_quicksort.c \
+		ft_display_cols.c\
+		ft_display_line.c \
+		ft_display_lines.c \
 
 SRCS_PATH = srcs/
 
