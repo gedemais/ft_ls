@@ -1,4 +1,16 @@
-# include "../includes/ft_ls.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_display_line.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/14 02:21:23 by gedemais          #+#    #+#             */
+/*   Updated: 2019/02/14 08:02:28 by gedemais         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/ft_ls.h"
 
 char	*ft_cpy_string_a(char *out, char *name, int *k)
 {
@@ -29,6 +41,7 @@ char	*ft_pad_string_a(char *out, int minw, int name_len, int *k)
 	out[*k] = '\0';
 	return (out);
 }
+
 int		ft_display_line(int mask, void **add, int nbf, int minw)
 {
 	char	*out;
@@ -53,8 +66,9 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 			j++;
 		}
 	out[k] = '\n';
+	out[k + 1] = '\n';
 //	printf("Write : %d\n", k + 1);
-	write(1, out, k + 1);
+	write(1, out, k + 2);
 	ft_strdel(&out);
 	return (0);
 }

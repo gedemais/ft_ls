@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/12 07:58:01 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/14 08:02:27 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	*ft_make_perms(char *str, struct stat file)
 t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 {
 	t_file			*new;
-	char			*file_path;
 	struct stat		file;
 	struct passwd	*psswd;
 	struct group	*gid;
@@ -78,9 +77,9 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 	if (!(new->name = ft_strnew(new->name_len)))
 		return (NULL);
 	new->name = ft_strcpy(new->name, name);
-	if (!(file_path = ft_strjoin(path, new->name)))
+	if (!(new->file_path = ft_strjoin(path, new->name)))
 		return (NULL);
-	if (stat(file_path, &file) < 0)
+	if (stat(new->file_path, &file) < 0)
 	{
 		fprintf(stderr, "fstatat(\"%s\") failed (%d: %s)\n", new->name, errno, strerror(errno));
 	}

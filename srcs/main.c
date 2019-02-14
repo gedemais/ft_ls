@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/12 07:59:34 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/14 07:48:48 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ int		ft_ls(char **params, int mask, char *path)
 	void	**add;
 	int		len;
 
-	
 	lst = ft_make_list(params, path, mask);
 	len = ft_lstlen(lst);
 	if (!(add = ft_addresses(lst, len)))
 		return (-1);
-	ft_ls_quicksort(ft_addresses(lst, len), 0, len + 1, mask);
+	ft_ls_quicksort(add, 0, len + 1, mask);
 	ft_run(path, mask, len + 1, add);
 	return (0);
 }

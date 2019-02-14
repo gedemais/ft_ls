@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/12 05:16:05 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/14 07:42:33 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define FT_LS_H
 
 # define TF ((t_file*)add[i])
+# define TFVAR ((t_file*)add[vars[4]])
+# define TF0 ((t_file*)add[0])
+# define TF1 ((t_file*)add[1])
+
 
 # define DEBUG ft_putstr("There\n");
 
@@ -39,17 +43,18 @@ typedef struct	s_file t_file;
 struct		s_file
 {
 	char	*name;
-	int	name_len;
+	char	*file_path;
+	int		name_len;
 	char	*perms;
 	char	*uid;
 	char	*gid;
-	int	dir;
-	int	nlinks;
-	int	size;
-	int	blocksize;
+	int		dir;
+	int		nlinks;
+	int		size;
+	int		blocksize;
 	char	*date;
-	int	day;
-	int	year;
+	int		day;
+	int		year;
 	t_file	*next;
 };
 
@@ -103,7 +108,7 @@ int		ft_display_line(int mask, void **add, int nbf, int minw);
 
 // fts.c
 int		ft_tablen(char **tab);
-char		**ft_tabdel(char **tab);
+char	**ft_tabdel(char **tab);
 int		ft_add_mask(int mask, char c);
 int		ft_get_screen_length(void);
 int		ft_find_biggest(void **add);

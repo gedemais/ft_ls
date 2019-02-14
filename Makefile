@@ -6,13 +6,15 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/05 00:59:17 by gedemais          #+#    #+#              #
-#    Updated: 2019/02/07 01:44:38 by gedemais         ###   ########.fr        #
+#    Updated: 2019/02/14 05:32:53 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 
-CC = @gcc
+CC = @gcc -g
+
+FLAGS = -fsanitize=address
 
 CFLAGS = -Wall -Werror -Wextra
 
@@ -55,5 +57,8 @@ clean :
 fclean : clean
 	@make fclean -C $(LIB_PATH)
 	@rm -rf $(NAME)
+
+fsanitize : $(LIB) $(SRCS)
+			$(CC) $(FLAGS) $(SRCS) $(LIB)
 
 re : fclean all
