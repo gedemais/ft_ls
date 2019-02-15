@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 03:27:21 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/15 07:38:29 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 		new->date = ft_strdup(ctime(&file.st_ctime)); // Date
 		new->blocksize = file.st_blocks;
 	}
+	if (mask & O_T)
+		new->secstime = ft_strdup(ctime(&file.st_mtime));
 	new->dir = (S_ISDIR(file.st_mode)) ? 1 : 0;
 	new->next = NULL;
 	return (new);

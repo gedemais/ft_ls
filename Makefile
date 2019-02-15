@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/05 00:59:17 by gedemais          #+#    #+#              #
-#    Updated: 2019/02/14 05:32:53 by gedemais         ###   ########.fr        #
+#    Updated: 2019/02/15 06:33:07 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,11 @@ LIB = libft/libft.a
 
 SRCS_NAME = 	fts.c\
 		main.c \
-		ft_run.c \
-		ft_list.c \
+		ft_run.c\
+		ft_list.c\
+		ft_usage.c\
+		ft_address.c\
+		ft_datecmp.c\
 		ft_parsing.c \
 		display_fts.c \
 		ft_quicksort.c \

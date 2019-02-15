@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 03:42:22 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/15 07:38:09 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 #include <time.h>
 
 
-void	ft_usage(int type, char wrong, char *wrong_name, int usage)
-{
-	if (type == 1)
-	{
-		ft_putstr("ls: illegal option -- ");
-		ft_putchar(wrong);	
-		ft_putchar('\n');
-	}
-	else if (type == 2)
-	{
-		ft_putstr("ls: ");
-		ft_putstr(wrong_name);
-		ft_putstr("No such file or directory\n");
-		ft_putchar('\n');
-	}
-	if (usage)
-		ft_putstr("usage: ls [-laRrt] [file ...]\n");
-	exit (EXIT_FAILURE);
-}
 
 
 int		ft_ls(char **params, int mask, char *path)
@@ -47,6 +28,8 @@ int		ft_ls(char **params, int mask, char *path)
 		return (-1);
 	if (!(mask & O_F))
 		ft_ls_quicksort(add, 0, len + 1, mask);
+	if (mask & O_R)
+		ft_addrev(add, mask);
 	ft_run(mask, len + 1, add);
 	return (0);
 }
@@ -61,5 +44,7 @@ int		main(int argc, char **argv)
 	if (argc > 1)
 		params = ft_parse_input(argc, argv, &mask);
 	ft_ls(params, mask, ft_strdup("./"));
+//	(void)argc;
+//	printf("%d\n%d", ft_datecmp(argv[1], argv[2]), ft_strcmp("Bonjour", "Ca va ?"));
 	return (0);
 }

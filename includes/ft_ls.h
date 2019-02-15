@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 03:44:28 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/15 06:35:14 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define TFVAR ((t_file*)add[vars[4]])
 # define TF0 ((t_file*)add[0])
 # define TF1 ((t_file*)add[1])
+# define TFN1 ((t_file*)n1)
+# define TFN2 ((t_file*)n2)
 
 
 # define DEBUG ft_putstr("There\n");
@@ -27,6 +29,7 @@
 # define O_R 8
 # define O_T 16
 # define O_F 32
+# define O_SMAJ 64
 
 # include "../libft/libft.h"
 # include <stdbool.h>
@@ -52,6 +55,7 @@ struct		s_file
 	int		nlinks;
 	int		size;
 	int		blocksize;
+	char	*secstime;
 	char	*date;
 	int		day;
 	int		year;
@@ -59,26 +63,42 @@ struct		s_file
 	t_file	*next;
 };
 
+typedef struct	s_date
+{
+	int		year;
+	int		month;
+	int		day;
+	int		hour;
+	int		mins;
+	int		secs;
+}				t_date; 
+
 // main.c
-int		ft_ls(char **params, int mask, char *path);
-void		ft_usage(int type, char wrong, char *wrong_name, int usage);
+int			ft_ls(char **params, int mask, char *path);
 
 // display_fts.c
-int		ft_nohiddens(int nbf, void **add);
-int		ft_flags(void **add, int i, int mask);
+int			ft_nohiddens(int nbf, void **add);
+int			ft_flags(void **add, int i, int mask);
 char		*ft_add_links(char *out, int nb, int max, int *k);
 char		*ft_add_base(char *out, char *str, int *k);
 char		*ft_add_date(char *out, char *date, int *k);
 void		ft_get_lines_data(void **add, int *max0, int *max1, int *total);
 
+// ft_address.c
+void		**ft_addresses(t_file *lst, int len);
+void		ft_addrev(void **add, int mask);
+
+// ft_datecmp.c
+int			ft_datecmp(char *d1, char *d2);
+
 // ft_run.c
 void		ft_run(int mask, int nbf, void **add);
 
 // ft_list.c
-int		ft_lstlen(t_file *lst);
+int			ft_lstlen(t_file *lst);
 void		ft_display_ls_lst(t_file *top);
 t_file		*ft_ls_lstnew(char *path, char *name, int mask);
-int		ft_ls_pushfront(t_file **file, t_file *new);
+int			ft_ls_pushfront(t_file **file, t_file *new);
 t_file		*ft_make_list(char **params, char *path, int mask);
 
 // ft_parsing.c
@@ -90,6 +110,7 @@ char		**ft_parse_input(int ac, char **av, int *mask);
 
 // ft_quicksort.c
 void		ft_swap_nodes(t_file *n1, t_file *n2, int mask);
+void		ft_addrev(void **add, int mask);
 void		**ft_addresses (t_file *lst, int len);
 int		ft_ls_quicksort(void **add, int start, int end, int mask);
 
@@ -104,9 +125,10 @@ int		ft_display_cols(int mask, void **add, int nbf, int minw);
 // ft_display_line.c
 char		*ft_cpy_string_a(char *out, char *name, int *k);
 char		*ft_pad_string_a(char *out, int minw, int name_len, int *k);
-int		ft_display_line(int mask, void **add, int nbf, int minw);
+int			ft_display_line(int mask, void **add, int nbf, int minw);
 
-
+// ft_usage.c
+void		ft_usage(int type, char wrong, char *wrong_name, int usage);
 
 // fts.c
 int		ft_tablen(char **tab);
