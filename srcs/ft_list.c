@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/14 08:02:27 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/15 03:27:21 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,27 @@ void	ft_display_ls_lst(t_file *top)
 	}
 }
 
-char	*ft_make_perms(char *str, struct stat file)
+char	*ft_make_perms(struct stat file)
 {
+	char	*str;
 	int		i;
 
 	i = 0;
 	if (!(str = (char*)malloc(sizeof(char) * 11)))
 		return (NULL);
-	str[0] = (S_ISDIR(file.st_mode)) ? 'd' : '-';
-	str[1] = (file.st_mode & S_IRUSR) ? 'r' : '-';
-	str[2] = (file.st_mode & S_IWUSR) ? 'w' : '-';
-	str[3] = (file.st_mode & S_IXUSR) ? 'x' : '-';
-	str[4] = (file.st_mode & S_IRGRP) ? 'r' : '-';
-	str[5] = (file.st_mode & S_IWGRP) ? 'w' : '-';
-	str[6] = (file.st_mode & S_IXGRP) ? 'x' : '-';
-	str[7] = (file.st_mode & S_IROTH) ? 'r' : '-';
-	str[8] = (file.st_mode & S_IWOTH) ? 'w' : '-';
-	str[9] = (file.st_mode & S_IXOTH) ? 'x' : '-'; 
-	str[10] = '\0';
-	return (str);
+	str[0] = '\0';
+	str[1] = (S_ISDIR(file.st_mode)) ? 'd' : '-';
+	str[2] = (file.st_mode & S_IRUSR) ? 'r' : '-';
+	str[3] = (file.st_mode & S_IWUSR) ? 'w' : '-';
+	str[4] = (file.st_mode & S_IXUSR) ? 'x' : '-';
+	str[5] = (file.st_mode & S_IRGRP) ? 'r' : '-';
+	str[6] = (file.st_mode & S_IWGRP) ? 'w' : '-';
+	str[7] = (file.st_mode & S_IXGRP) ? 'x' : '-';
+	str[8] = (file.st_mode & S_IROTH) ? 'r' : '-';
+	str[9] = (file.st_mode & S_IWOTH) ? 'w' : '-';
+	str[10] = (file.st_mode & S_IXOTH) ? 'x' : '-';
+	str[11] = '\0';
+	return (&str[1]);
 }
 
 t_file	*ft_ls_lstnew(char *path, char *name, int mask)
@@ -74,10 +76,8 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 	if (!(new = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	new->name_len = ft_strlen(name);
-	if (!(new->name = ft_strnew(new->name_len)))
-		return (NULL);
-	new->name = ft_strcpy(new->name, name);
-	if (!(new->file_path = ft_strjoin(path, new->name)))
+	new->name = ft_strdup(name);
+	if (!(new->file_path = ft_strjoin(path, name)))
 		return (NULL);
 	if (stat(new->file_path, &file) < 0)
 	{
@@ -85,19 +85,17 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 	}
 	if (mask & O_L)
 	{
-
-		new->perms = ft_make_perms(new->perms, file); // Permissions
+		new->perms = ft_make_perms(file); // Permissions
 		if ((psswd = getpwuid(file.st_uid)))
 			if (!(new->uid = ft_strdup(psswd->pw_name))) // UID
 				return (NULL);
 		if ((gid = getgrgid(file.st_gid)))
 			if (!(new->gid = ft_strdup(gid->gr_name))) // GID
 				return (NULL);
-
 		new->nlinks = (int)file.st_nlink; // nombre de liens
 		new->size = file.st_size; // Taille en octets
 		new->date = ft_strdup(ctime(&file.st_ctime)); // Date
-//		new->blocksize = (int)file.st_blocks;
+		new->blocksize = file.st_blocks;
 	}
 	new->dir = (S_ISDIR(file.st_mode)) ? 1 : 0;
 	new->next = NULL;
@@ -143,5 +141,6 @@ t_file	*ft_make_list(char **params, char *path, int mask)
 			ft_ls_pushfront(&lst, ft_ls_lstnew(path, dir->d_name, mask));
 	}
 	closedir(d);
+	ft_strdel(&path);
 	return (lst);
 }

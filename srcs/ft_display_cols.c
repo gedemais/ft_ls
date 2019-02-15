@@ -6,14 +6,14 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 04:11:43 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/14 07:21:40 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/15 03:12:38 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
 static void		ft_print_cols(char *out, int vars[8], int minw)
-{	
+{
 	if (vars[6] < vars[1] * minw)
 		ft_bzero(&out[vars[6]], (vars[1] * minw) - vars[6]);
 	write(1, out, vars[6]);
@@ -49,4 +49,3 @@ int				ft_display_cols(int mask, void **add, int nbf, int minw)
 //	printf("Bzero = %d\n", vars[1] * minw - vars[6]);
 	return (0);
 }
-

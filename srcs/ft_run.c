@@ -10,40 +10,26 @@
 
 #include "../includes/ft_ls.h"
 
-void	ft_relaunch(void **add, int nbf, int mask, char *path)
+void	ft_relaunch(void **add, int nbf, int mask)
 {
-	char	*new_path;
-	char	*slash;
 	int		i;
 
 	i = 2;
-	slash = ft_strdup("/");
 	while (i < nbf)
 	{
-		if (ft_strcmp(TF->name, "Contents") == 0)
-			printf("Contents : dir = %d\n", TF->dir);
-		if (TF->dir)
+		if (TF->dir && ft_strcmp(TF->name, ".") != 0 && ft_strcmp(TF->name, "..") != 0)
 		{
-//			if (!(tmp = ft_strjoin(path, TF->name)))
-//				return ;
-//			ft_putstr(tmp);
-//			ft_putstr(":\n");
-//			if (!(new_path = ft_strjoin(tmp, "/\0")))
-//				return ;
-			ft_putendl(TF->file_path);
-			new_path = ft_strjoin(TF->file_path, slash);
-			ft_strdel(&path);
-			ft_ls(NULL, mask, new_path);
+			ft_putstr(TF->file_path);
+			ft_putstr(":\n");
+			if (!(TF->file_path = ft_strjoin(TF->file_path, "/\0")))
+				return ;
+			ft_ls(NULL, mask, TF->file_path);
 		}
 		i++;
 	}
-//	if (i == 2)
-		
-//	ft_strdel(&new_path);
-	ft_strdel(&slash);
 }
 
-void	ft_run(char *path, int mask, int nbf, void **add)
+void	ft_run(int mask, int nbf, void **add)
 {
 	int		t_len;
 	int		minw;
@@ -57,5 +43,5 @@ void	ft_run(char *path, int mask, int nbf, void **add)
 	else
 		ft_display_cols(mask, add, nbf, minw);
 	if (mask & O_RMAJ)
-		ft_relaunch(add, nbf, mask, path);
+		ft_relaunch(add, nbf, mask);
 }

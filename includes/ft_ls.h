@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/14 07:42:33 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/15 03:44:28 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define O_A 4
 # define O_R 8
 # define O_T 16
+# define O_F 32
 
 # include "../libft/libft.h"
 # include <stdbool.h>
@@ -43,7 +44,6 @@ typedef struct	s_file t_file;
 struct		s_file
 {
 	char	*name;
-	char	*file_path;
 	int		name_len;
 	char	*perms;
 	char	*uid;
@@ -55,6 +55,7 @@ struct		s_file
 	char	*date;
 	int		day;
 	int		year;
+	char	*file_path;
 	t_file	*next;
 };
 
@@ -68,9 +69,10 @@ int		ft_flags(void **add, int i, int mask);
 char		*ft_add_links(char *out, int nb, int max, int *k);
 char		*ft_add_base(char *out, char *str, int *k);
 char		*ft_add_date(char *out, char *date, int *k);
+void		ft_get_lines_data(void **add, int *max0, int *max1, int *total);
 
 // ft_run.c
-void		ft_run(char *path, int mask, int nbf, void **add);
+void		ft_run(int mask, int nbf, void **add);
 
 // ft_list.c
 int		ft_lstlen(t_file *lst);

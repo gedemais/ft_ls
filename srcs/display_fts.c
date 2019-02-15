@@ -78,3 +78,25 @@ char	*ft_add_date(char *out, char *date, int *k)
 	*k += 12;
 	return (out);
 }
+
+void	ft_get_lines_data(void **add, int *max0, int *max1, int *total)
+{
+	int		i;
+
+	i = 0;
+	*max0 = 0;
+	*max1 = 0;
+	*total = 0;
+	while (add[i])
+	{
+		if (TF->nlinks > *max0)
+			*max0 = TF->nlinks;
+		if (TF->size > *max1)
+			*max1 = TF->size;
+		*total += TF->blocksize;
+		i++;
+	}
+	*max0 = ft_nb_len(*max0);
+	*max1 = ft_nb_len(*max1);
+}
+
