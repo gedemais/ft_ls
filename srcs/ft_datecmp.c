@@ -109,8 +109,17 @@ int		ft_datecmp(char *d1, char *d2)
 	date[1].hour = ft_atoi(&d2[11]);
 	date[1].mins = ft_atoi(&d2[14]);
 	date[1].secs = ft_atoi(&d2[17]);
+/*	printf("year = %d\n", date[0].year);
+	printf("month = %d\n", date[0].month);
+	printf("day = %d\n", date[0].day);
+	printf("hour = %d\n", date[0].hour);
+	printf("mins = %d\n", date[0].mins);
+	printf("secs = %d\n", date[0].secs);
+	printf("year = %d\n", date[1].year);
+	printf("month = %d\n", date[1].month);
+	printf("day = %d\n", date[1].day);
+	printf("hour = %d\n", date[1].hour);
+	printf("mins = %d\n", date[1].mins);
+	printf("secs = %d\n", date[1].secs);*/
 	return (ft_calculus(&date[0], &date[1]));
 }
-
-
-

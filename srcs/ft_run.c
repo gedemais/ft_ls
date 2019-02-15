@@ -10,6 +10,32 @@
 
 #include "../includes/ft_ls.h"
 
+void	ft_write_buffer(char *str, int flush)
+{
+	static char	buff[100];
+	static int	k = 0;
+	int		i;
+
+	i = 0;
+	while (str[i] && k < 100)
+	{
+		buff[k] = str[i];
+		k++;
+		i++;
+		if (k == 100)
+		{
+			write(1, buff, k);
+			k = 0;
+			return ;
+		}
+	}
+	if (flush)
+	{
+		write(1, buff, k);
+		k = 0;
+	}
+}
+
 void	ft_relaunch(void **add, int nbf, int mask)
 {
 	int		i;

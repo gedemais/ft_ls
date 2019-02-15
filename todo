@@ -1,0 +1,7 @@
+Adapter le -t a la minute et sort en ascii quand == 0
+ft_write_buffer(char *str, int flush) + tests & application
+Remplacer les itoa
+ft_lstdel
+free le tableau de liens
+Virer les getsize
+
