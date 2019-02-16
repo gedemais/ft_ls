@@ -20,14 +20,14 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 	int		i;
 
 	i = 0;
-	if (!str || !c || (cat == 0 && flush == 0))
+	if (!str || !c || (cat == 0 && flush == 0))
 		return ;
 	while (str[i] && k < 8192 && flush == 0)
 	{
 		buff[k] = str[i];
 		i++;
 		k++;
-		if (k == 8192 || flush)
+		if (k == 8192 || flush)
 		{
 			write(1, buff, k);
 			k = 0;

@@ -74,7 +74,7 @@ typedef struct	s_date
 }				t_date; 
 
 // main.c
-void			ft_write_buff(char *str, int flush);
+void			ft_write_buff(char *str, char c, int cat, int flush);
 int			ft_ls(char **params, int mask, char *path);
 
 // display_fts.c
