@@ -40,8 +40,10 @@ int				ft_display_cols(int mask, void **add, int nbf, int minw)
 		vars[7] = 0;
 		while (++vars[4] < nbf && vars[7] < vars[0])
 			if (vars[4] % (vars[3]) == vars[5] && ft_flags(add, vars[4], mask) && (out = ft_cpy_string_a(out, TFVAR->name, &vars[6])))
+			{
 				if (vars[7]++ < vars[0] && vars[4] < (nbf - vars[2]))
 					out = ft_pad_string_a(out, minw, TFVAR->name_len, &vars[6]);
+			}
 		out[vars[6]++] = '\n';
 	}
 	ft_print_cols(out, vars, minw);

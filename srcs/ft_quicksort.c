@@ -104,13 +104,13 @@ int		ft_ls_partition_t(void **add, int start, int end, int mask)
 	pivot = end - 1;
 	if (end - start == 2)
 	{
-		if (ft_datecmp(((t_file*)add[start])->secstime, ((t_file*)add[end - 1])->secstime) > 0)
+		if (ft_datecmp(((t_file*)add[start])->secstime, ((t_file*)add[end - 1])->secstime, ((t_file*)add[start]), ((t_file*)add[end - 1])) > 0)
 			ft_swap_nodes(((t_file*)add[start]), ((t_file*)add[end - 1]), mask);
 		return (0);
 	}
 	while (i < end - 1 && j < end - 1)
 	{
-		if (ft_datecmp(((t_file*)add[j])->secstime, ((t_file*)add[pivot])->secstime) < 0)
+		if (ft_datecmp(((t_file*)add[j])->secstime, ((t_file*)add[pivot])->secstime, ((t_file*)add[j]), ((t_file*)add[pivot])) < 0)
 		{
 			i++;
 			ft_swap_nodes(((t_file*)add[i]), ((t_file*)add[j]), mask);

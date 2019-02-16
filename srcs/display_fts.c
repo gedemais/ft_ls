@@ -99,4 +99,3 @@ void	ft_get_lines_data(void **add, int *max0, int *max1, int *total)
 	*max0 = ft_nb_len(*max0);
 	*max1 = ft_nb_len(*max1);
 }
-

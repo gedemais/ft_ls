@@ -57,7 +57,7 @@ int		ft_get_month(char *month)
 	return (-1);
 }
 
-int		ft_calculus(t_date *d1, t_date *d2)
+int		ft_calculus(t_date *d1, t_date *d2, t_file *n1, t_file *n2)
 {
 	long long int	ret1;
 	long long int	ret2;
@@ -78,12 +78,12 @@ int		ft_calculus(t_date *d1, t_date *d2)
 	ret2 += d2->hour * 3600;
 	ret1 += d1->mins * 60;
 	ret2 += d2->mins * 60;
-	ret1 += d1->secs;
-	ret2 += d2->secs;
+	if (ret1 == ret2)
+		return (ft_strcmp(n1->name, n2->name));
 	return (ret2 - ret1);
 }
 
-int		ft_datecmp(char *d1, char *d2)
+int		ft_datecmp(char *d1, char *d2, t_file *n1, t_file *n2)
 {
 	t_date	date[2];
 
@@ -105,10 +105,8 @@ int		ft_datecmp(char *d1, char *d2)
 	}
 	date[0].hour = ft_atoi(&d1[11]);
 	date[0].mins = ft_atoi(&d1[14]);
-	date[0].secs = ft_atoi(&d1[17]);
 	date[1].hour = ft_atoi(&d2[11]);
 	date[1].mins = ft_atoi(&d2[14]);
-	date[1].secs = ft_atoi(&d2[17]);
 /*	printf("year = %d\n", date[0].year);
 	printf("month = %d\n", date[0].month);
 	printf("day = %d\n", date[0].day);
@@ -121,5 +119,5 @@ int		ft_datecmp(char *d1, char *d2)
 	printf("hour = %d\n", date[1].hour);
 	printf("mins = %d\n", date[1].mins);
 	printf("secs = %d\n", date[1].secs);*/
-	return (ft_calculus(&date[0], &date[1]));
+	return (ft_calculus(&date[0], &date[1], n1, n2));
 }

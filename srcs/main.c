@@ -13,8 +13,29 @@
 #include "../includes/ft_ls.h"
 #include <time.h>
 
+void		ft_write_buff(char *str, char c, int cat, int flush)
+{
+	static char	buff[8192];
+	static int	k = 0;
+	int		i;
 
-
+	i = 0;
+	if (!str || !c || (cat == 0 && flush == 0))
+		return ;
+	while (str[i] && k < 8192 && flush == 0)
+	{
+		buff[k] = str[i];
+		i++;
+		k++;
+		if (k == 8192 || flush)
+		{
+			write(1, buff, k);
+			k = 0;
+			if (flush)
+				break;
+		}
+	}
+}
 
 int		ft_ls(char **params, int mask, char *path)
 {
@@ -37,14 +58,12 @@ int		ft_ls(char **params, int mask, char *path)
 int		main(int argc, char **argv)
 {
 	char	**params;
-	int		mask;
+	int	mask;
 
 	params = NULL;
 	mask = 0;
 	if (argc > 1)
 		params = ft_parse_input(argc, argv, &mask);
 	ft_ls(params, mask, ft_strdup("./"));
-//	(void)argc;
-//	printf("%d\n%d", ft_datecmp(argv[1], argv[2]), ft_strcmp("Bonjour", "Ca va ?"));
 	return (0);
 }

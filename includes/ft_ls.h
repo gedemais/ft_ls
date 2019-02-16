@@ -74,6 +74,7 @@ typedef struct	s_date
 }				t_date; 
 
 // main.c
+void			ft_write_buff(char *str, int flush);
 int			ft_ls(char **params, int mask, char *path);
 
 // display_fts.c
@@ -89,7 +90,7 @@ void		**ft_addresses(t_file *lst, int len);
 void		ft_addrev(void **add, int mask);
 
 // ft_datecmp.c
-int			ft_datecmp(char *d1, char *d2);
+int			ft_datecmp(char *d1, char *d2, t_file *n1, t_file *n2);
 
 // ft_run.c
 void		ft_run(int mask, int nbf, void **add);
@@ -132,7 +133,7 @@ void		ft_usage(int type, char wrong, char *wrong_name, int usage);
 
 // fts.c
 int		ft_tablen(char **tab);
-char	**ft_tabdel(char **tab);
+char		**ft_tabdel(char **tab);
 int		ft_add_mask(int mask, char c);
 int		ft_get_screen_length(void);
 int		ft_find_biggest(void **add);
