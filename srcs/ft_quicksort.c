@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/16 17:28:29 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 21:03:27 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,7 @@ int			ft_ls_quicksort(void **add, int start, int end, int mask)
 	if (start < end - 1)
 	{
 		if (mask & O_T)
-		{
 			j = ft_ls_partition_t(add, start, end, mask);
-		}
 		else
 			j = ft_ls_partition_base(add, start, end, mask);
 		ft_ls_quicksort((&add[start]), 0, j, mask);

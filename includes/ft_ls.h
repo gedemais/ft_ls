@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 04:23:01 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 21:13:34 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,17 @@
 # define TFAP ((t_file*)add[pivot])
 
 
-# define DEBUG 1
+# define DEBUG 0
+# define PUT ft_putstr("There\n");
+# define PUT1 ft_putstr("There1\n");
+# define PUT2 ft_putstr("There2\n");
+# define PUT3 ft_putstr("There3\n");
+# define PUT4 ft_putstr("There4\n");
+# define PUT5 ft_putstr("There5\n");
+# define PUT6 ft_putstr("There6\n");
+# define PUT7 ft_putstr("There7\n");
+# define PUT8 ft_putstr("There8\n");
+# define PUT9 ft_putstr("There9\n");
 
 # define O_L 1
 # define O_RMAJ 2
@@ -130,6 +140,8 @@ int			ft_getless(void **add, int nbf, int npl, int minw);
 int			ft_display_cols(int mask, void **add, int nbf, int minw);
 
 // ft_display_line.c
+void		ft_cpy_string(char *str);
+void		ft_pad_string(int minw, int name_len);
 char		*ft_cpy_string_a(char *out, char *name, int *k);
 char		*ft_pad_string_a(char *out, int minw, int name_len, int *k);
 int			ft_display_line(int mask, void **add, int nbf, int minw);
@@ -142,7 +154,7 @@ int			ft_tablen(char **tab);
 char		**ft_tabdel(char **tab);
 int			ft_add_mask(int mask, char c);
 int			ft_get_screen_length(void);
-int			ft_find_biggest(void **add);
+int			ft_find_biggest(void **add, int nbf);
 int			ft_find_longest(void **add);
 int			ft_find_fattest(void **add);
 

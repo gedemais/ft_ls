@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:35:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 01:52:57 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 21:04:31 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		ft_get_screen_length(void)
 	return (screen.ts_cols);
 }
 
-int		ft_find_biggest(void **add)
+int		ft_find_biggest(void **add, int nbf)
 {
 	int		i;
 	int		ret;
@@ -74,7 +74,7 @@ int		ft_find_biggest(void **add)
 
 	i = 0;
 	ret = 0;
-	while (add[i])
+	while (i < nbf)
 	{
 		if ((temp = ft_strlen(TF->name)) > ret)
 			ret = temp;

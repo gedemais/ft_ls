@@ -1,4 +1,4 @@
-ft_write_buffer(char *str, int flush) + tests & application
+. -la
 Virer les getsize
 Remplacer les itoa
 ft_lstdel

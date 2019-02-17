@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 05:12:25 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 21:13:36 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 	int		i;
 
 	i = 0;
-	ft_putstr("ThereA\n");
 	if (cat == 1 && c > 0)
 	{
 		buff[k++] = c;
@@ -31,7 +30,6 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 		}
 		return ;
 	}
-	ft_putstr("ThereB\n");
 	if (flush)
 	{
 		write(1, buff, k);

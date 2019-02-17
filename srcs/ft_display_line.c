@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 02:21:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 02:42:24 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 20:54:35 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,14 @@ void	ft_cpy_string(char *str)
 
 void	ft_pad_string(int minw, int name_len)
 {
-	char	buff[32];
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	while (i + name_len < minw)
 	{
-		buff[j] = ' ';
+		ft_write_buff(NULL, ' ', 1, 0);
 		i++;
-		j++;
-		if (j == 31)
-		{
-			buff[++j] = '\0';
-			ft_write_buff(&buff[0], 0, 0, 0);
-			j = 0;
-		}
 	}
-	buff[j] = '\0';
-	ft_write_buff(buff, 0, 0, 0);
 }
 
 char	*ft_cpy_string_a(char *out, char *name, int *k)

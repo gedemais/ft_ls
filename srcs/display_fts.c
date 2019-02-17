@@ -103,13 +103,15 @@ char	*ft_add_date(char *out, char *date, int *k)
 
 void	ft_get_lines_data(void **add, int *max0, int *max1, int *total)
 {
+	int		nbf;
 	int		i;
 
+	nbf = *total;
 	i = 0;
 	*max0 = 0;
 	*max1 = 0;
 	*total = 0;
-	while (add[i])
+	while (i < nbf)
 	{
 		if (TF->nlinks > *max0)
 			*max0 = TF->nlinks;

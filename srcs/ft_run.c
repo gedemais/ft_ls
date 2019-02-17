@@ -37,7 +37,7 @@ void	ft_run(int mask, int nbf, void **add)
 	if (DEBUG)
 		ft_putstr("ft_run\n");
 	t_len = ft_get_screen_length();
-	minw = ft_find_biggest(add) + 1;
+	minw = ft_find_biggest(add, nbf) + 1;
 	if (mask & O_L)
 	{
 		if (DEBUG)
