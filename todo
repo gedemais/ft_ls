@@ -1,7 +1,14 @@
-Adapter le -t a la minute et sort en ascii quand == 0
 ft_write_buffer(char *str, int flush) + tests & application
+Virer les getsize
 Remplacer les itoa
 ft_lstdel
 free le tableau de liens
-Virer les getsize
-
+Remplacer les nombres par des Defines dans ft_datecmp
+Remplacer les casts par des Defines dans ft_ls_partition
+Revoir le parsing pour la gestion des dependances de flags
+Refaire les comms dans le .h
+Corriger l'affichage du Makefile
+Split lstnew
+-S
+Regrouper les fts de partitionages
+Split ft_quicksort.c

@@ -10,32 +10,6 @@
 
 #include "../includes/ft_ls.h"
 
-void	ft_write_buffer(char *str, int flush)
-{
-	static char	buff[100];
-	static int	k = 0;
-	int		i;
-
-	i = 0;
-	while (str[i] && k < 100)
-	{
-		buff[k] = str[i];
-		k++;
-		i++;
-		if (k == 100)
-		{
-			write(1, buff, k);
-			k = 0;
-			return ;
-		}
-	}
-	if (flush)
-	{
-		write(1, buff, k);
-		k = 0;
-	}
-}
-
 void	ft_relaunch(void **add, int nbf, int mask)
 {
 	int		i;
@@ -45,8 +19,8 @@ void	ft_relaunch(void **add, int nbf, int mask)
 	{
 		if (TF->dir && ft_strcmp(TF->name, ".") != 0 && ft_strcmp(TF->name, "..") != 0)
 		{
-			ft_putstr(TF->file_path);
-			ft_putstr(":\n");
+			ft_write_buff(TF->file_path, 0, 0, 0);
+			ft_write_buff(":\n", 0, 0, 0);
 			if (!(TF->file_path = ft_strjoin(TF->file_path, "/\0")))
 				return ;
 			ft_ls(NULL, mask, TF->file_path);
@@ -63,7 +37,7 @@ void	ft_run(int mask, int nbf, void **add)
 	t_len = ft_get_screen_length();
 	minw = ft_find_biggest(add) + 1;
 	if (mask & O_L)
-		ft_display_lines(mask, add, nbf);
+		ft_display_lines(add, nbf);
 	else if (minw * ((mask & O_A) ? nbf : ft_nohiddens(nbf, add)) <= t_len)
 		ft_display_line(mask, add, nbf, minw);
 	else

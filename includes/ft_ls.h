@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 06:35:14 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 03:32:48 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # define TF1 ((t_file*)add[1])
 # define TFN1 ((t_file*)n1)
 # define TFN2 ((t_file*)n2)
+# define TFAS ((t_file*)add[start])
+# define TFAE ((t_file*)add[end - 1])
+# define TFAJ ((t_file*)add[j])
+# define TFAP ((t_file*)add[pivot])
 
 
 # define DEBUG ft_putstr("There\n");
@@ -74,15 +78,17 @@ typedef struct	s_date
 }				t_date; 
 
 // main.c
-void			ft_write_buff(char *str, char c, int cat, int flush);
+void		ft_write_buff(char *str, char c, int cat, int flush);
 int			ft_ls(char **params, int mask, char *path);
 
 // display_fts.c
 int			ft_nohiddens(int nbf, void **add);
 int			ft_flags(void **add, int i, int mask);
 char		*ft_add_links(char *out, int nb, int max, int *k);
+void		ft_add_links_b(int nb, int max);
 char		*ft_add_base(char *out, char *str, int *k);
 char		*ft_add_date(char *out, char *date, int *k);
+void		ft_add_date_b(char *date);
 void		ft_get_lines_data(void **add, int *max0, int *max1, int *total);
 
 // ft_address.c
@@ -90,7 +96,7 @@ void		**ft_addresses(t_file *lst, int len);
 void		ft_addrev(void **add, int mask);
 
 // ft_datecmp.c
-int			ft_datecmp(char *d1, char *d2, t_file *n1, t_file *n2);
+int			ft_datecmp(char *d1, char *d2, char *n1, char *n2);
 
 // ft_run.c
 void		ft_run(int mask, int nbf, void **add);
@@ -103,9 +109,9 @@ int			ft_ls_pushfront(t_file **file, t_file *new);
 t_file		*ft_make_list(char **params, char *path, int mask);
 
 // ft_parsing.c
-int		ft_is_flag(char c);
-int		ft_count(int argc, char **argv);
-int		ft_get_options(int ac, char **av, int *i, int mask);
+int			ft_is_flag(char c);
+int			ft_count(int argc, char **argv);
+int			ft_get_options(int ac, char **av, int *i, int mask);
 char		**ft_get_params(int ac, char **av, char **data, int i);
 char		**ft_parse_input(int ac, char **av, int *mask);
 
@@ -113,15 +119,15 @@ char		**ft_parse_input(int ac, char **av, int *mask);
 void		ft_swap_nodes(t_file *n1, t_file *n2, int mask);
 void		ft_addrev(void **add, int mask);
 void		**ft_addresses (t_file *lst, int len);
-int		ft_ls_quicksort(void **add, int start, int end, int mask);
+int			ft_ls_quicksort(void **add, int start, int end, int mask);
 
 // ft_display_lines.c
-int		ft_getsize_lines(int mask, void **add, int nbf, int maxs[2]);
-int		ft_display_lines(int mask, void **add, int nbf);
+int			ft_getsize_lines(int mask, void **add, int nbf, int maxs[2]);
+int			ft_display_lines(void **add, int nbf);
 
 // ft_display_cols.c
-int		ft_getless(void **add, int nbf, int npl, int minw);
-int		ft_display_cols(int mask, void **add, int nbf, int minw);
+int			ft_getless(void **add, int nbf, int npl, int minw);
+int			ft_display_cols(int mask, void **add, int nbf, int minw);
 
 // ft_display_line.c
 char		*ft_cpy_string_a(char *out, char *name, int *k);
@@ -132,12 +138,12 @@ int			ft_display_line(int mask, void **add, int nbf, int minw);
 void		ft_usage(int type, char wrong, char *wrong_name, int usage);
 
 // fts.c
-int		ft_tablen(char **tab);
+int			ft_tablen(char **tab);
 char		**ft_tabdel(char **tab);
-int		ft_add_mask(int mask, char c);
-int		ft_get_screen_length(void);
-int		ft_find_biggest(void **add);
-int		ft_find_longest(void **add);
-int		ft_find_fattest(void **add);
+int			ft_add_mask(int mask, char c);
+int			ft_get_screen_length(void);
+int			ft_find_biggest(void **add);
+int			ft_find_longest(void **add);
+int			ft_find_fattest(void **add);
 
 #endif

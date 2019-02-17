@@ -37,6 +37,22 @@ char	*ft_add_base(char *out, char *str, int *k)
 	return (out);
 }
 
+void	ft_add_links_b(int nb, int max)
+{
+	char	*tmp;
+	int		len;
+
+	len = ft_nb_len(nb);
+	while (len < max)
+	{
+		ft_write_buff(NULL, ' ', 1, 0);
+		len++;
+	}
+	tmp = ft_itoa(nb); // Trouver mieux
+	ft_write_buff(tmp, 0, 0, 0);
+	ft_strdel(&tmp);
+}
+
 char	*ft_add_links(char *out, int nb, int max, int *k)
 {
 	char	*tmp;
@@ -59,6 +75,12 @@ char	*ft_add_links(char *out, int nb, int max, int *k)
 		i++;
 	}
 	return (out);
+}
+
+void	ft_add_date_b(char *date)
+{	
+	date[16] = '\0';
+	ft_write_buff(&date[4], 0, 0, 0);
 }
 
 char	*ft_add_date(char *out, char *date, int *k)

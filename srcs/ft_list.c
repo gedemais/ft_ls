@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 07:38:29 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 03:41:27 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_make_perms(struct stat file)
 	int		i;
 
 	i = 0;
-	if (!(str = (char*)malloc(sizeof(char) * 11)))
+	if (!(str = (char*)malloc(sizeof(char) * 12)))
 		return (NULL);
 	str[0] = '\0';
 	str[1] = (S_ISDIR(file.st_mode)) ? 'd' : '-';

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 07:37:17 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/16 17:28:29 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,20 @@ int		ft_ls_partition_base(void **add, int start, int end, int mask)
 	pivot = end - 1;
 	if (end - start == 2)
 	{
-		if (ft_strcmp(((t_file*)add[start])->name, ((t_file*)add[end - 1])->name) > 0)
-			ft_swap_nodes(((t_file*)add[start]), ((t_file*)add[end - 1]), mask);
+		if (ft_strcmp(TFAS->name, TFAE->name) > 0)
+			ft_swap_nodes(TFAS, TFAE, mask);
 		return (0);
 	}
 	while (i < end - 1 && j < end - 1)
 	{
-		if (ft_strcmp(((t_file*)add[j])->name, ((t_file*)add[pivot])->name) < 0)
+		if (ft_strcmp(TFAJ->name, TFAP->name) < 0)
 		{
 			i++;
-			ft_swap_nodes(((t_file*)add[i]), ((t_file*)add[j]), mask);
+			ft_swap_nodes(((t_file*)add[i]), TFAJ, mask);
 		}
 		j++;
 	}
-	ft_swap_nodes(((t_file*)add[i + 1]), ((t_file*)add[pivot]), mask);
+	ft_swap_nodes(((t_file*)add[i + 1]), TFAJ, mask);
 	return (i + 1);
 }
 
@@ -104,13 +104,13 @@ int		ft_ls_partition_t(void **add, int start, int end, int mask)
 	pivot = end - 1;
 	if (end - start == 2)
 	{
-		if (ft_datecmp(((t_file*)add[start])->secstime, ((t_file*)add[end - 1])->secstime, ((t_file*)add[start]), ((t_file*)add[end - 1])) > 0)
+		if (ft_datecmp(((t_file*)add[start])->secstime, ((t_file*)add[end - 1])->secstime, ((t_file*)add[start])->name, ((t_file*)add[end - 1])->name) > 0)
 			ft_swap_nodes(((t_file*)add[start]), ((t_file*)add[end - 1]), mask);
 		return (0);
 	}
 	while (i < end - 1 && j < end - 1)
 	{
-		if (ft_datecmp(((t_file*)add[j])->secstime, ((t_file*)add[pivot])->secstime, ((t_file*)add[j]), ((t_file*)add[pivot])) < 0)
+		if (ft_datecmp(((t_file*)add[j])->secstime, ((t_file*)add[pivot])->secstime, ((t_file*)add[j])->name, ((t_file*)add[pivot])->name) < 0)
 		{
 			i++;
 			ft_swap_nodes(((t_file*)add[i]), ((t_file*)add[j]), mask);

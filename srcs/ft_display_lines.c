@@ -6,11 +6,22 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 04:11:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 03:43:05 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 03:54:49 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+void	ft_add_total_b(int total)
+{
+	char	*tmp;
+
+	ft_write_buff("total ", 0, 0, 0);
+	if (!(tmp = ft_itoa(total)))
+		return ;
+	ft_write_buff(tmp, 0, 0, 0);
+	ft_strdel(&tmp);
+}
 
 char	*ft_add_total(char *out, int total, int *k)
 {
@@ -75,50 +86,32 @@ int		ft_getsize_lines(int mask, void **add, int nbf, int maxs[2])
 	return (size);
 }
 
-int		ft_display_lines(int mask, void **add, int nbf)
+int		ft_display_lines(void **add, int nbf)
 {
-	char	*out;
-	int		maxs[2];
+	int		maxs[3];
 	int		i;
-	int		j;
-	int		k;
-	int		total;
 
 	i = -1;
-	j = 0;
-	k = 0;
-	(void)mask;
-//	maxs[0] = ft_nb_len(ft_find_longest(add));
-//	maxs[1] = ft_nb_len(ft_find_fattest(add));
-//	printf("Malloc = %d\n", ft_getsize_lines(mask, add, nbf, maxs));
-	if (!(out = (char*)malloc(sizeof(char) * (ft_getsize_lines(mask, add, nbf, maxs)))))
-		return (-1);
-//	total = ft_get_total(add);
-	ft_get_lines_data(add, &maxs[0], &maxs[1], &total);
-	out = ft_add_total(out, total, &k);
+	ft_get_lines_data(add, &maxs[0], &maxs[1], &maxs[2]);
+	ft_add_total_b(maxs[2]);
+	ft_write_buff(NULL, '\n', 1, 0);
 	while (++i < nbf)
 	{
-		out = ft_add_base(out, TF->perms, &k);
-		out[k++] = ' ';
-		out[k++] = ' ';
-		out = ft_add_links(out, TF->nlinks, maxs[0], &k);
-		out[k++] = ' ';
-		out = ft_add_base(out, TF->uid, &k);
-		out[k++] = ' ';
-		out[k++] = ' ';
-		out = ft_add_base(out, TF->gid, &k);
-		out[k++] = ' ';
-		out[k++] = ' ';
-		out = ft_add_links(out, TF->size, maxs[1], &k);
-		out[k++] = ' ';
-		out = ft_add_date(out, TF->date, &k);
-		out[k++] = ' ';
-		ft_add_base(out, TF->name, &k);
-		out[k++] = '\n';
+		ft_write_buff(TF->perms, 0, 0, 0);
+		ft_write_buff("  ", 0, 0, 0);
+		ft_add_links_b(TF->nlinks, maxs[0]);
+		ft_write_buff(NULL, ' ', 1, 0);
+		ft_write_buff(TF->uid, 0, 0, 0);
+		ft_write_buff("  ", 0, 0, 0);
+		ft_write_buff(TF->gid, 0, 0, 0);
+		ft_write_buff("  ", 0, 0, 0);
+		ft_add_links_b(TF->size, maxs[1]);
+		ft_write_buff(NULL, ' ', 1, 0);
+		ft_add_date_b(TF->date);
+		ft_write_buff(NULL, ' ', 1, 0);
+		ft_write_buff(TF->name, 0, 0, 0);
+		ft_write_buff(NULL, '\n', 1, 0);
 	}
-	out[k] = '\n';
-//	printf("Write = %d\n", k);
-	write(1, out, k + 1);
-	ft_strdel(&out);
+	ft_write_buff(NULL, '\n', 1, 0);
 	return (0);
 }
