@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 04:11:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 03:54:49 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 05:11:14 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,28 @@ int		ft_display_lines(void **add, int nbf)
 	ft_write_buff(NULL, '\n', 1, 0);
 	while (++i < nbf)
 	{
+		ft_putstr("There1\n");
 		ft_write_buff(TF->perms, 0, 0, 0);
 		ft_write_buff("  ", 0, 0, 0);
+		ft_putstr("There2\n");
 		ft_add_links_b(TF->nlinks, maxs[0]);
 		ft_write_buff(NULL, ' ', 1, 0);
+		ft_putstr("There3\n");
 		ft_write_buff(TF->uid, 0, 0, 0);
 		ft_write_buff("  ", 0, 0, 0);
+		ft_putstr("There4\n");
 		ft_write_buff(TF->gid, 0, 0, 0);
 		ft_write_buff("  ", 0, 0, 0);
+		ft_putstr("There5\n");
 		ft_add_links_b(TF->size, maxs[1]);
 		ft_write_buff(NULL, ' ', 1, 0);
+		ft_putstr("There6\n");
 		ft_add_date_b(TF->date);
 		ft_write_buff(NULL, ' ', 1, 0);
+		ft_putstr("There7\n");
 		ft_write_buff(TF->name, 0, 0, 0);
 		ft_write_buff(NULL, '\n', 1, 0);
+		ft_putstr("There8\n");
 	}
 	ft_write_buff(NULL, '\n', 1, 0);
 	return (0);

@@ -34,14 +34,28 @@ void	ft_run(int mask, int nbf, void **add)
 	int		t_len;
 	int		minw;
 
+	if (DEBUG)
+		ft_putstr("ft_run\n");
 	t_len = ft_get_screen_length();
 	minw = ft_find_biggest(add) + 1;
 	if (mask & O_L)
+	{
+		if (DEBUG)
+			ft_putstr("ft_display_lines\n");
 		ft_display_lines(add, nbf);
+	}
 	else if (minw * ((mask & O_A) ? nbf : ft_nohiddens(nbf, add)) <= t_len)
+	{	
+		if (DEBUG)
+			ft_putstr("ft_display_line\n");
 		ft_display_line(mask, add, nbf, minw);
+	}
 	else
+	{	
+		if (DEBUG)
+			ft_putstr("ft_display_cols\n");
 		ft_display_cols(mask, add, nbf, minw);
+	}
 	if (mask & O_RMAJ)
 		ft_relaunch(add, nbf, mask);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 03:32:48 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/17 04:23:01 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define TFAP ((t_file*)add[pivot])
 
 
-# define DEBUG ft_putstr("There\n");
+# define DEBUG 1
 
 # define O_L 1
 # define O_RMAJ 2
