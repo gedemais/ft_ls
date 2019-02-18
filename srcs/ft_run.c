@@ -21,7 +21,7 @@ void	ft_relaunch(void **add, int nbf, int mask)
 		{
 			ft_write_buff(TF->file_path, 0, 0, 0);
 			ft_write_buff(":\n", 0, 0, 0);
-			if (!(TF->file_path = ft_strjoin(TF->file_path, "/\0")))
+			if (!(TF->file_path = ft_new_path(TF->file_path, "/\0")))
 				return ;
 			ft_ls(NULL, mask, TF->file_path);
 		}
@@ -45,13 +45,13 @@ void	ft_run(int mask, int nbf, void **add)
 		ft_display_lines(add, nbf);
 	}
 	else if (minw * ((mask & O_A) ? nbf : ft_nohiddens(nbf, add)) <= t_len)
-	{	
+	{
 		if (DEBUG)
 			ft_putstr("ft_display_line\n");
 		ft_display_line(mask, add, nbf, minw);
 	}
 	else
-	{	
+	{
 		if (DEBUG)
 			ft_putstr("ft_display_cols\n");
 		ft_display_cols(mask, add, nbf, minw);

@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_singleton.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/05 17:25:10 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/18 04:21:28 by gedemais         ###   ########.fr       */
+/*   Created: 2019/02/18 04:13:27 by gedemais          #+#    #+#             */
+/*   Updated: 2019/02/18 04:20:54 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/ft_ls.h"
 
-char	*ft_strchr(const char *s, int c)
+int		*ft_is_params(void)
 {
-	int		i;
+	static int	nb = 0;
 
-	i = 0;
-	if (c == 0)
-		return ((char*)&s[ft_strlen(s)]);
-	while (s[i])
-	{
-		if (s[i] == (unsigned char)c)
-			return ((char*)&s[i]);
-		i++;
-	}
-	return (NULL);
+	return (&nb);
 }

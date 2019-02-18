@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 02:21:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 20:54:35 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 05:32:13 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*ft_pad_string_a(char *out, int minw, int name_len, int *k)
 
 int		ft_display_line(int mask, void **add, int nbf, int minw)
 {
-	char	*out;
 	int		i;
 	int		j;
 	int		k;
@@ -90,26 +89,16 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 	j = 0;
 	k = 0;
 	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
-//	printf("Malloc = %d\n", minw * (nbf2 - 1) + ((t_file*)add[nbf - 1])->name_len + 1);
-	if (!(out = (char*)malloc(sizeof(char) * minw * (nbf2 - 1) + ((t_file*)add[nbf - 1])->name_len + 1)))
-		return (-1);
 	while (++i < nbf)
 		if (j <= nbf2 && ft_flags(add, i, mask))
 		{
 			ft_cpy_string(TF->name);
-//			out = ft_cpy_string_a(out, TF->name, &k);
 			if (i != nbf - 1 && j != nbf2)
 				ft_pad_string(minw, TF->name_len);	
-//				out = ft_pad_string_a(out, minw, TF->name_len, &k);
 			j++;
 		}
 	ft_write_buff(NULL, '\n', 1, 0);
-	if (mask & O_RMAJ)
+	if (mask & O_RMAJ || *ft_is_params)
 		ft_write_buff(NULL, '\n', 1, 0);
-//	out[k] = '\n';
-//	out[k + 1] = '\n';
-//	printf("Write : %d\n", k + 1);
-//	write(1, out, k + 2);
-	ft_strdel(&out);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 21:13:34 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 07:58:31 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ struct		s_file
 	int		name_len;
 	char	*perms;
 	char	*uid;
+	int		uid_len;
 	char	*gid;
+	int		gid_len;
 	int		dir;
 	int		nlinks;
 	int		size;
@@ -99,11 +101,11 @@ void		ft_add_links_b(int nb, int max);
 char		*ft_add_base(char *out, char *str, int *k);
 char		*ft_add_date(char *out, char *date, int *k);
 void		ft_add_date_b(char *date);
-void		ft_get_lines_data(void **add, int *max0, int *max1, int *total);
+void		ft_get_lines_data(void **add, int *max);
 
 // ft_address.c
 void		**ft_addresses(t_file *lst, int len);
-void		ft_addrev(void **add, int mask);
+void		**ft_addrev(void **add, int mask);
 
 // ft_datecmp.c
 int			ft_datecmp(char *d1, char *d2, char *n1, char *n2);
@@ -118,6 +120,10 @@ t_file		*ft_ls_lstnew(char *path, char *name, int mask);
 int			ft_ls_pushfront(t_file **file, t_file *new);
 t_file		*ft_make_list(char **params, char *path, int mask);
 
+// ft_params.c
+void		ft_params(char **params, int mask, char *path);
+char		*ft_new_path(char *path, char *param);
+
 // ft_parsing.c
 int			ft_is_flag(char c);
 int			ft_count(int argc, char **argv);
@@ -127,8 +133,8 @@ char		**ft_parse_input(int ac, char **av, int *mask);
 
 // ft_quicksort.c
 void		ft_swap_nodes(t_file *n1, t_file *n2, int mask);
-void		ft_addrev(void **add, int mask);
 void		**ft_addresses (t_file *lst, int len);
+int			ft_sort_params(char **tab, int start, int end);
 int			ft_ls_quicksort(void **add, int start, int end, int mask);
 
 // ft_display_lines.c
@@ -157,5 +163,8 @@ int			ft_get_screen_length(void);
 int			ft_find_biggest(void **add, int nbf);
 int			ft_find_longest(void **add);
 int			ft_find_fattest(void **add);
+
+// ft_singletons.c
+int			*ft_is_params(void);
 
 #endif

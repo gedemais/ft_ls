@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:18:55 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 04:19:26 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 07:50:31 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@ void	ft_usage(int type, char wrong, char *wrong_name, int usage)
 {
 	if (type == 1)
 	{
-		ft_putstr("ls: illegal option -- ");
-		ft_putchar(wrong);	
-		ft_putchar('\n');
+		ft_write_buff("ls: illegal option -- ", 0, 0, 0);
+		ft_write_buff(NULL, wrong, 0, 0);
+		ft_write_buff(NULL, '\n', 0, 0);
 	}
 	else if (type == 2)
 	{
-		ft_putstr("ls: ");
-		ft_putstr(wrong_name);
-		ft_putstr("No such file or directory\n");
-		ft_putchar('\n');
+		ft_write_buff("ft_ls: ", 0, 0, 0);
+		ft_write_buff(wrong_name, 0, 0, 0);
+		ft_putstr(" No such file or directory\n");
 	}
 	if (usage)
 		ft_putstr("usage: ls [-laRrt] [file ...]\n");

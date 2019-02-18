@@ -6,13 +6,13 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:14:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 20:55:11 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 07:58:27 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	ft_addrev(void **add, int mask)
+void	**ft_addrev(void **add, int mask)
 {
 	int		i;
 	int		j;
@@ -28,6 +28,7 @@ void	ft_addrev(void **add, int mask)
 		i++;
 		j--;
 	}
+	return (add);
 }
 
 void	**ft_addresses(t_file *lst, int len)
@@ -37,7 +38,7 @@ void	**ft_addresses(t_file *lst, int len)
 	int		i;
 
 	i = 0;
-	if (!(add = (void**)malloc(sizeof(void*) * len + 2)))
+	if (!(add = (void**)malloc(sizeof(void*) * (len + 2))))
 		return (NULL);
 	tmp = lst;
 	while (tmp)

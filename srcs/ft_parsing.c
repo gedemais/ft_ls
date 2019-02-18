@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:16:50 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/15 03:46:42 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 07:54:48 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**ft_parse_input(int ac, char **av, int *mask)
 	data = NULL;
 	i = 1;
 	s = ft_count(ac, av);
-	if (ac < 1 || s == 0 || !(data = (char**)malloc(sizeof(char*) * s + 1)))
+	if (ac < 1 || s == 0 || !(data = (char**)malloc(sizeof(char*) * (s + 1))))
 		return (NULL);
 	if (ac > 1 && av[1][0] == '-')
 		*mask = ft_get_options(ac, av, &i, *mask);

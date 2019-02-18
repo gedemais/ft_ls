@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 21:13:36 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 07:58:22 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,22 @@ int		ft_ls(char **params, int mask, char *path)
 	void	**add;
 	int		len;
 
-	if (DEBUG)
-		ft_putstr("--- START ---\n");
+	if (params)
+	{
+		ft_params(params, mask, path);
+		ft_write_buff(NULL, 0, 0, 1);
+		return (0);
+	}
 	lst = ft_make_list(params, path, mask);
-	if (DEBUG)
-		ft_putstr("List Done !\n");
 	len = ft_lstlen(lst);
-	if (DEBUG)
-		ft_putstr("Ft_listlen Done !\n");
-	if (!(add = ft_addresses(lst, len)))
+	if (!(add = ft_addresses(lst, len + 1)))
 		return (-1);
-	if (DEBUG)
-		ft_putstr("Adresses tab Done !\n");
 	if (!(mask & O_F))
 		ft_ls_quicksort(add, 0, len + 1, mask);
-	if (DEBUG)
-		ft_putstr("Sort Done !\n");
 	if (mask & O_R)
 		ft_addrev(add, mask);
-	if (DEBUG)
-		ft_putstr("Addrev Done !\n");
 	ft_run(mask, len + 1, add);
-	if (DEBUG)
-		ft_putstr("Run Done !\n");
-	ft_write_buff("", 0, 0, 1);
+	ft_write_buff(NULL, 0, 0, 1);
 	return (0);
 }
 
@@ -95,7 +87,6 @@ int		main(int argc, char **argv)
 	mask = 0;
 	if (argc > 1)
 		params = ft_parse_input(argc, argv, &mask);
-	ft_ls(params, mask, ft_strdup("./"));
-	ft_strdel(&start_path);
+	ft_ls(params, mask, start_path);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 03:41:27 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 06:58:14 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 		return (NULL);
 	if (stat(new->file_path, &file) < 0)
 	{
-		fprintf(stderr, "fstatat(\"%s\") failed (%d: %s)\n", new->name, errno, strerror(errno));
+		fprintf(stderr, "fstatat(\"%s\") failed (%d: %s)\n", new->file_path, errno, strerror(errno));
 	}
 	if (mask & O_L)
 	{
@@ -89,9 +89,11 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 		if ((psswd = getpwuid(file.st_uid)))
 			if (!(new->uid = ft_strdup(psswd->pw_name))) // UID
 				return (NULL);
+		new->uid_len = ft_strlen(new->uid);
 		if ((gid = getgrgid(file.st_gid)))
 			if (!(new->gid = ft_strdup(gid->gr_name))) // GID
 				return (NULL);
+		new->gid_len = ft_strlen(new->gid);
 		new->nlinks = (int)file.st_nlink; // nombre de liens
 		new->size = file.st_size; // Taille en octets
 		new->date = ft_strdup(ctime(&file.st_ctime)); // Date

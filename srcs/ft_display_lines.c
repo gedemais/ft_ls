@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 04:11:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 21:13:33 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/18 01:37:54 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,28 @@ int		ft_getsize_lines(int mask, void **add, int nbf, int maxs[2])
 	return (size);
 }
 
+void	ft_add_uid(char *uid, int uid_len, int len)
+{
+	ft_write_buff(uid, 0, 0, 0);
+	if (uid_len < len)
+	{
+		ft_putendl(uid);
+		while (uid_len < len)
+		{
+				ft_write_buff(NULL, ' ', 1, 0);
+				uid_len++;
+		}
+	}
+}
+
 int		ft_display_lines(void **add, int nbf)
 {
-	int		maxs[3];
+	int		maxs[5];
 	int		i;
 
 	i = -1;
 	maxs[2] = nbf;
-	ft_get_lines_data(add, &maxs[0], &maxs[1], &maxs[2]);
+	ft_get_lines_data(add, maxs);
 	ft_add_total_b(maxs[2]);
 	ft_write_buff(NULL, '\n', 1, 0);
 	while (++i < nbf)
@@ -102,9 +116,9 @@ int		ft_display_lines(void **add, int nbf)
 		ft_write_buff("  ", 0, 0, 0);
 		ft_add_links_b(TF->nlinks, maxs[0]);
 		ft_write_buff(NULL, ' ', 1, 0);
-		ft_write_buff(TF->uid, 0, 0, 0);
+		ft_add_uid(TF->uid, TF->uid_len, maxs[3]);
 		ft_write_buff("  ", 0, 0, 0);
-		ft_write_buff(TF->gid, 0, 0, 0);
+		ft_add_uid(TF->gid, TF->gid_len, maxs[4]);
 		ft_write_buff("  ", 0, 0, 0);
 		ft_add_links_b(TF->size, maxs[1]);
 		ft_write_buff(NULL, ' ', 1, 0);

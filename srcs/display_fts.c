@@ -101,25 +101,29 @@ char	*ft_add_date(char *out, char *date, int *k)
 	return (out);
 }
 
-void	ft_get_lines_data(void **add, int *max0, int *max1, int *total)
+void	ft_get_lines_data(void **add, int *max)
 {
 	int		nbf;
 	int		i;
 
-	nbf = *total;
+	nbf = max[2];
+	i = -1;
+	while (++i < 5)
+		max[i] = 0;
 	i = 0;
-	*max0 = 0;
-	*max1 = 0;
-	*total = 0;
 	while (i < nbf)
 	{
-		if (TF->nlinks > *max0)
-			*max0 = TF->nlinks;
-		if (TF->size > *max1)
-			*max1 = TF->size;
-		*total += TF->blocksize;
+		if (TF->nlinks > max[0])
+			max[0] = TF->nlinks;
+		if (TF->size > max[1])
+			max[1] = TF->size;
+		if (TF->uid_len > max[3])
+			max[3] = TF->uid_len;
+		if (TF->gid_len > max[4])
+			max[4] = TF->gid_len;
+		max[2] += TF->blocksize;
 		i++;
 	}
-	*max0 = ft_nb_len(*max0);
-	*max1 = ft_nb_len(*max1);
+	max[0] = ft_nb_len(max[0]);
+	max[1] = ft_nb_len(max[1]);
 }
