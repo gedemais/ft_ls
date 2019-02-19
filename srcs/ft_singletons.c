@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_singleton.c                                     :+:      :+:    :+:   */
+/*   ft_singletons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/18 04:13:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/18 04:20:54 by gedemais         ###   ########.fr       */
+/*   Created: 2019/02/19 02:35:38 by gedemais          #+#    #+#             */
+/*   Updated: 2019/02/19 02:43:00 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-int		*ft_is_params(void)
+int		*ft_last_endl(void)
 {
-	static int	nb = 0;
+	static int	val = 0;
 
-	return (&nb);
+	return (&val);
 }

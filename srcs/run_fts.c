@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_display_line.c                                  :+:      :+:    :+:   */
+/*   run_fts.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/14 02:21:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/18 05:32:13 by gedemais         ###   ########.fr       */
+/*   Created: 2019/02/19 00:41:51 by gedemais          #+#    #+#             */
+/*   Updated: 2019/02/19 22:01:29 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,57 +48,44 @@ void	ft_pad_string(int minw, int name_len)
 	}
 }
 
-char	*ft_cpy_string_a(char *out, char *name, int *k)
+int		ft_nohiddens(int nbf, void **add)
 {
+	int		new_nbf;
 	int		i;
 
 	i = 0;
-	while (name[i])
+	new_nbf = nbf;
+	while (i < nbf)
 	{
-		out[*k] = name[i];
-		*k = *k + 1;
+		if (TF->name[0] == '.')
+			new_nbf--;
 		i++;
 	}
-	out[*k] = '\0';
-	return (out);
+	return (new_nbf);
 }
 
-char	*ft_pad_string_a(char *out, int minw, int name_len, int *k)
+int		ft_flags(t_file *node, int mask)
+{
+	if (node->name[0] == '.' && !(mask & O_A))
+		return (0);
+	if (node->nope)
+		return (0);
+	return (1);
+}
+
+int		ft_find_biggest(void **add, int nbf)
 {
 	int		i;
+	int		ret;
+	int		temp;
 
 	i = 0;
-	while (i + name_len < minw)
+	ret = 0;
+	while (i < nbf)
 	{
-		out[*k] = ' ';
-		*k = *k + 1;
+		if ((temp = TF->name_len) > ret)
+			ret = temp;
 		i++;
 	}
-	out[*k] = '\0';
-	return (out);
-}
-
-int		ft_display_line(int mask, void **add, int nbf, int minw)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		nbf2;
-
-	i = -1;
-	j = 0;
-	k = 0;
-	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
-	while (++i < nbf)
-		if (j <= nbf2 && ft_flags(add, i, mask))
-		{
-			ft_cpy_string(TF->name);
-			if (i != nbf - 1 && j != nbf2)
-				ft_pad_string(minw, TF->name_len);	
-			j++;
-		}
-	ft_write_buff(NULL, '\n', 1, 0);
-	if (mask & O_RMAJ || *ft_is_params)
-		ft_write_buff(NULL, '\n', 1, 0);
-	return (0);
+	return (ret);
 }

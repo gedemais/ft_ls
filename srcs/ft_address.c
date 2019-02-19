@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:14:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/18 07:58:27 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/19 05:00:48 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	**ft_addrev(void **add, int mask)
 
 	i = 0;
 	j = 0;
+	if (!add)
+		return (NULL);
 	while (add[j])
 		j++;
 	j--;
@@ -38,6 +40,8 @@ void	**ft_addresses(t_file *lst, int len)
 	int		i;
 
 	i = 0;
+	if (len == 0)
+		return (NULL);
 	if (!(add = (void**)malloc(sizeof(void*) * (len + 2))))
 		return (NULL);
 	tmp = lst;

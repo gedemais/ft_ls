@@ -1,3 +1,4 @@
+
 . -la
 Virer les getsize
 Remplacer les itoa
@@ -12,3 +13,11 @@ Split lstnew
 -S
 Regrouper les fts de partitionages
 Split ft_quicksort.c
+Adapter les options de sort aux parametres
+
+Segfaults :
+Un path seul
+
+Todo :
+
+Dones :

@@ -6,11 +6,28 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/18 07:58:14 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:33:17 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+int		ft_find_dir_in_params(struct stat *file, char **params, int i, int len)
+{
+	static int	step = 0;
+	int			ret;
+
+	ret = 0;
+	i += step;
+	while (i < len)
+	{
+		if (S_ISDIR(file[i].st_mode) && params[i][0])
+			ret++;
+		i++;
+	}
+	step++;
+	return (ret);
+}
 
 char	*ft_new_path(char *path, char *param)
 {
@@ -18,6 +35,12 @@ char	*ft_new_path(char *path, char *param)
 	char	*tmp;
 	int		len;
 
+	if (param[0] == '/')
+	{
+		if (param[ft_strlen(param) - 1] == '/')
+			return (param);
+		return (ft_strjoin(param, "/\0"));
+	}
 	if (path[ft_strlen(path) - 1] == '/')
 	{
 		if (!(tmp = ft_strjoin(path, param)))
@@ -73,9 +96,13 @@ t_file	*ft_params_files(char **params, struct stat *file, char *path, int *len)
 
 	i = 0;
 	j = 0;
+	if (*len == 0)
+		return (NULL);
 	while (params[i])
 	{
-		if (!(S_ISDIR(file[i].st_mode)))
+		if (params[i][0] == '\0' && params[i + 1] != NULL)
+			i++;
+		if (!(S_ISDIR(file[i].st_mode)) && file[i].st_mode != 3)
 		{
 			if (j == 0)
 				lst = ft_ls_lstnew(path, params[i], 0);
@@ -86,7 +113,7 @@ t_file	*ft_params_files(char **params, struct stat *file, char *path, int *len)
 		i++;
 	}
 	*len = j;
-	return ((i == 0) ? NULL : lst);
+	return ((j == 0) ? NULL : lst);
 }
 
 void	ft_params(char **params, int mask, char *path)
@@ -102,8 +129,17 @@ void	ft_params(char **params, int mask, char *path)
 	if (!(file = (struct stat*)malloc(sizeof(struct stat) * len)))
 		return ;
 	while (params[++i] != NULL)
+	{
 		if (stat(ft_strjoin(path, params[i]), &file[i]) < 0)
-			ft_usage(2, 0, params[i], 0);
+		{
+				if (stat(params[i], &file[i]) < 0)
+				{
+					ft_usage(errno, 0, params[i], 0);
+					file[i].st_mode = 3;
+				}
+		}
+	}
+	*ft_last_endl() = ft_find_dir_in_params(file, params, 0, ft_tablen(params));
 	if ((files = ft_params_files(params, file, path, &len)))
 		ft_run(mask, len, ft_addrev(ft_addresses(files, ft_lstlen(files)), mask));
 	i = -1;
@@ -112,8 +148,13 @@ void	ft_params(char **params, int mask, char *path)
 		{
 			if (!(new_path = ft_new_path(path, params[i])))
 				return ;
-			ft_write_buff(new_path, 0, 0, 0);
-			ft_write_buff(":\n", 0, 0, 0);
+			*ft_last_endl() = ft_find_dir_in_params(file, params, i, ft_tablen(params));
+			if (ft_tablen(params) > 1)
+			{
+				ft_write_buff(path, 0, 0, 0);
+				ft_write_buff(params[i], 0, 0, 0);
+				ft_write_buff(":\n", 0, 0, 0);
+			}
 			ft_ls(NULL, mask, new_path);
 		}
 	ft_memdel((void**)&file);

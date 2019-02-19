@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/18 07:58:31 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:04:19 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ struct		s_file
 	int		day;
 	int		year;
 	char	*file_path;
+	int		nope;
 	t_file	*next;
 };
 
@@ -95,13 +96,10 @@ int			ft_ls(char **params, int mask, char *path);
 
 // display_fts.c
 int			ft_nohiddens(int nbf, void **add);
-int			ft_flags(void **add, int i, int mask);
-char		*ft_add_links(char *out, int nb, int max, int *k);
-void		ft_add_links_b(int nb, int max);
-char		*ft_add_base(char *out, char *str, int *k);
-char		*ft_add_date(char *out, char *date, int *k);
-void		ft_add_date_b(char *date);
-void		ft_get_lines_data(void **add, int *max);
+int			ft_flags(t_file *node, int mask);
+void		ft_add_links(int nb, int max);
+void		ft_add_date(char *date);
+void		ft_get_lines_data(void **add, int *max, int nbf);
 
 // ft_address.c
 void		**ft_addresses(t_file *lst, int len);
@@ -124,6 +122,7 @@ t_file		*ft_make_list(char **params, char *path, int mask);
 void		ft_params(char **params, int mask, char *path);
 char		*ft_new_path(char *path, char *param);
 
+int			ft_display_lines(void **add, int nbf, int mask);
 // ft_parsing.c
 int			ft_is_flag(char c);
 int			ft_count(int argc, char **argv);
@@ -138,8 +137,9 @@ int			ft_sort_params(char **tab, int start, int end);
 int			ft_ls_quicksort(void **add, int start, int end, int mask);
 
 // ft_display_lines.c
-int			ft_getsize_lines(int mask, void **add, int nbf, int maxs[2]);
-int			ft_display_lines(void **add, int nbf);
+void		ft_add_total(int total);
+int			ft_display_lines(void **add, int nbf, int mask);
+void		ft_add_uid(char *uid, int uid_len, int len);
 
 // ft_display_cols.c
 int			ft_getless(void **add, int nbf, int npl, int minw);
@@ -148,8 +148,6 @@ int			ft_display_cols(int mask, void **add, int nbf, int minw);
 // ft_display_line.c
 void		ft_cpy_string(char *str);
 void		ft_pad_string(int minw, int name_len);
-char		*ft_cpy_string_a(char *out, char *name, int *k);
-char		*ft_pad_string_a(char *out, int minw, int name_len, int *k);
 int			ft_display_line(int mask, void **add, int nbf, int minw);
 
 // ft_usage.c
@@ -165,6 +163,6 @@ int			ft_find_longest(void **add);
 int			ft_find_fattest(void **add);
 
 // ft_singletons.c
-int			*ft_is_params(void);
+int			*ft_last_endl(void);
 
 #endif

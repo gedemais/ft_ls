@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/18 06:58:14 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:13:03 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 	if (!(new->file_path = ft_strjoin(path, name)))
 		return (NULL);
 	if (stat(new->file_path, &file) < 0)
-	{
-		fprintf(stderr, "fstatat(\"%s\") failed (%d: %s)\n", new->file_path, errno, strerror(errno));
-	}
+		new->nope = 1;
 	if (mask & O_L)
 	{
 		new->perms = ft_make_perms(file); // Permissions
