@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 22:13:03 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/20 07:11:29 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_display_ls_lst(t_file *top)
 	}
 }
 
-char	*ft_make_perms(struct stat file)
+char	*ft_make_perms(struct stat *file)
 {
 	char	*str;
 	int		i;
@@ -52,19 +52,23 @@ char	*ft_make_perms(struct stat file)
 	if (!(str = (char*)malloc(sizeof(char) * 12)))
 		return (NULL);
 	str[0] = '\0';
-	str[1] = (S_ISDIR(file.st_mode)) ? 'd' : '-';
-	str[2] = (file.st_mode & S_IRUSR) ? 'r' : '-';
-	str[3] = (file.st_mode & S_IWUSR) ? 'w' : '-';
-	str[4] = (file.st_mode & S_IXUSR) ? 'x' : '-';
-	str[5] = (file.st_mode & S_IRGRP) ? 'r' : '-';
-	str[6] = (file.st_mode & S_IWGRP) ? 'w' : '-';
-	str[7] = (file.st_mode & S_IXGRP) ? 'x' : '-';
-	str[8] = (file.st_mode & S_IROTH) ? 'r' : '-';
-	str[9] = (file.st_mode & S_IWOTH) ? 'w' : '-';
-	str[10] = (file.st_mode & S_IXOTH) ? 'x' : '-';
+	str[1] = (S_ISDIR(file->st_mode)) ? 'd' : '-';
+	if (S_ISLNK(file->st_mode))
+		str[1] = 'l';
+	str[2] = (file->st_mode & S_IRUSR) ? 'r' : '-';
+	str[3] = (file->st_mode & S_IWUSR) ? 'w' : '-';
+	str[4] = (file->st_mode & S_IXUSR) ? 'x' : '-';
+	str[5] = (file->st_mode & S_IRGRP) ? 'r' : '-';
+	str[6] = (file->st_mode & S_IWGRP) ? 'w' : '-';
+	str[7] = (file->st_mode & S_IXGRP) ? 'x' : '-';
+	str[8] = (file->st_mode & S_IROTH) ? 'r' : '-';
+	str[9] = (file->st_mode & S_IWOTH) ? 'w' : '-';
+	str[10] = (file->st_mode & S_IXOTH) ? 'x' : '-';
 	str[11] = '\0';
 	return (&str[1]);
 }
+
+
 
 t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 {
@@ -77,16 +81,30 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 		return (NULL);
 	new->name_len = ft_strlen(name);
 	new->name = ft_strdup(name);
+	if (!(new->file_path = (char*)malloc(sizeof(char) * (new->name_len + ft_strlen(path)))))
+		return (NULL);
+	new->file_path = ft_strcpy(new->file_path, path);
+	new->file_path = ft_strcat(new->file_path, name);
 	if (!(new->file_path = ft_strjoin(path, name)))
 		return (NULL);
-	if (stat(new->file_path, &file) < 0)
+	if (lstat(new->file_path, &file) < 0)
+	{
+		if (errno == EACCES)
+			ft_usage(errno, 0, new->file_path, 0);
 		new->nope = 1;
+	}
 	if (mask & O_L)
 	{
-		new->perms = ft_make_perms(file); // Permissions
-		if ((psswd = getpwuid(file.st_uid)))
+		new->perms = ft_make_perms(&file); // Permissions
+		if ((psswd = getpwuid(file.st_uid)) != NULL)
+		{
 			if (!(new->uid = ft_strdup(psswd->pw_name))) // UID
 				return (NULL);
+		}
+		else
+			if (!(new->uid = ft_strdup("root"))) // UID
+				return (NULL);
+
 		new->uid_len = ft_strlen(new->uid);
 		if ((gid = getgrgid(file.st_gid)))
 			if (!(new->gid = ft_strdup(gid->gr_name))) // GID
@@ -113,7 +131,7 @@ int		ft_ls_pushfront(t_file **file, t_file *new)
 	return (0);
 }
 
-t_file	*ft_make_list(char **params, char *path, int mask)
+t_file	*ft_make_list(char *path, int mask)
 {
 	t_file			*lst;
 	DIR				*d;
@@ -123,16 +141,6 @@ t_file	*ft_make_list(char **params, char *path, int mask)
 	i = -1;
 	if (!(d = opendir(path)))
 		return (NULL);
-	if (params)
-		while (params[++i])
-		{
-			if (i == 0)
-				lst = ft_ls_lstnew(path, params[i], mask);
-			else
-				ft_ls_pushfront(&lst, ft_ls_lstnew(path, params[i], mask));
-		}
-	if (params != NULL)
-		params = ft_tabdel(params);
 	while ((dir = readdir(d)))
 	{
 		if (dir->d_name[0] == '.' && !(mask & O_A))
@@ -143,6 +151,5 @@ t_file	*ft_make_list(char **params, char *path, int mask)
 			ft_ls_pushfront(&lst, ft_ls_lstnew(path, dir->d_name, mask));
 	}
 	closedir(d);
-	ft_strdel(&path);
 	return (lst);
 }

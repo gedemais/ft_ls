@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 00:32:07 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 00:41:21 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/20 05:36:26 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_add_uid(char *uid, int uid_len, int len)
 	ft_write_buff(uid, 0, 0, 0);
 	if (uid_len < len)
 	{
-		ft_putendl(uid);
 		while (uid_len < len)
 		{
 				ft_write_buff(NULL, ' ', 1, 0);

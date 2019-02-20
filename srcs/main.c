@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 22:15:28 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/20 07:11:31 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void		ft_write_buff(char *str, char c, int cat, int flush)
 {
-	static char	buff[8192];
+	static char	buff[WBUFF_SIZE];
 	static int	k = 0;
 	int		i;
 
@@ -23,7 +23,7 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 	if (cat == 1 && c > 0)
 	{
 		buff[k++] = c;
-		if (k == 8192)
+		if (k == WBUFF_SIZE)
 		{
 			write(1, buff, k);
 			k = 0;
@@ -37,12 +37,12 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 	}
 	if (!str || c < 0 || (cat && flush))
 		return ;
-	while (str[i] && k < 8192)
+	while (str[i] && k < WBUFF_SIZE)
 	{
 		buff[k] = str[i];
 		i++;
 		k++;
-		if (k == 8192)
+		if (k == WBUFF_SIZE)
 		{
 			write(1, buff, k);
 			k = 0;
@@ -62,7 +62,12 @@ int		ft_ls(char **params, int mask, char *path)
 		ft_write_buff(NULL, 0, 0, 1);
 		return (0);
 	}
-	lst = ft_make_list(params, path, mask);
+	if (!(lst = ft_make_list(path, mask)))
+	{
+		if (mask & O_RMAJ)
+			ft_write_buff(NULL, '\n', 1, 0);
+		return (0);
+	}
 	len = ft_lstlen(lst);
 	if (!(add = ft_addresses(lst, len + 1)))
 		return (-1);

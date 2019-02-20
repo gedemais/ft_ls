@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/05 00:59:17 by gedemais          #+#    #+#              #
-#    Updated: 2019/02/19 02:42:51 by gedemais         ###   ########.fr        #
+#    Updated: 2019/02/20 06:34:07 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,11 +63,5 @@ fclean : clean
 
 fsanitize : $(LIB) $(SRCS)
 			$(CC) $(FLAGS) $(SRCS) $(LIB)
-
-try : $(NAME)
-	cp $(NAME) ~/
-	cd ~/
-	./ft_ls -laR
-	cd Desktop/42/ft_ls
 
 re : fclean all

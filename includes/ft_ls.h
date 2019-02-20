@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 22:04:19 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:30:04 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define TFAJ ((t_file*)add[j])
 # define TFAP ((t_file*)add[pivot])
 
+# define WBUFF_SIZE 8192
 
 # define DEBUG 0
 # define PUT ft_putstr("There\n");
@@ -116,7 +117,7 @@ int			ft_lstlen(t_file *lst);
 void		ft_display_ls_lst(t_file *top);
 t_file		*ft_ls_lstnew(char *path, char *name, int mask);
 int			ft_ls_pushfront(t_file **file, t_file *new);
-t_file		*ft_make_list(char **params, char *path, int mask);
+t_file		*ft_make_list(char *path, int mask);
 
 // ft_params.c
 void		ft_params(char **params, int mask, char *path);

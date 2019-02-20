@@ -31,7 +31,7 @@ int				ft_display_cols(int mask, void **add, int nbf, int minw)
 				if (vars[7]++ < vars[0] && vars[4] < (nbf - vars[2]))
 					ft_pad_string(minw, TFVAR->name_len);
 			}
-		if (vars[5] < vars[2] || (*ft_last_endl() > 1))
+		if (vars[5] < vars[2] || (*ft_last_endl() > 1) || (mask & O_RMAJ))
 			ft_write_buff(NULL, '\n', 1, 0);
 	}
 	return (0);
@@ -102,7 +102,7 @@ void	ft_relaunch(void **add, int nbf, int mask)
 	i = 2;
 	while (i < nbf)
 	{
-		if (TF->dir && ft_strcmp(TF->name, ".") != 0 && ft_strcmp(TF->name, "..") != 0)
+		if (TF->dir && ft_strcmp(TF->name, ".") != 0 && ft_strcmp(TF->name, "..") != 0 && TF->nope == 0 && TF->perms[0] != 'l')
 		{
 			ft_write_buff(TF->file_path, 0, 0, 0);
 			ft_write_buff(":\n", 0, 0, 0);

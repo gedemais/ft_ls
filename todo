@@ -5,7 +5,6 @@ Remplacer les itoa
 ft_lstdel
 free le tableau de liens
 Remplacer les nombres par des Defines dans ft_datecmp
-Remplacer les casts par des Defines dans ft_ls_partition
 Revoir le parsing pour la gestion des dependances de flags
 Refaire les comms dans le .h
 Corriger l'affichage du Makefile

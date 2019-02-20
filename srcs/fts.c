@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:35:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 21:58:18 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/20 00:59:11 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int		ft_add_mask(int mask, char c)
 		return (O_R); 
 	else if (c == 't' && !(mask & O_T) && !(mask & O_SMAJ))
 		return (O_T);
-	else if (c == 'f' && !(mask & O_F))
-		return (O_T);
+	else if (c == 'f' && !(mask & O_SMAJ) && !(mask & O_T))
+		return (O_F);
 	else if (c == 'S' && !(mask & O_SMAJ) && !(mask & O_T))
-		return (O_T);
+		return (O_SMAJ);
 	else
 		return (0);
 }

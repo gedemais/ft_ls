@@ -6,11 +6,21 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 04:02:32 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:04:26 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+int		ft_cmp(int mask, t_file *n1, t_file *n2)
+{
+	if (mask & O_T)
+		return (ft_datecmp(n1->secstime, n2->secstime, n1->name, n2->name));
+	else if (mask & O_SMAJ)
+		return (n2->size - n1->size);
+	else
+		return (ft_strcmp(n1->name, n2->name));		
+}
 
 void	ft_swap_strs(char *s1, char *s2)
 {
@@ -82,7 +92,7 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	}
 }
 
-int		ft_ls_partition_base(void **add, int start, int end, int mask)
+int		ft_ls_partition(void **add, int start, int end, int mask)
 {
 	int		i;
 	int		j;
@@ -93,13 +103,13 @@ int		ft_ls_partition_base(void **add, int start, int end, int mask)
 	pivot = end - 1;
 	if (end - start == 2)
 	{
-		if (ft_strcmp(TFAS->name, TFAE->name) > 0)
+		if (ft_cmp(mask, TFAS, TFAE) > 0)
 			ft_swap_nodes(TFAS, TFAE, mask);
 		return (0);
 	}
 	while (i < end - 1 && j < end - 1)
 	{
-		if (ft_strcmp(TFAJ->name, TFAP->name) < 0)
+		if (ft_cmp(mask, TFAJ, TFAP) < 0)
 		{
 			i++;
 			ft_swap_nodes(((t_file*)add[i]), TFAJ, mask);
@@ -107,34 +117,6 @@ int		ft_ls_partition_base(void **add, int start, int end, int mask)
 		j++;
 	}
 	ft_swap_nodes(((t_file*)add[i + 1]), TFAJ, mask);
-	return (i + 1);
-}
-
-int		ft_ls_partition_t(void **add, int start, int end, int mask)
-{
-	int		i;
-	int		j;
-	int		pivot;
-
-	i = start - 1;
-	j = start;
-	pivot = end - 1;
-	if (end - start == 2)
-	{
-		if (ft_datecmp(((t_file*)add[start])->secstime, ((t_file*)add[end - 1])->secstime, ((t_file*)add[start])->name, ((t_file*)add[end - 1])->name) > 0)
-			ft_swap_nodes(((t_file*)add[start]), ((t_file*)add[end - 1]), mask);
-		return (0);
-	}
-	while (i < end - 1 && j < end - 1)
-	{
-		if (ft_datecmp(((t_file*)add[j])->secstime, ((t_file*)add[pivot])->secstime, ((t_file*)add[j])->name, ((t_file*)add[pivot])->name) < 0)
-		{
-			i++;
-			ft_swap_nodes(((t_file*)add[i]), ((t_file*)add[j]), mask);
-		}
-		j++;
-	}
-	ft_swap_nodes(((t_file*)add[i + 1]), ((t_file*)add[pivot]), mask);
 	return (i + 1);
 }
 
@@ -185,10 +167,7 @@ int			ft_ls_quicksort(void **add, int start, int end, int mask)
 
 	if (start < end - 1)
 	{
-		if (mask & O_T)
-			j = ft_ls_partition_t(add, start, end, mask);
-		else
-			j = ft_ls_partition_base(add, start, end, mask);
+		j = ft_ls_partition(add, start, end, mask);
 		ft_ls_quicksort((&add[start]), 0, j, mask);
 		ft_ls_quicksort((&add[j + 1]), 0, (end - j - 1), mask);
 	}

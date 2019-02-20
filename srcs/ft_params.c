@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 22:33:17 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/19 23:10:31 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_new_path(char *path, char *param)
 	char	*tmp;
 	int		len;
 
-	if (param[0] == '/')
+	if (param[0] == '/' && ft_strcmp(path, "./") == 0)
 	{
 		if (param[ft_strlen(param) - 1] == '/')
 			return (param);
