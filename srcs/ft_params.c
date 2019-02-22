@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 23:10:31 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/22 07:10:08 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	ft_params(char **params, int mask, char *path)
 	}
 	*ft_last_endl() = ft_find_dir_in_params(file, params, 0, ft_tablen(params));
 	if ((files = ft_params_files(params, file, path, &len)))
-		ft_run(mask, len, ft_addrev(ft_addresses(files, ft_lstlen(files)), mask));
+		ft_run(mask, len, ft_addrev(ft_addresses(files, ft_lstlen(files) + 1), mask));
 	i = -1;
 	while (params[++i] != NULL)
 		if (S_ISDIR(file[i].st_mode))

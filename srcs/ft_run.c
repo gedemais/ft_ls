@@ -82,7 +82,7 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 	k = 0;
 	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
 	while (++i < nbf)
-		if (j <= nbf2 && ft_flags(add[i], mask))
+		if (j <= nbf2)
 		{
 			ft_cpy_string(TF->name);
 			if (i != nbf - 1 && j != nbf2)
@@ -99,10 +99,10 @@ void	ft_relaunch(void **add, int nbf, int mask)
 {
 	int		i;
 
-	i = 2;
+	i = 0;
 	while (i < nbf)
 	{
-		if (TF->dir && ft_strcmp(TF->name, ".") != 0 && ft_strcmp(TF->name, "..") != 0 && TF->nope == 0 && TF->perms[0] != 'l')
+		if (ft_relaunch_check(TF, mask) == 1)
 		{
 			ft_write_buff(TF->file_path, 0, 0, 0);
 			ft_write_buff(":\n", 0, 0, 0);

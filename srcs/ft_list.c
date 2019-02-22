@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/20 07:11:29 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/22 06:50:10 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,6 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 		return (NULL);
 	new->name_len = ft_strlen(name);
 	new->name = ft_strdup(name);
-	if (!(new->file_path = (char*)malloc(sizeof(char) * (new->name_len + ft_strlen(path)))))
-		return (NULL);
-	new->file_path = ft_strcpy(new->file_path, path);
-	new->file_path = ft_strcat(new->file_path, name);
 	if (!(new->file_path = ft_strjoin(path, name)))
 		return (NULL);
 	if (lstat(new->file_path, &file) < 0)
@@ -93,9 +89,10 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 			ft_usage(errno, 0, new->file_path, 0);
 		new->nope = 1;
 	}
+	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
+	new->perms = ft_make_perms(&file); // Permissions
 	if (mask & O_L)
 	{
-		new->perms = ft_make_perms(&file); // Permissions
 		if ((psswd = getpwuid(file.st_uid)) != NULL)
 		{
 			if (!(new->uid = ft_strdup(psswd->pw_name))) // UID
@@ -117,7 +114,6 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 	}
 	if (mask & O_T)
 		new->secstime = ft_strdup(ctime(&file.st_mtime));
-	new->dir = (S_ISDIR(file.st_mode)) ? 1 : 0;
 	new->next = NULL;
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 00:41:51 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/20 05:36:23 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/22 06:56:22 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		ft_flags(t_file *node, int mask)
 {
 	if (node->name[0] == '.' && !(mask & O_A))
 		return (0);
-	if (node->nope)
+	if (node->nope == 1)
 		return (0);
 	return (1);
 }
@@ -88,4 +88,18 @@ int		ft_find_biggest(void **add, int nbf)
 		i++;
 	}
 	return (ret);
+}
+
+int		ft_relaunch_check(t_file *file, int mask)
+{
+	(void)mask;
+	if (file->dir == 0) 
+		return (0);
+	if (ft_strcmp(file->name, ".") == 0 || ft_strcmp(file->name, "..") == 0) 
+		return (0);
+	if (file->nope == 1)
+		return (0);
+	if (file->perms[0] == 'l')
+		return (0);
+	return (1);
 }

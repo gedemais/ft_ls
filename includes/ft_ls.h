@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/20 06:30:04 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/22 07:06:49 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define WBUFF_SIZE 8192
 
 # define DEBUG 0
+# define DEBUGPARAMS 1
 # define PUT ft_putstr("There\n");
 # define PUT1 ft_putstr("There1\n");
 # define PUT2 ft_putstr("There2\n");
@@ -94,6 +95,7 @@ typedef struct	s_date
 // main.c
 void		ft_write_buff(char *str, char c, int cat, int flush);
 int			ft_ls(char **params, int mask, char *path);
+int			ft_relaunch_check(t_file *file, int mask);
 
 // display_fts.c
 int			ft_nohiddens(int nbf, void **add);

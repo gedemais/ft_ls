@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/22 06:53:48 by gedemais          #+#    #+#             */
+/*   Updated: 2019/02/22 07:05:54 by gedemais         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/20 07:11:31 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/02/22 06:52:10 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +37,14 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 		buff[k++] = c;
 		if (k == WBUFF_SIZE)
 		{
-			write(1, buff, k);
+			write(1, buff, (buff[k - 1] == '\n' && buff[k - 2] == '\n') ? k - 1 : k);
 			k = 0;
 		}
 		return ;
 	}
 	if (flush)
 	{
-		write(1, buff, k);
+		write(1, buff, (buff[k - 1] == '\n' && buff[k - 2] == '\n') ? k - 1 : k);
 		k = 0;
 	}
 	if (!str || c < 0 || (cat && flush))
@@ -44,7 +56,7 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 		k++;
 		if (k == WBUFF_SIZE)
 		{
-			write(1, buff, k);
+			write(1, buff, (buff[k - 1] == '\n' && buff[k - 2] == '\n') ? k - 1 : k);
 			k = 0;
 		}
 	}
@@ -76,7 +88,6 @@ int		ft_ls(char **params, int mask, char *path)
 	if (mask & O_R)
 		ft_addrev(add, mask);
 	ft_run(mask, len + 1, add);
-	ft_write_buff(NULL, 0, 0, 1);
 	return (0);
 }
 
@@ -93,5 +104,6 @@ int		main(int argc, char **argv)
 	if (argc > 1)
 		params = ft_parse_input(argc, argv, &mask);
 	ft_ls(params, mask, start_path);
+	ft_write_buff(NULL, 0, 0, 1);
 	return (0);
 }
