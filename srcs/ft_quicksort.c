@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/22 07:06:12 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:31:47 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	int		temp;
 	int		dir;
 
+	temp = n1->nsfd;
+	n2->nsfd = n1->nsfd;
+	n2->nsfd = temp;
 	tmp = n1->file_path;
 	n1->file_path = n2->file_path;
 	n2->file_path = tmp;

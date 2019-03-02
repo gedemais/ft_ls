@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/22 07:06:49 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/02 21:49:05 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_LS_H
 
 # define TF ((t_file*)add[i])
+# define TFJ ((t_file*)add[j])
 # define TFVAR ((t_file*)add[vars[4]])
 # define TF0 ((t_file*)add[0])
 # define TF1 ((t_file*)add[1])
@@ -27,7 +28,6 @@
 # define WBUFF_SIZE 8192
 
 # define DEBUG 0
-# define DEBUGPARAMS 1
 # define PUT ft_putstr("There\n");
 # define PUT1 ft_putstr("There1\n");
 # define PUT2 ft_putstr("There2\n");
@@ -79,6 +79,7 @@ struct		s_file
 	int		year;
 	char	*file_path;
 	int		nope;
+	int		nsfd;
 	t_file	*next;
 };
 
@@ -117,19 +118,18 @@ void		ft_run(int mask, int nbf, void **add);
 // ft_list.c
 int			ft_lstlen(t_file *lst);
 void		ft_display_ls_lst(t_file *top);
-t_file		*ft_ls_lstnew(char *path, char *name, int mask);
+t_file		*ft_ls_lstnew(char *path, char *name, int mask, int params);
 int			ft_ls_pushfront(t_file **file, t_file *new);
-t_file		*ft_make_list(char *path, int mask);
+t_file		*ft_make_list(char *path, int mask, int params);
 
 // ft_params.c
-void		ft_params(char **params, int mask, char *path);
+int			ft_params(char **params, int mask, char *path);
 char		*ft_new_path(char *path, char *param);
 
 int			ft_display_lines(void **add, int nbf, int mask);
 // ft_parsing.c
 int			ft_is_flag(char c);
 int			ft_count(int argc, char **argv);
-int			ft_get_options(int ac, char **av, int *i, int mask);
 char		**ft_get_params(int ac, char **av, char **data, int i);
 char		**ft_parse_input(int ac, char **av, int *mask);
 
@@ -154,7 +154,7 @@ void		ft_pad_string(int minw, int name_len);
 int			ft_display_line(int mask, void **add, int nbf, int minw);
 
 // ft_usage.c
-void		ft_usage(int type, char wrong, char *wrong_name, int usage);
+int			ft_usage(int type, char wrong, char *wrong_name, int usage);
 
 // fts.c
 int			ft_tablen(char **tab);

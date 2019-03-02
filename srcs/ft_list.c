@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/22 06:50:10 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:29:39 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ char	*ft_make_perms(struct stat *file)
 	return (&str[1]);
 }
 
-
-
-t_file	*ft_ls_lstnew(char *path, char *name, int mask)
+t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 {
 	t_file			*new;
 	struct stat		file;
@@ -85,11 +83,20 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 		return (NULL);
 	if (lstat(new->file_path, &file) < 0)
 	{
-		if (errno == EACCES)
+		if (errno == EACCES && params == 0)
 			ft_usage(errno, 0, new->file_path, 0);
+		else if (errno == EACCES && params == 1)
+			new->nsfd = 1;
+		else
+			new->nsfd = 0;
 		new->nope = 1;
 	}
 	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
+	if (params == 1 && new->dir == 1)
+	{
+		free(new);
+		return (NULL);
+	}
 	new->perms = ft_make_perms(&file); // Permissions
 	if (mask & O_L)
 	{
@@ -120,6 +127,8 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask)
 
 int		ft_ls_pushfront(t_file **file, t_file *new)
 {
+	if (!new)
+		return (-1);
 	if (!(new->next = *file))
 		return (-1);
 	if (!(*file = new))
@@ -127,7 +136,7 @@ int		ft_ls_pushfront(t_file **file, t_file *new)
 	return (0);
 }
 
-t_file	*ft_make_list(char *path, int mask)
+t_file	*ft_make_list(char *path, int mask, int params)
 {
 	t_file			*lst;
 	DIR				*d;
@@ -142,9 +151,9 @@ t_file	*ft_make_list(char *path, int mask)
 		if (dir->d_name[0] == '.' && !(mask & O_A))
 			(void)mask;
 		else if (i == -1 && ++i == 0)
-			lst = ft_ls_lstnew(path, dir->d_name, mask);
+			lst = ft_ls_lstnew(path, dir->d_name, mask, params);
 		else
-			ft_ls_pushfront(&lst, ft_ls_lstnew(path, dir->d_name, mask));
+			ft_ls_pushfront(&lst, ft_ls_lstnew(path, dir->d_name, mask, params));
 	}
 	closedir(d);
 	return (lst);

@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/22 06:53:48 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/22 07:05:54 by gedemais         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/22 06:52:10 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/02 21:27:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +56,43 @@ int		ft_ls(char **params, int mask, char *path)
 	void	**add;
 	int		len;
 
+	if (DEBUG)
+		ft_write_buff("FT_LS\n", 0, 0, 0);
 	if (params)
 	{
+		if (DEBUG)
+			ft_write_buff("  ft_params\n", 0, 0, 0);
 		ft_params(params, mask, path);
 		ft_write_buff(NULL, 0, 0, 1);
 		return (0);
 	}
-	if (!(lst = ft_make_list(path, mask)))
+	if (DEBUG)
+		ft_write_buff("  ft_make_list\n", 0, 0, 0);
+	if (!(lst = ft_make_list(path, mask, 0)))
 	{
 		if (mask & O_RMAJ)
 			ft_write_buff(NULL, '\n', 1, 0);
 		return (0);
 	}
+	if (DEBUG)
+		ft_write_buff("  ft_lstlen\n", 0, 0, 0);
 	len = ft_lstlen(lst);
+	if (DEBUG)
+		ft_write_buff("  ft_addresses\n", 0, 0, 0);
 	if (!(add = ft_addresses(lst, len + 1)))
 		return (-1);
+	if (DEBUG)
+		ft_write_buff("  Sort\n", 0, 0, 0);
 	if (!(mask & O_F))
 		ft_ls_quicksort(add, 0, len + 1, mask);
 	if (mask & O_R)
+	{	
+		if (DEBUG)
+			ft_write_buff("  ft_addrev\n", 0, 0, 0);
 		ft_addrev(add, mask);
+	}
+	if (DEBUG)
+		ft_write_buff("  ft_run\n", 0, 0, 0);
 	ft_run(mask, len + 1, add);
 	return (0);
 }
@@ -101,9 +107,15 @@ int		main(int argc, char **argv)
 	if (!(start_path = ft_strdup("./")))
 		return (1);
 	mask = 0;
+	if (DEBUG)
+		ft_write_buff("-------START-------\n", 0, 0, 0);
 	if (argc > 1)
 		params = ft_parse_input(argc, argv, &mask);
+	if (DEBUG)
+		ft_write_buff("Parsing Done\n", 0, 0, 0);
 	ft_ls(params, mask, start_path);
+	if (DEBUG)
+		ft_write_buff("-------END-------\n", 0, 0, 0);
 	ft_write_buff(NULL, 0, 0, 1);
 	return (0);
 }

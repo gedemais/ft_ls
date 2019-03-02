@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:16:50 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/20 05:15:00 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/02 17:23:10 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,91 +19,136 @@ int		ft_is_flag(char c)
 	return (1);
 }
 
-int		ft_count(int argc, char **argv)
+int		ft_add_mask(int mask, char c)
+{
+	if (c == 'l' && !(mask & O_L))
+		return (O_L); 
+	else if (c == 'R' && !(mask & O_RMAJ))
+		return (O_RMAJ); 
+	else if (c == 'a' && !(mask & O_A))
+		return (O_A); 
+	else if (c == 'r' && !(mask & O_R))
+		return (O_R); 
+	else if (c == 't' && !(mask & O_T) && !(mask & O_SMAJ))
+		return (O_T);
+	else if (c == 'f' && !(mask & O_SMAJ) && !(mask & O_T))
+		return (O_F);
+	else if (c == 'S' && !(mask & O_SMAJ) && !(mask & O_T))
+		return (O_SMAJ);
+	else
+		return (0);
+}
+
+int		ft_count(int ac, char **av)
 {
 	int		i;
 	int		size;
-	int		stop;
-	int		params;
 
 	i = 1;
 	size = 0;
-	stop = 1;
-	params = 0;
-	while (i < argc)
+	while (i < ac && av[i][0] == '-' && av[i][1] != '\0')
 	{
-		if (argv[i][0] == '-' && argv[i][1] == '-' && size == 0)
-			params = 1;
-		else if (argv[i][0] == '-' && argv[i][1] != '-' && size == 0)
-			params = 1;
-		else if (argv[i][0] && argv[i][0] != '-' && stop)
-			size++;
+		if (ft_strcmp(av[i], "--") == 0 && ++i)
+			break ;
 		i++;
 	}
-	return (size + params);
+	while (i < ac)
+	{
+		size++;
+		i++;
+	}
+	return (size);
 }
 
-int		ft_get_options(int ac, char **av, int *i, int mask)
+int		ft_make_mask(char *flags)
 {
-	int		j;
-	int		k;
+	int		i;
+	int		mask;
 
-	k = -1;
-	if (ft_strcmp(av[1], "--") == 0 && (*i = *i + 1) > 0)
-		return (0);
-	while (*i < ac && ft_strcmp(av[*i], "--") != 0 && av[*i][0] == '-')
+	i = 0;
+	mask = 0;
+	while (flags[i])
 	{
-		j = -1;
-		while (av[*i][++j])
-			if (ft_is_flag(av[*i][j]))
-					mask += ft_add_mask(mask, av[*i][j]);
-			else if (j > 0)
-				ft_usage(1, av[*i][j], "", 1);
-		*i = *i + 1;
+		mask += ft_add_mask(mask, flags[i]);
+		i++;
 	}
 	return (mask);
 }
 
-
-char	**ft_get_params(int ac, char **av, char **data, int i)
+int		ft_get_options(int ac, char **av)
 {
+	char	flags[8];
+	int		i;
+	int		j;
+	int		k;
+
+	i = 1;
+	k = 0;
+	flags[7] = '\0';
+	while (i < ac && av[i][0] == '-' && av[i][1] != '\0')
+	{
+		j = 1;
+		while (av[i][j])
+		{
+			if (ft_strcmp(av[i], "--") == 0 && ++i)
+				break ;
+			if (ft_is_flag(av[i][j]) == 1 && ft_strfind(flags, av[i][j]) == 0)
+				flags[k++] = av[i][j];
+			else if (ft_is_flag(av[i][j]) == 0)
+				ft_usage(1, av[i][j], NULL, 1);
+			j++;
+		}
+		i++;
+	}
+	flags[k] = '\0';
+	return (ft_make_mask(flags));
+}
+
+char	**ft_make_params(int ac, char **av, int size)
+{
+	char	**dest;
+	int		i;
 	int		j;
 
+	i = 1;
 	j = 0;
-	if (i == ac)
+	if (!(dest = (char**)malloc(sizeof(char*) * (size + 1))))
 		return (NULL);
+	while (i < ac && av[i][0] == '-' && av[i][1] != '\0')
+	{
+		if (ft_strcmp(av[i], "--") == 0 && ++i)
+			break ;
+		i++;
+	}
 	while (i < ac)
 	{
-			if (!(data[j] = ft_strdup(av[i])))
-				return (NULL);
+		if (!(dest[j] = ft_strdup(av[i])))
+			return (NULL);
 		i++;
 		j++;
 	}
-	data[j] = NULL;
-	return (data);
+	dest[j] = NULL;
+	return (dest);
 }
 
 char	**ft_parse_input(int ac, char **av, int *mask)
 {
-	char	**data;
+	char	**params = NULL;
 	int		s;
 	int		i;
 
-	data = NULL;
 	i = 1;
-	s = ft_count(ac, av);
-	if (ac < 1 || s == 0 || !(data = (char**)malloc(sizeof(char*) * (s + 1))))
-		return (NULL);
-	if (ac > 1 && av[1][0] == '-')
-		*mask = ft_get_options(ac, av, &i, *mask);
-	if (ac > 1 && i < ac)
+	s = 1;
+	if ((s = ft_count(ac, av)) > 0)
 	{
-		if (!(data = ft_get_params(ac, av, data, i)))
+		if (!(params = ft_make_params(ac, av, s)))
 			return (NULL);
 	}
 	else
-		data = NULL;
-	return (data);
+		params = NULL;
+	if ((*mask = ft_get_options(ac, av)) == -1)
+		return (NULL);
+	return (params);
 }
 
 

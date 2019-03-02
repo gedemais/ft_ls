@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:14:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/22 06:53:33 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/02 18:40:38 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	**ft_addresses(t_file *lst, int len)
 	tmp = lst;
 	while (tmp)
 	{
-		add[i] = &(*tmp);
-		tmp = tmp->next;
-		i++;
+			add[i] = &(*tmp);
+			tmp = tmp->next;
+			i++;
 	}
 	add[i] = NULL;
 	return (add);

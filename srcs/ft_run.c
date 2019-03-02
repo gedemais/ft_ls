@@ -25,7 +25,7 @@ int				ft_display_cols(int mask, void **add, int nbf, int minw)
 		vars[4] = -1;
 		vars[7] = 0;
 		while (++vars[4] < nbf && vars[7] < vars[0])
-			if (vars[4] % (vars[3]) == vars[5] && ft_flags(add[vars[4]], mask))
+			if (TFVAR->nope == 0 && vars[4] % (vars[3]) == vars[5] && ft_flags(add[vars[4]], mask))
 			{
 				ft_write_buff(TFVAR->name, 0, 1, 0);
 				if (vars[7]++ < vars[0] && vars[4] < (nbf - vars[2]))
@@ -47,7 +47,7 @@ int		ft_display_lines(void **add, int nbf, int mask)
 	ft_add_total(maxs[2]);
 	while (++i < nbf)
 	{
-		if (ft_flags(add[i], mask))
+		if (TF->nope == 0 && ft_flags(add[i], mask))
 		{
 			ft_write_buff(TF->perms, 0, 0, 0);
 			ft_write_buff("  ", 0, 0, 0);
@@ -82,7 +82,7 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 	k = 0;
 	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
 	while (++i < nbf)
-		if (j <= nbf2)
+		if (TF->nope == 0 && j <= nbf2)
 		{
 			ft_cpy_string(TF->name);
 			if (i != nbf - 1 && j != nbf2)
@@ -114,13 +114,30 @@ void	ft_relaunch(void **add, int nbf, int mask)
 	}
 }
 
+int		ft_nonope(int nbf, void **add)
+{
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (i < nbf)
+	{
+		if (TF->nope == 0)
+			ret++;
+		i++;
+	}
+	printf("ret = %d\n", ret);
+	return (ret);
+}
+
 void	ft_run(int mask, int nbf, void **add)
 {
 	int		t_len;
 	int		minw;
 
 	if (DEBUG)
-		ft_putstr("ft_run\n");
+		ft_write_buff("ft_run\n", 0, 0, 1);
 	if (!add)
 		return ;
 	t_len = ft_get_screen_length();
@@ -128,19 +145,19 @@ void	ft_run(int mask, int nbf, void **add)
 	if (mask & O_L)
 	{
 		if (DEBUG)
-			ft_putstr("ft_display_lines\n");
+			ft_write_buff("ft_display_lines\n", 0, 0, 1);
 		ft_display_lines(add, nbf, mask);
 	}
-	else if (minw * ((mask & O_A) ? nbf : ft_nohiddens(nbf, add)) <= t_len)
+	else if (minw * ((mask & O_A) ? ft_nonope(nbf, add) : ft_nohiddens(nbf, add)) <= t_len)
 	{
 		if (DEBUG)
-			ft_putstr("ft_display_line\n");
+			ft_write_buff("ft_display_line\n", 0, 0, 1);
 		ft_display_line(mask, add, nbf, minw);
 	}
 	else
 	{
 		if (DEBUG)
-			ft_putstr("ft_display_cols\n");
+			ft_write_buff("ft_display_cols\n", 0, 0, 1);
 		ft_display_cols(mask, add, nbf, minw);
 	}
 	if (mask & O_RMAJ)
