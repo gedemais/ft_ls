@@ -31,6 +31,15 @@ void	ft_swap_strs(char *s1, char *s2)
 	s2 = tmp;
 }
 
+void	ft_swap_str(char **s1, char **s2)
+{
+	char	*tmp;
+
+	tmp = *s1;
+	*s1 = *s2;
+	*s2 = tmp;
+}
+
 void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 {
 	char	*tmp;
@@ -135,7 +144,7 @@ int		ft_ls_partition_params(char **params, int start, int end)
 	if (end - start == 2)
 	{
 		if (ft_strcmp(params[start], params[end - 1]) > 0)
-			ft_swap_strs(params[start], params[end - 1]);
+			ft_swap_str(&params[start], &params[end - 1]);
 		return (0);
 	}
 	while (i < end - 1 && j < end - 1)
@@ -143,11 +152,11 @@ int		ft_ls_partition_params(char **params, int start, int end)
 		if (ft_strcmp(params[j], params[pivot]) < 0)
 		{
 			i++;
-			ft_swap_strs(params[i], params[j]);
+			ft_swap_str(&params[i], &params[j]);
 		}
 		j++;
 	}
-	ft_swap_strs(params[i + 1], params[pivot]);
+	ft_swap_str(&params[i + 1], &params[pivot]);
 	return (i + 1);
 }
 

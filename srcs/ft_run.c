@@ -10,6 +10,22 @@
 
 #include "../includes/ft_ls.h"
 
+int		ft_nonope(int nbf, void **add)
+{
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (i < nbf)
+	{
+		if (TF->nope == 0)
+			ret++;
+		i++;
+	}
+	return (ret);
+}
+
 int				ft_display_cols(int mask, void **add, int nbf, int minw)
 {
 	int	vars[8];
@@ -47,7 +63,7 @@ int		ft_display_lines(void **add, int nbf, int mask)
 	ft_add_total(maxs[2]);
 	while (++i < nbf)
 	{
-		if (TF->nope == 0 && ft_flags(add[i], mask))
+		if (TF->nope == 0)
 		{
 			ft_write_buff(TF->perms, 0, 0, 0);
 			ft_write_buff("  ", 0, 0, 0);
@@ -80,7 +96,7 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 	i = -1;
 	j = 0;
 	k = 0;
-	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
+	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(ft_nonope(nbf, add), add);
 	while (++i < nbf)
 		if (TF->nope == 0 && j <= nbf2)
 		{
@@ -114,23 +130,6 @@ void	ft_relaunch(void **add, int nbf, int mask)
 	}
 }
 
-int		ft_nonope(int nbf, void **add)
-{
-	int		i;
-	int		ret;
-
-	i = 0;
-	ret = 0;
-	while (i < nbf)
-	{
-		if (TF->nope == 0)
-			ret++;
-		i++;
-	}
-	printf("ret = %d\n", ret);
-	return (ret);
-}
-
 void	ft_run(int mask, int nbf, void **add)
 {
 	int		t_len;
@@ -148,7 +147,7 @@ void	ft_run(int mask, int nbf, void **add)
 			ft_write_buff("ft_display_lines\n", 0, 0, 1);
 		ft_display_lines(add, nbf, mask);
 	}
-	else if (minw * ((mask & O_A) ? ft_nonope(nbf, add) : ft_nohiddens(nbf, add)) <= t_len)
+	else if (minw * ((mask & O_A) ? ft_nonope(nbf, add) : ft_nohiddens(ft_nonope(nbf, add), add)) <= t_len)
 	{
 		if (DEBUG)
 			ft_write_buff("ft_display_line\n", 0, 0, 1);

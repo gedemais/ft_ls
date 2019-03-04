@@ -12,6 +12,14 @@
 
 #include "../includes/ft_ls.h"
 
+int		ft_ls_lstdel(t_file *lst)
+{
+	if (lst->next)
+		ft_ls_lstdel(lst->next);
+	free(lst);
+	return (0);
+}
+
 int		ft_lstlen(t_file *lst)
 {
 	t_file	*tmp;
@@ -91,6 +99,8 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 			new->nsfd = 0;
 		new->nope = 1;
 	}
+	else
+		new->nope = 0;
 	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
 	if (params == 1 && new->dir == 1)
 	{

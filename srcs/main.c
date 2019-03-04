@@ -50,6 +50,22 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 	}
 }
 
+void		ft_free_all(void **add, t_file *lst)
+{
+	int		i;
+
+	i = 0;
+	while (TF)
+	{
+		add[i] = NULL;
+		free(TF);
+		i++;
+	}
+	free(TF);
+	free(add);
+	ft_ls_lstdel(lst);
+}
+
 int		ft_ls(char **params, int mask, char *path)
 {
 	t_file	*lst;
@@ -94,6 +110,7 @@ int		ft_ls(char **params, int mask, char *path)
 	if (DEBUG)
 		ft_write_buff("  ft_run\n", 0, 0, 0);
 	ft_run(mask, len + 1, add);
+	ft_free_all(add, lst);
 	return (0);
 }
 

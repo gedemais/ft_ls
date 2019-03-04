@@ -14,7 +14,7 @@
 
 int		ft_is_flag(char c)
 {
-	if (c != 'l' && c != 'R' && c != 'a' && c != 'r' && c != 't' && c != 'S')
+	if (c != 'l' && c != 'R' && c != 'a' && c != 'r' && c != 't' && c != 'f' && c != 'S')
 		return (0);
 	return (1);
 }
@@ -32,7 +32,7 @@ int		ft_add_mask(int mask, char c)
 	else if (c == 't' && !(mask & O_T) && !(mask & O_SMAJ))
 		return (O_T);
 	else if (c == 'f' && !(mask & O_SMAJ) && !(mask & O_T))
-		return (O_F);
+		return (!(mask & O_A) ? O_F + O_A : O_F);
 	else if (c == 'S' && !(mask & O_SMAJ) && !(mask & O_T))
 		return (O_SMAJ);
 	else
@@ -128,6 +128,7 @@ char	**ft_make_params(int ac, char **av, int size)
 		j++;
 	}
 	dest[j] = NULL;
+	ft_sort_params(dest, 0, j);
 	return (dest);
 }
 

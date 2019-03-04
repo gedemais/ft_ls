@@ -57,7 +57,7 @@ int		ft_nohiddens(int nbf, void **add)
 	new_nbf = nbf;
 	while (i < nbf)
 	{
-		if (TF->name[0] == '.')
+		if (TF->name[0] == '.' && TF->nope == 0)
 			new_nbf--;
 		i++;
 	}
@@ -66,10 +66,8 @@ int		ft_nohiddens(int nbf, void **add)
 
 int		ft_flags(t_file *node, int mask)
 {
-	if (node->name[0] == '.' && !(mask & O_A))
-		return (0);
-	if (node->nope == 1)
-		return (0);
+	(void)node;
+	(void)mask;
 	return (1);
 }
 
@@ -83,7 +81,7 @@ int		ft_find_biggest(void **add, int nbf)
 	ret = 0;
 	while (i < nbf)
 	{
-		if ((temp = TF->name_len) > ret)
+		if ((temp = TF->name_len) > ret && TF->nope == 0)
 			ret = temp;
 		i++;
 	}

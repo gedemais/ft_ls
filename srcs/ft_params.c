@@ -127,7 +127,6 @@ int		ft_nsfd(t_file *lst, char **params)
 		i++;
 	}
 	nsfd[j] = NULL;
-	ft_sort_params(nsfd, 0, j);
 	i = 0;
 	while (nsfd[i])
 	{
@@ -163,20 +162,18 @@ int		ft_set_add(void **add, char **params)
 int		ft_params(char **params, int mask, char *path)
 {
 	t_file	*lst;
-	char	**dirs;
 	void	**add;
 
-	(void)params;
-	(void)dirs;
-	(void)add;
 	if (!(lst = ft_make_list(path, mask, 1)))
 		return (-1);
-
+//	ft_pctab(params);
 	if (!(add = ft_make_add(lst, ft_lstlen(lst) + 1, mask)))
 		return (-1);
+	ft_sort_params(params, 0, ft_tablen(params) + 1);
 	ft_nsfd(lst, params);
 	ft_set_add(add, params);
 	ft_run(mask, ft_lstlen(lst) + 1, add);
+//	ft_params_relaunch();
 	return (0);
 }
 

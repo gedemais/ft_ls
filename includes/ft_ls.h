@@ -116,6 +116,7 @@ int			ft_datecmp(char *d1, char *d2, char *n1, char *n2);
 void		ft_run(int mask, int nbf, void **add);
 
 // ft_list.c
+int		ft_ls_lstdel(t_file *lst);
 int			ft_lstlen(t_file *lst);
 void		ft_display_ls_lst(t_file *top);
 t_file		*ft_ls_lstnew(char *path, char *name, int mask, int params);
@@ -134,6 +135,8 @@ char		**ft_get_params(int ac, char **av, char **data, int i);
 char		**ft_parse_input(int ac, char **av, int *mask);
 
 // ft_quicksort.c
+void		ft_swap_strs(char *s1, char *s2);
+void		ft_swap_str(char **s1, char **s2);
 void		ft_swap_nodes(t_file *n1, t_file *n2, int mask);
 void		**ft_addresses (t_file *lst, int len);
 int			ft_sort_params(char **tab, int start, int end);

@@ -32,9 +32,10 @@ int		ft_usage(int type, char wrong, char *wrong_name, int usage)
 		ft_write_buff(wrong_name, 0, 0, 0);
 		ft_write_buff(": Permission denied\n", 0, 0, 0);
 	}
-	if (usage)
+	if (usage == 1)
 	{	
-		ft_write_buff("usage: ./ft_ls [-laRrtfS] [file ...]\n", 0, 0, 1);
+		ft_write_buff(NULL, 0, 0, 1);
+		ft_putstr("usage: ./ft_ls [-laRrtfS] [file ...]\n");
 		exit (EXIT_FAILURE);
 	}
 	return (0);
