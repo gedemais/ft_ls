@@ -96,8 +96,9 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 	i = -1;
 	j = 0;
 	k = 0;
-	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(ft_nonope(nbf, add), add);
+	nbf2 = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
 	while (++i < nbf)
+	{
 		if (TF->nope == 0 && j <= nbf2)
 		{
 			ft_cpy_string(TF->name);
@@ -105,6 +106,7 @@ int		ft_display_line(int mask, void **add, int nbf, int minw)
 				ft_pad_string(minw, TF->name_len);
 			j++;
 		}
+	}
 	ft_write_buff(NULL, '\n', 1, 0);
 	if (mask & O_RMAJ || *ft_last_endl() >= 1)
 		ft_write_buff(NULL, '\n', 1, 0);

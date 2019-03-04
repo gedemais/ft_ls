@@ -128,7 +128,7 @@ char	**ft_make_params(int ac, char **av, int size)
 		j++;
 	}
 	dest[j] = NULL;
-	ft_sort_params(dest, 0, j);
+	ft_sort_params(dest, j);
 	return (dest);
 }
 

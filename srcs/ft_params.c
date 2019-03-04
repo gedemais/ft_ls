@@ -150,10 +150,9 @@ int		ft_set_add(void **add, char **params)
 		while (params[++i])
 		{
 			if (ft_strcmp(TFJ->name, params[i]) == 0)
-				ret++;	
+				ret++;
 		}
-		if (ret == 0)
-			TFJ->nope = 1;
+		TFJ->nope = (ret > 0) ? 0 : 1;
 		j++;
 	}
 	return (0);
@@ -166,10 +165,9 @@ int		ft_params(char **params, int mask, char *path)
 
 	if (!(lst = ft_make_list(path, mask, 1)))
 		return (-1);
-//	ft_pctab(params);
 	if (!(add = ft_make_add(lst, ft_lstlen(lst) + 1, mask)))
 		return (-1);
-	ft_sort_params(params, 0, ft_tablen(params) + 1);
+	ft_sort_params(params, ft_tablen(params) + 1);
 	ft_nsfd(lst, params);
 	ft_set_add(add, params);
 	ft_run(mask, ft_lstlen(lst) + 1, add);

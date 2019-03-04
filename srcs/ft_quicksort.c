@@ -132,43 +132,27 @@ int		ft_ls_partition(void **add, int start, int end, int mask)
 	return (i + 1);
 }
 
-int		ft_ls_partition_params(char **params, int start, int end)
+int			ft_sort_params(char **argv, int argc)
 {
-	int		i;
-	int		j;
-	int		pivot;
+	char	*tmp;
+	int	i;
+	int	j;
 
-	i = start - 1;
-	j = start;
-	pivot = end - 1;
-	if (end - start == 2)
+	i = 0;
+	while (i < argc - 1)
 	{
-		if (ft_strcmp(params[start], params[end - 1]) > 0)
-			ft_swap_str(&params[start], &params[end - 1]);
-		return (0);
-	}
-	while (i < end - 1 && j < end - 1)
-	{
-		if (ft_strcmp(params[j], params[pivot]) < 0)
+		j = 0;
+		while (j < argc - 1)
 		{
-			i++;
-			ft_swap_str(&params[i], &params[j]);
+			if (ft_strcmp(argv[j + 1], argv[j]) < 0)
+			{
+				tmp = argv[j + 1];
+				argv[j + 1] = argv[j];
+				argv[j] = tmp;
+			}
+			j++;
 		}
-		j++;
-	}
-	ft_swap_str(&params[i + 1], &params[pivot]);
-	return (i + 1);
-}
-
-int			ft_sort_params(char **tab, int start, int end)
-{
-	int		j;
-
-	if (start < end - 1)
-	{
-		j = ft_ls_partition_params(tab, start, end);
-		ft_sort_params((&tab[start]), 0, j);
-		ft_sort_params((&tab[j + 1]), 0, (end - j - 1));
+		i++;
 	}
 	return (0);
 }

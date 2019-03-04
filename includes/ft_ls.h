@@ -139,7 +139,7 @@ void		ft_swap_strs(char *s1, char *s2);
 void		ft_swap_str(char **s1, char **s2);
 void		ft_swap_nodes(t_file *n1, t_file *n2, int mask);
 void		**ft_addresses (t_file *lst, int len);
-int			ft_sort_params(char **tab, int start, int end);
+int		ft_sort_params(char **argv, int argc);
 int			ft_ls_quicksort(void **add, int start, int end, int mask);
 
 // ft_display_lines.c
