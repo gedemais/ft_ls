@@ -159,7 +159,7 @@ void	ft_run(int mask, int nbf, void **add)
 	{
 		if (DEBUG)
 			ft_write_buff("ft_display_cols\n", 0, 0, 1);
-		ft_display_cols(mask, add, nbf, minw);
+		ft_display_cols(mask, add, ft_nonope(nbf, add), minw);
 	}
 	if (mask & O_RMAJ)
 		ft_relaunch(add, nbf, mask);

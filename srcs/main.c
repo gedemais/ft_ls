@@ -63,7 +63,8 @@ void		ft_free_all(void **add, t_file *lst)
 	}
 	free(TF);
 	free(add);
-	ft_ls_lstdel(lst);
+	(void)lst;
+//	ft_ls_lstdel(lst);
 }
 
 int		ft_ls(char **params, int mask, char *path)

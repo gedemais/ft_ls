@@ -149,11 +149,42 @@ int		ft_set_add(void **add, char **params)
 		ret = 0;
 		while (params[++i])
 		{
-			if (ft_strcmp(TFJ->name, params[i]) == 0)
+			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0)
 				ret++;
 		}
 		TFJ->nope = (ret > 0) ? 0 : 1;
 		j++;
+	}
+	return (0);
+}
+
+int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
+{
+	t_file		*tmp;
+	char		*new_path;
+	int		i;
+
+	i = 0;
+	while (params[i])
+	{
+		tmp = lst;
+		while (tmp)
+		{
+			if (ft_strcmp(params[i], tmp->name) == 0 && tmp->dir == 1)
+			{
+				if (!(new_path = ft_new_path(path, tmp->name)))
+					return (-1);
+				if (new_path[ft_strlen(new_path) - 1] == '/')
+					new_path[ft_strlen(new_path) - 1] = '\0';
+				if (new_path[0] == '.' && new_path[1] == '/')
+					ft_write_buff(&new_path[2], 0, 0, 0);
+				ft_write_buff(":\n", 0, 0, 0);
+				ft_ls(NULL, mask, ft_strjoin(new_path, "/\0"));
+				ft_write_buff(NULL, '\n', 1, 0);
+			}
+			tmp = tmp->next;
+		}
+		i++;
 	}
 	return (0);
 }
@@ -171,7 +202,13 @@ int		ft_params(char **params, int mask, char *path)
 	ft_nsfd(lst, params);
 	ft_set_add(add, params);
 	ft_run(mask, ft_lstlen(lst) + 1, add);
-//	ft_params_relaunch();
+	ft_write_buff(NULL, '\n', 1, 0);
+/*	while (lst)
+	{
+		ft_putendl(lst->name);
+		lst = lst->next;
+	}*/
+	ft_params_relaunch(lst, params, path, mask);
 	return (0);
 }
 

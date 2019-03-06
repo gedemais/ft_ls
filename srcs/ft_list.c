@@ -102,11 +102,6 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	else
 		new->nope = 0;
 	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
-	if (params == 1 && new->dir == 1)
-	{
-		free(new);
-		return (NULL);
-	}
 	new->perms = ft_make_perms(&file); // Permissions
 	if (mask & O_L)
 	{
