@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 00:32:07 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/20 05:36:26 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/07 21:49:05 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,16 @@ void	ft_get_lines_data(void **add, int *max, int nbf)
 	}
 	max[0] = ft_nb_len(max[0]);
 	max[1] = ft_nb_len(max[1]);
+}
+
+int		ft_add_linkings(t_file *file)
+{
+	if (file->link)
+	{
+		ft_write_buff(" -> ", 0, 0, 0);
+		ft_write_buff(file->link, 0, 0, 0);
+		return (1);
+	}
+	else
+		return (0);
 }

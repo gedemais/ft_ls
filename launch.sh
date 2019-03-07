@@ -1,3 +1,3 @@
-ls $1
-echo ''
-./ft_ls $1
+ls $1 > true
+./ft_ls $1 > mine
+diff true mine

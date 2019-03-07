@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/07 12:28:46 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/07 21:51:19 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,28 @@ char	*ft_make_perms(struct stat *file)
 	return (&str[1]);
 }
 
+char	*ft_getlink(t_file *file)
+{
+	char	*dest;
+	int		i;
+
+	i = 2;
+	if (!(dest = (char*)malloc(sizeof(char) * 1024)))
+		return (NULL);
+	while (readlink(file->file_path, dest, 1024) == -1)
+	{
+		if (errno == EFAULT)
+		{
+			if (!(dest = ft_strrealloc(dest, 1024 * i)))
+				return (NULL);
+		}
+		else
+			return (NULL);
+		i++;
+	}
+	return (dest);
+}
+
 t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 {
 	t_file			*new;
@@ -103,6 +125,13 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 		new->nope = 0;
 	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
 	new->perms = ft_make_perms(&file); // Permissions
+	if (S_ISLNK(file.st_mode))
+	{
+		if (!(new->link = ft_getlink(new)))
+			return (NULL);
+	}
+	else
+		new->link = NULL;
 	if (mask & O_L)
 	{
 		if ((psswd = getpwuid(file.st_uid)) != NULL)

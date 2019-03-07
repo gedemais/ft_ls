@@ -78,6 +78,7 @@ int		ft_display_lines(void **add, int nbf, int mask)
 			ft_add_date(TF->date);
 			ft_write_buff(NULL, ' ', 1, 0);
 			ft_write_buff(TF->name, 0, 0, 0);
+			ft_add_linkings(TF);
 			ft_write_buff(NULL, '\n', 1, 0);
 		}
 	}

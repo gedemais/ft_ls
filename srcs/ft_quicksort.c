@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/02 19:31:47 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/07 22:15:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	temp = n1->nope;
 	n1->nope = n2->nope;
 	n2->nope = temp;
-	if (mask & O_L)
-	{
+
+	tmp = n1->link;
+	n1->link = n2->link;
+	n2->link = tmp;
+
 		tmp = n1->perms; // Permissions
 		n1->perms = n2->perms;
 		n2->perms = tmp;
@@ -95,7 +98,6 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 		temp = n1->nlinks; // Nombre de liens
 		n1->nlinks = n2->nlinks;
 		n2->nlinks = temp;
-	}
 	if (mask & O_T)
 	{
 		tmp = n1->secstime;
@@ -135,14 +137,14 @@ int		ft_ls_partition(void **add, int start, int end, int mask)
 int			ft_sort_params(char **argv, int argc)
 {
 	char	*tmp;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (i < argc - 1)
 	{
 		j = 0;
-		while (j < argc - 1)
+		while (j < argc)
 		{
 			if (ft_strcmp(argv[j + 1], argv[j]) < 0)
 			{

@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/05 00:59:17 by gedemais          #+#    #+#              #
-#    Updated: 2019/03/07 21:02:32 by gedemais         ###   ########.fr        #
+#    Updated: 2019/03/07 21:42:51 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,11 @@ SRCS_PATH = srcs/
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 
-OBJS = $(SRCS_NAME:.c=.o)
+OBJS_NAME = $(SRCS_NAME:.c=.o)
+
+OBJS_PATH = obj/
+
+OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAME))
 
 all : $(LIB) $(NAME)
 
@@ -67,11 +71,13 @@ $(LIB) : $(LIB_PATH)
 		@make re -C $(LIB_PATH)
 
 $(OBJS) : $(SRCS)
+		@mkdir -p $(OBJS_PATH)
 		@echo "Making $(CYA)ft_ls$(DEF)..."
 		$(CC) $(CFLAGS) -c $(SRCS)
+		@mv $(OBJS_NAME) obj/
 
 clean : 
-	@rm -rf $(OBJS)
+	@rm -rf obj/
 	@make clean -C $(LIB_PATH)
 
 fclean : clean

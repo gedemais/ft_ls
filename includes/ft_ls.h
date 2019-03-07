@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/07 20:45:03 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/07 21:49:30 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ struct		s_file
 	int		gid_len;
 	int		dir;
 	int		nlinks;
+	char	*link;
 	int		size;
 	int		blocksize;
 	char	*secstime;
@@ -119,6 +120,7 @@ void		ft_run(int mask, int nbf, void **add);
 int		ft_ls_lstdel(t_file *lst);
 int			ft_lstlen(t_file *lst);
 void		ft_display_ls_lst(t_file *top);
+int			ft_add_linkings(t_file *file);
 t_file		*ft_ls_lstnew(char *path, char *name, int mask, int params);
 int			ft_ls_pushfront(t_file **file, t_file *new);
 t_file		*ft_make_list(char *path, int mask, int params);
