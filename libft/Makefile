@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 17:34:45 by gedemais          #+#    #+#              #
-#    Updated: 2019/01/07 19:55:56 by gedemais         ###   ########.fr        #
+#    Updated: 2019/03/07 21:01:38 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,18 +112,15 @@ all: $(NAME) libft.h
 $(NAME) : $(OBJS)
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
-	@echo "$(GRE)Done !$(DEF)"
 
 ./%.o: ./%.c
 	$(CC) $(FLAGS) -c $<
 
 clean: 
 	@rm -rf $(OBJS)
-	@echo "$(ORG)Objects files $(DEF)deleted."
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "$(YEL)libft.a$(DEF) deleted."
 
 re: fclean all
 

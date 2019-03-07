@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/02 19:29:39 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/07 12:28:46 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,3 +163,4 @@ t_file	*ft_make_list(char *path, int mask, int params)
 	closedir(d);
 	return (lst);
 }
+

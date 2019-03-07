@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:16:50 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/02 17:23:10 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/07 20:29:37 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,20 @@ char	**ft_make_params(int ac, char **av, int size)
 	return (dest);
 }
 
+int		ft_check_brackets(int ac, char **av)
+{
+	int		i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (av[i][0] == '\0')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	**ft_parse_input(int ac, char **av, int *mask)
 {
 	char	**params = NULL;
@@ -140,6 +154,11 @@ char	**ft_parse_input(int ac, char **av, int *mask)
 
 	i = 1;
 	s = 1;
+	if (ft_check_brackets(ac, av) == 1)
+	{
+		ft_usage(2, 0, "Empty Quotes/Brackets", 1);
+		exit (EXIT_FAILURE);
+	}
 	if ((s = ft_count(ac, av)) > 0)
 	{
 		if (!(params = ft_make_params(ac, av, s)))

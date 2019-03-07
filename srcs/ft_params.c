@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/02 21:54:26 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/07 20:37:41 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,10 @@ int		ft_find_param(t_file *lst, char *name)
 
 int		ft_nsfd(t_file *lst, char **params)
 {
-	char	**nsfd;
-	int		i;
-	int		j;
+	char			**nsfd;
+	struct stat		dir;
+	int				i;
+	int				j;
 	
 	if (!(nsfd = (char**)malloc(sizeof(char*) * (ft_lstlen(lst) + 1))))
 		return (-1);
@@ -121,7 +122,7 @@ int		ft_nsfd(t_file *lst, char **params)
 	j = 0;
 	while (params[i])
 	{
-		if (ft_find_param(lst, params[i]) == 0)
+		if (ft_find_param(lst, params[i]) == 0 && lstat(params[i], &dir) < 0)
 			if (!(nsfd[j++] = ft_strdup(params[i])))
 				return (-1);
 		i++;
@@ -133,6 +134,7 @@ int		ft_nsfd(t_file *lst, char **params)
 		ft_usage(2, 0, nsfd[i], 0);
 		i++;
 	}
+//	ft_tabdel(nsfd);
 	return (0);
 }
 
@@ -141,48 +143,74 @@ int		ft_set_add(void **add, char **params)
 	int		i;
 	int		j;
 	int		ret;
+	int		result;
 
 	j = 0;
+	result = 0;
 	while (TFJ)
 	{
 		i = -1;
 		ret = 0;
 		while (params[++i])
 		{
-			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0)
+			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0 && ++result)
 				ret++;
 		}
 		TFJ->nope = (ret > 0) ? 0 : 1;
 		j++;
 	}
+	return (result);
+}
+
+int		ft_display_dir(char *new_path)
+{
+	if (new_path[ft_strlen(new_path) - 1] == '/')
+		new_path[ft_strlen(new_path) - 1] = '\0';
+	if (new_path[0] == '.' && new_path[1] == '/')
+		ft_write_buff(&new_path[2], 0, 0, 0);
+	ft_write_buff(":\n", 0, 0, 0);
 	return (0);
+}
+
+char	*ft_relaunch_condition(t_file *lst, char *param, char *name)
+{
+	struct stat	dir;
+
+	if (ft_find_param(lst, param) > 1)
+		return (NULL);
+	else if (lstat(param, &dir) == -1)
+		return (NULL);
+	else if (S_ISDIR(dir.st_mode) == 0)
+		return (NULL);
+	else
+	{
+		if (!(name = ft_strdup(param)))
+			return (NULL);
+		return (name);
+	}
 }
 
 int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
 {
-	t_file		*tmp;
 	char		*new_path;
-	int		i;
+	char		*tmp;
+	int			i;
+	int			len;
 
 	i = 0;
+	len = ft_tablen(params);
 	while (params[i])
 	{
-		tmp = lst;
-		while (tmp)
+		if ((tmp = ft_relaunch_condition(lst, params[i], tmp)))
 		{
-			if (ft_strcmp(params[i], tmp->name) == 0 && tmp->dir == 1)
-			{
-				if (!(new_path = ft_new_path(path, tmp->name)))
-					return (-1);
-				if (new_path[ft_strlen(new_path) - 1] == '/')
-					new_path[ft_strlen(new_path) - 1] = '\0';
-				if (new_path[0] == '.' && new_path[1] == '/')
-					ft_write_buff(&new_path[2], 0, 0, 0);
-				ft_write_buff(":\n", 0, 0, 0);
-				ft_ls(NULL, mask, ft_strjoin(new_path, "/\0"));
-				ft_write_buff(NULL, '\n', 1, 0);
-			}
-			tmp = tmp->next;
+			if (!(new_path = ft_new_path(path, tmp)))
+				return (-1);
+			if (len > 1)
+				ft_display_dir(new_path);
+			ft_ls(NULL, mask, ft_strjoin(new_path, "/\0"));
+			if (tmp)
+				ft_strdel(&tmp);
+			ft_write_buff(NULL, '\n', 1, 0);
 		}
 		i++;
 	}
@@ -194,20 +222,17 @@ int		ft_params(char **params, int mask, char *path)
 	t_file	*lst;
 	void	**add;
 
-	if (!(lst = ft_make_list(path, mask, 1)))
+	if (!(lst = ft_make_list(path, ((mask & O_A) ? mask : mask + O_A), 1)))
 		return (-1);
 	if (!(add = ft_make_add(lst, ft_lstlen(lst) + 1, mask)))
 		return (-1);
 	ft_sort_params(params, ft_tablen(params) + 1);
 	ft_nsfd(lst, params);
-	ft_set_add(add, params);
-	ft_run(mask, ft_lstlen(lst) + 1, add);
-	ft_write_buff(NULL, '\n', 1, 0);
-/*	while (lst)
+	if (ft_set_add(add, params) > 0)
 	{
-		ft_putendl(lst->name);
-		lst = lst->next;
-	}*/
+		ft_run(mask, ft_lstlen(lst) + 1, add);
+		ft_write_buff(NULL, '\n', 1, 0);
+	}
 	ft_params_relaunch(lst, params, path, mask);
 	return (0);
 }
