@@ -16,26 +16,26 @@ int		ft_usage(int type, char wrong, char *wrong_name, int usage)
 {
 	if (type == 1)
 	{
-		ft_write_buff("ft_ls: illegal option -- ", 0, 0, 0);
-		ft_write_buff(NULL, wrong, 1, 0);
-		ft_write_buff(NULL, '\n', 1, 0);
+		ft_putstr_fd("ft_ls: illegal option -- ", 2);
+		ft_putchar_fd(wrong, 2);
+		ft_putchar_fd('\n', 2);
 	}
 	else if (type == 2)
 	{
-		ft_write_buff("ft_ls: ", 0, 0, 0);
-		ft_write_buff(wrong_name, 0, 0, 0);
-		ft_write_buff(": No such file or directory\n", 0, 0, 0);
+		ft_putstr_fd("ft_ls: ", 2);
+		ft_putstr_fd(wrong_name, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 	else if (type == EACCES)
 	{
-		ft_write_buff("ft_ls: ", 0, 0, 0);
-		ft_write_buff(wrong_name, 0, 0, 0);
-		ft_write_buff(": Permission denied\n", 0, 0, 0);
+		ft_putstr_fd("ft_ls: ", 2);
+		ft_putstr_fd(wrong_name, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
 	}
 	if (usage == 1)
-	{	
+	{
 		ft_write_buff(NULL, 0, 0, 1);
-		ft_putstr("usage: ./ft_ls [-laRrtfS] [file ...]\n");
+		ft_putstr_fd("usage: ./ft_ls [-laRrtfS] [file ...]\n", 2);
 		exit (EXIT_FAILURE);
 	}
 	return (0);

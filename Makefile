@@ -26,9 +26,9 @@ ORG = \033[1;31m
 
 NAME = ft_ls
 
-CC = @gcc -g
+CC = @gcc
 
-FLAGS = -fsanitize=address
+FLAGS = -g -fsanitize=address
 
 CFLAGS = -Wall -Werror -Wextra
 

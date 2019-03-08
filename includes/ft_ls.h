@@ -46,6 +46,7 @@
 # define O_T 16
 # define O_F 32
 # define O_SMAJ 64
+# define O_I 128
 
 # include "../libft/libft.h"
 # include <stdbool.h>
@@ -63,24 +64,25 @@ typedef struct	s_file t_file;
 struct		s_file
 {
 	char	*name;
-	int		name_len;
+	int	name_len;
 	char	*perms;
 	char	*uid;
-	int		uid_len;
+	int	uid_len;
 	char	*gid;
-	int		gid_len;
-	int		dir;
-	int		nlinks;
+	int	gid_len;
+	int	dir;
+	int	nlinks;
 	char	*link;
-	int		size;
-	int		blocksize;
+	int	ino;
+	int	size;
+	int	blocksize;
 	char	*secstime;
 	char	*date;
-	int		day;
-	int		year;
+	int	day;
+	int	year;
 	char	*file_path;
-	int		nope;
-	int		nsfd;
+	int	nope;
+	int	nsfd;
 	t_file	*next;
 };
 

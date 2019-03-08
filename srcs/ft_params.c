@@ -111,27 +111,21 @@ int		ft_find_param(t_file *lst, char *name)
 
 int		ft_nsfd(t_file *lst, char **params)
 {
-	char			**nsfd;
 	struct stat		dir;
 	int				i;
 	int				j;
 	
-	if (!(nsfd = (char**)malloc(sizeof(char*) * (ft_lstlen(lst) + 1))))
-		return (-1);
 	i = 0;
-	j = 0;
+	j = -1;
 	while (params[i])
 	{
 		if (ft_find_param(lst, params[i]) == 0 && lstat(params[i], &dir) < 0)
-			if (!(nsfd[j++] = ft_strdup(params[i])))
-				return (-1);
-		i++;
-	}
-	nsfd[j] = NULL;
-	i = 0;
-	while (nsfd[i])
-	{
-		ft_usage(2, 0, nsfd[i], 0);
+		{
+			if (errno == EACCES)
+				ft_usage(errno, 0, params[i], 0);	
+			else 
+				ft_usage(2, 0, params[i], 0);
+		}
 		i++;
 	}
 //	ft_tabdel(nsfd);

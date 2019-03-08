@@ -14,7 +14,7 @@
 
 int		ft_is_flag(char c)
 {
-	if (c != 'l' && c != 'R' && c != 'a' && c != 'r' && c != 't' && c != 'f' && c != 'S')
+	if (c != 'l' && c != 'R' && c != 'a' && c != 'r' && c != 't' && c != 'f' && c != 'S' && c != 'i')
 		return (0);
 	return (1);
 }
@@ -35,6 +35,8 @@ int		ft_add_mask(int mask, char c)
 		return (!(mask & O_A) ? O_F + O_A : O_F);
 	else if (c == 'S' && !(mask & O_SMAJ) && !(mask & O_T))
 		return (O_SMAJ);
+	else if (c == 'i' && !(mask & O_I))
+		return (O_I);
 	else
 		return (0);
 }
@@ -72,23 +74,25 @@ int		ft_make_mask(char *flags)
 		mask += ft_add_mask(mask, flags[i]);
 		i++;
 	}
+	ft_strdel(&flags);
 	return (mask);
 }
 
 int		ft_get_options(int ac, char **av)
 {
-	char	flags[8];
-	int		i;
-	int		j;
-	int		k;
+	char	*flags;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 1;
 	k = 0;
-	flags[7] = '\0';
+	if (!(flags = (char*)malloc(sizeof(char) * 8)))
+		return (-1);
 	while (i < ac && av[i][0] == '-' && av[i][1] != '\0')
 	{
-		j = 1;
-		while (av[i][j])
+		j = 0;
+		while (av[i][++j] != '\0')
 		{
 			if (ft_strcmp(av[i], "--") == 0 && ++i)
 				break ;
@@ -96,11 +100,10 @@ int		ft_get_options(int ac, char **av)
 				flags[k++] = av[i][j];
 			else if (ft_is_flag(av[i][j]) == 0)
 				ft_usage(1, av[i][j], NULL, 1);
-			j++;
 		}
 		i++;
 	}
-	flags[k] = '\0';
+	flags[k++] = '\0';
 	return (ft_make_mask(flags));
 }
 

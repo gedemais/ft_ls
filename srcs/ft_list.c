@@ -14,9 +14,13 @@
 
 int		ft_ls_lstdel(t_file *lst)
 {
-	if (lst->next)
-		ft_ls_lstdel(lst->next);
-	free(lst);
+	t_file	*tmp;
+
+	tmp = lst;
+	while (tmp->next)
+	{
+		tmp = tmp->next;
+	}
 	return (0);
 }
 
@@ -40,7 +44,7 @@ int		ft_lstlen(t_file *lst)
 void	ft_display_ls_lst(t_file *top)
 {
 	t_file	*tmp;
-	int		i;
+	int	i;
 
 	tmp = top;
 	i = 0;
@@ -79,7 +83,7 @@ char	*ft_make_perms(struct stat *file)
 char	*ft_getlink(t_file *file)
 {
 	char	*dest;
-	int		i;
+	int	i;
 
 	i = 2;
 	if (!(dest = (char*)malloc(sizeof(char) * 1024)))
@@ -92,7 +96,10 @@ char	*ft_getlink(t_file *file)
 				return (NULL);
 		}
 		else
+		{
+			ft_strdel(&dest);
 			return (NULL);
+		}
 		i++;
 	}
 	return (dest);
@@ -132,8 +139,6 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	}
 	else
 		new->link = NULL;
-	if (mask & O_L)
-	{
 		if ((psswd = getpwuid(file.st_uid)) != NULL)
 		{
 			if (!(new->uid = ft_strdup(psswd->pw_name))) // UID
@@ -152,7 +157,11 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 		new->size = file.st_size; // Taille en octets
 		new->date = ft_strdup(ctime(&file.st_ctime)); // Date
 		new->blocksize = file.st_blocks;
-	}
+	if (mask & O_I)
+		new->ino = file.st_ino;
+	else
+		new->ino = -1;
+	printf("%d\n", new->ino);
 	if (mask & O_T)
 		new->secstime = ft_strdup(ctime(&file.st_mtime));
 	new->next = NULL;

@@ -42,68 +42,28 @@ void	ft_swap_str(char **s1, char **s2)
 
 void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 {
-	char	*tmp;
-	int		temp;
-	int		dir;
+	ft_swap(&n1->dir, &n2->dir);
+	ft_swap(&n1->nope, &n2->nope);
+	ft_swap(&n1->nsfd, &n2->nsfd);
+	ft_swap(&n1->name_len, &n2->name_len);
+	ft_swap(&n1->nlinks, &n2->nlinks);
+	ft_swap(&n1->gid_len, &n2->gid_len);
+	ft_swap(&n1->size, &n2->size);
+	ft_swap(&n1->uid_len, &n2->uid_len);
+	
+	ft_swap_str(&n1->name, &n2->name);
+	ft_swap_str(&n1->file_path, &n2->file_path);
+	
+	ft_swap_str(&n1->link, &n2->link);
+	ft_swap_str(&n1->perms, &n2->perms);
+	ft_swap_str(&n1->uid, &n2->uid);
+	ft_swap_str(&n1->gid, &n2->gid);
+	ft_swap_str(&n1->date, &n2->date);
+	ft_swap_str(&n1->secstime, &n2->secstime);
+	
+	if (mask & O_I)
+		ft_swap(&n1->ino, &n2->ino);
 
-	temp = n1->nsfd;
-	n2->nsfd = n1->nsfd;
-	n2->nsfd = temp;
-	tmp = n1->file_path;
-	n1->file_path = n2->file_path;
-	n2->file_path = tmp;
-	tmp = n1->name;
-	temp = n1->name_len;
-	n1->name = n2->name;
-	n1->name_len = n2->name_len;
-	n2->name = tmp;
-	n2->name_len = temp;
-	dir = n1->dir;
-	n1->dir = n2->dir;
-	n2->dir = dir;
-	temp = n1->nope;
-	n1->nope = n2->nope;
-	n2->nope = temp;
-
-	tmp = n1->link;
-	n1->link = n2->link;
-	n2->link = tmp;
-
-		tmp = n1->perms; // Permissions
-		n1->perms = n2->perms;
-		n2->perms = tmp;
-
-		tmp = n1->uid; // UID
-		n1->uid = n2->uid;
-		n2->uid = tmp;
-		temp = n1->uid_len;
-		n1->uid_len = n2->uid_len;
-		n2->uid_len = temp;
-
-		tmp = n1->gid; // GID
-		n1->gid = n2->gid;
-		n2->gid = tmp;
-		temp = n1->gid_len;
-		n1->gid_len = n2->gid_len;
-		n2->gid_len = temp;
-
-		tmp = n1->date; // Date
-		n1->date = n2->date;
-		n2->date = tmp;
-
-		temp = n1->size; // Size
-		n1->size = n2->size;
-		n2->size = temp;
-
-		temp = n1->nlinks; // Nombre de liens
-		n1->nlinks = n2->nlinks;
-		n2->nlinks = temp;
-	if (mask & O_T)
-	{
-		tmp = n1->secstime;
-		n1->secstime = n2->secstime;
-		n2->secstime = tmp;
-	}
 }
 
 int		ft_ls_partition(void **add, int start, int end, int mask)
@@ -144,7 +104,7 @@ int			ft_sort_params(char **argv, int argc)
 	while (i < argc - 1)
 	{
 		j = 0;
-		while (j < argc)
+		while (j < argc - 1)
 		{
 			if (ft_strcmp(argv[j + 1], argv[j]) < 0)
 			{

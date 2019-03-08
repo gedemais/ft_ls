@@ -31,7 +31,7 @@ int				ft_display_cols(int mask, void **add, int nbf, int minw)
 	int	vars[8];
 
 	vars[0] = ((vars[0] = ft_get_screen_length() / minw) > 0) ? vars[0] : 1;
-	vars[1] = (mask & O_A) ? nbf : ft_nohiddens(nbf, add);
+	vars[1] = (mask & O_A) ? nbf : ft_nohiddens(nbf, add) - 1;
 	vars[2] = vars[1] / vars[0] + 1;
 	vars[3] = nbf / vars[0] + 1;
 	vars[5] = -1;
@@ -119,6 +119,8 @@ void	ft_relaunch(void **add, int nbf, int mask)
 	int		i;
 
 	i = 0;
+	if (!add)
+		return ;
 	while (i < nbf)
 	{
 		if (ft_relaunch_check(TF, mask) == 1)

@@ -50,23 +50,6 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 	}
 }
 
-void		ft_free_all(void **add, t_file *lst)
-{
-	int		i;
-
-	i = 0;
-	while (TF)
-	{
-		add[i] = NULL;
-		free(TF);
-		i++;
-	}
-	free(TF);
-	free(add);
-	(void)lst;
-//	ft_ls_lstdel(lst);
-}
-
 int		ft_ls(char **params, int mask, char *path)
 {
 	t_file	*lst;
@@ -81,6 +64,7 @@ int		ft_ls(char **params, int mask, char *path)
 			ft_write_buff("  ft_params\n", 0, 0, 0);
 		ft_params(params, mask, path);
 		ft_write_buff(NULL, 0, 0, 1);
+		ft_tabdel(params);
 		return (0);
 	}
 	if (DEBUG)
@@ -102,7 +86,7 @@ int		ft_ls(char **params, int mask, char *path)
 		ft_write_buff("  Sort\n", 0, 0, 0);
 	if (!(mask & O_F))
 		ft_ls_quicksort(add, 0, len + 1, mask);
-	if (mask & O_R)
+	if (mask & O_R || mask & O_F)
 	{	
 		if (DEBUG)
 			ft_write_buff("  ft_addrev\n", 0, 0, 0);
@@ -111,7 +95,6 @@ int		ft_ls(char **params, int mask, char *path)
 	if (DEBUG)
 		ft_write_buff("  ft_run\n", 0, 0, 0);
 	ft_run(mask, len + 1, add);
-	ft_free_all(add, lst);
 	return (0);
 }
 

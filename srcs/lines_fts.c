@@ -31,8 +31,8 @@ void	ft_add_uid(char *uid, int uid_len, int len)
 	{
 		while (uid_len < len)
 		{
-				ft_write_buff(NULL, ' ', 1, 0);
-				uid_len++;
+			ft_write_buff(NULL, ' ', 1, 0);
+			uid_len++;
 		}
 	}
 }
