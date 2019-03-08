@@ -35,8 +35,8 @@ int		ft_add_mask(int mask, char c)
 		return (!(mask & O_A) ? O_F + O_A : O_F);
 	else if (c == 'S' && !(mask & O_SMAJ) && !(mask & O_T))
 		return (O_SMAJ);
-	else if (c == 'i' && !(mask & O_I))
-		return (O_I);
+	else if (c == 'p' && !(mask & O_P))
+		return (O_P);
 	else
 		return (0);
 }

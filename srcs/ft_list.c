@@ -157,11 +157,6 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 		new->size = file.st_size; // Taille en octets
 		new->date = ft_strdup(ctime(&file.st_ctime)); // Date
 		new->blocksize = file.st_blocks;
-	if (mask & O_I)
-		new->ino = file.st_ino;
-	else
-		new->ino = -1;
-	printf("%d\n", new->ino);
 	if (mask & O_T)
 		new->secstime = ft_strdup(ctime(&file.st_mtime));
 	new->next = NULL;

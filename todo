@@ -1,10 +1,8 @@
 Remplacer les itoa
-ft_lstdel
-free le tableau de liens
+LEAKS
 Remplacer les nombres par des Defines dans ft_datecmp
 Refaire les comms dans le .h
 Split lstnew
 -S
 Split ft_quicksort.c
-Adapter les options de sort aux parametres
-
+Access Denied

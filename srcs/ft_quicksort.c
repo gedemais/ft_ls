@@ -42,6 +42,7 @@ void	ft_swap_str(char **s1, char **s2)
 
 void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 {
+	(void)mask;
 	ft_swap(&n1->dir, &n2->dir);
 	ft_swap(&n1->nope, &n2->nope);
 	ft_swap(&n1->nsfd, &n2->nsfd);
@@ -60,10 +61,6 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	ft_swap_str(&n1->gid, &n2->gid);
 	ft_swap_str(&n1->date, &n2->date);
 	ft_swap_str(&n1->secstime, &n2->secstime);
-	
-	if (mask & O_I)
-		ft_swap(&n1->ino, &n2->ino);
-
 }
 
 int		ft_ls_partition(void **add, int start, int end, int mask)
