@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-#include <time.h>
 
 void		ft_write_buff(char *str, char c, int cat, int flush)
 {

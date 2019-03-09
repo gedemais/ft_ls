@@ -3,6 +3,5 @@ LEAKS
 Remplacer les nombres par des Defines dans ft_datecmp
 Refaire les comms dans le .h
 Split lstnew
--S
 Split ft_quicksort.c
 Access Denied
