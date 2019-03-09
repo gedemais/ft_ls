@@ -173,5 +173,3 @@ char	**ft_parse_input(int ac, char **av, int *mask)
 		return (NULL);
 	return (params);
 }
-
-

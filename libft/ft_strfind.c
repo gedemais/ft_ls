@@ -22,7 +22,7 @@ int		ft_strfind(const char *str, int c)
 	if (!str)
 		return (0);
 	while (str[++i])
-		if (str[i] == (unsigned char)c)
+		if (str[i] == c)
 			ret++;
 	return (ret);
 }

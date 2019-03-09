@@ -62,22 +62,22 @@ int		ft_calculus(t_date *d1, t_date *d2)
 	long long int	ret1;
 	long long int	ret2;
 
-	ret1 = (d1->year) ? d1->year * 31536000 : 0;
-	ret2 = (d2->year) ? d2->year * 31536000 : 0;
+	ret1 = (d1->year) ? d1->year * SINY : 0;
+	ret2 = (d2->year) ? d2->year * SINY : 0;
 	if (d1->month == 2)
-		ret1 += 86400 * 28;
+		ret1 += SIND * 28;
 	else
-		ret1 += (d1->month % 2 == 0) ? 86400 * 30 : 86400 * 31;
+		ret1 += (d1->month % 2 == 0) ? SIND * 30 : SIND * 31;
 	if (d2->month == 2)
-		ret2 += 86400 * 28;
+		ret2 += SIND * 28;
 	else
-		ret2 += (d2->month % 2 == 0) ? 86400 * 30 : 86400 * 31;
-	ret1 += d1->day * 86400;
-	ret2 += d2->day * 86400;
-	ret1 += d1->hour * 3600;
-	ret2 += d2->hour * 3600;
-	ret1 += d1->mins * 60;
-	ret2 += d2->mins * 60;
+		ret2 += (d2->month % 2 == 0) ? SIND * 30 : SIND * 31;
+	ret1 += d1->day * SIND;
+	ret2 += d2->day * SIND;
+	ret1 += d1->hour * SINH;
+	ret2 += d2->hour * SINH;
+	ret1 += d1->mins * SINM;
+	ret2 += d2->mins * SINM;
 	ret1 += d1->secs;
 	ret2 += d2->secs;
 	return (ret2 - ret1);
@@ -109,23 +109,8 @@ int		ft_datecmp(char *d1, char *d2, char *n1, char *n2)
 	d[1].hour = ft_atoi(&d2[11]);
 	d[1].mins = ft_atoi(&d2[14]);
 	d[1].secs = ft_atoi(&d2[17]);
-/*	printf("year = %d\n", date[0].year);
-	printf("month = %d\n", date[0].month);
-	printf("day = %d\n", date[0].day);
-	printf("hour = %d\n", date[0].hour);
-	printf("mins = %d\n", date[0].mins);
-	printf("secs = %d\n", date[0].secs);
-	printf("year = %d\n", date[1].year);
-	printf("month = %d\n", date[1].month);
-	printf("day = %d\n", date[1].day);
-	printf("hour = %d\n", date[1].hour);
-	printf("mins = %d\n", date[1].mins);
-	printf("secs = %d\n", date[1].secs);*/
-	if (d[0].year == d[1].year && d[0].month == d[1].month &&
-	d[0].day == d[1].day && d[0].hour == d[1].hour && d[0].mins == d[1].mins)
-	{
-//		DEBUG
+	if (d[0].year == d[1].year && d[0].month == d[1].month
+	&& d[0].day == d[1].day && d[0].hour == d[1].hour && d[0].mins == d[1].mins)
 		return (ft_strcmp(n1, n2));
-	}
 	return (ft_calculus(&d[0], &d[1]));
 }

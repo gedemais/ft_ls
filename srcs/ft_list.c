@@ -12,18 +12,6 @@
 
 #include "../includes/ft_ls.h"
 
-int		ft_ls_lstdel(t_file *lst)
-{
-	t_file	*tmp;
-
-	tmp = lst;
-	while (tmp->next)
-	{
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
 int		ft_lstlen(t_file *lst)
 {
 	t_file	*tmp;

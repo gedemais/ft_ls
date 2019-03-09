@@ -36,19 +36,21 @@ LIB_PATH = libft/
 
 LIB = libft/libft.a
 
-SRCS_NAME = fts.c \
+SRCS_NAME = 		fts.c \
 			main.c \
 			ft_run.c\
 			run_fts.c\
-			ft_list.c \
-			ft_usage.c \
-			lines_fts.c \
-			ft_params.c  \
-			ft_address.c  \
-			ft_datecmp.c   \
-			ft_parsing.c    \
-			ft_quicksort.c   \
-			ft_singletons.c   \
+			ft_free.c \
+			ft_list.c  \
+			ft_path.c   \
+			ft_usage.c   \
+			lines_fts.c   \
+			ft_params.c    \
+			ft_address.c    \
+			ft_datecmp.c     \
+			ft_parsing.c      \
+			ft_quicksort.c     \
+			ft_singletons.c     \
 
 SRCS_PATH = srcs/
 

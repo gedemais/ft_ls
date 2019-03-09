@@ -12,37 +12,6 @@
 
 #include "../includes/ft_ls.h"
 
-char	*ft_new_path(char *path, char *param)
-{
-	char	*dest;
-	char	*tmp;
-	int		len;
-
-	if (param[0] == '/' && ft_strcmp(path, "./") == 0)
-	{
-		if (param[ft_strlen(param) - 1] == '/')
-			return (param);
-		return (ft_strjoin(param, "/\0"));
-	}
-	if (path[ft_strlen(path) - 1] == '/')
-	{
-		if (!(tmp = ft_strjoin(path, param)))
-			return (NULL);
-		if (!(dest = ft_strjoin(tmp, "/")))
-			return (NULL);
-	}
-	else
-		if (!(tmp = ft_strjoin(path, "/\0")))
-			return (NULL);
-		else if (!(dest = ft_strjoin(tmp, param)))
-			return (NULL);
-	len = ft_strlen(dest);
-	if (dest[len - 1] == '/' && dest[len - 2] == '/')
-		dest[len - 1] = '\0';
-	ft_memdel((void**)&tmp);
-	return (dest);
-}
-
 int		ft_count_files(char *path)
 {
 	DIR				*d;
@@ -128,7 +97,6 @@ int		ft_nsfd(t_file *lst, char **params)
 		}
 		i++;
 	}
-//	ft_tabdel(nsfd);
 	return (0);
 }
 
@@ -202,7 +170,7 @@ int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
 			if (len > 1)
 				ft_display_dir(new_path);
 			ft_ls(NULL, mask, ft_strjoin(new_path, "/\0"));
-			if (tmp)
+			if (tmp != NULL)
 				ft_strdel(&tmp);
 			ft_write_buff(NULL, '\n', 1, 0);
 		}
@@ -228,6 +196,7 @@ int		ft_params(char **params, int mask, char *path)
 		ft_write_buff(NULL, '\n', 1, 0);
 	}
 	ft_params_relaunch(lst, params, path, mask);
+	ft_strdel(&path);
 	return (0);
 }
 

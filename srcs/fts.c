@@ -25,22 +25,6 @@ int		ft_tablen(char **tab)
 	return (i);
 }
 
-char	**ft_tabdel(char **tab)
-{
-	int		i;
-
-	i = 0;
-	while (tab[i])
-	{
-		ft_strdel(&tab[i]);
-		i++;
-	}
-	ft_strdel(&tab[i]);
-	free(tab);
-	tab = NULL;
-	return (tab);
-}
-
 int		ft_get_screen_length(void)
 {
 	struct ttysize	screen;

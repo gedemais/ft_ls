@@ -10,8 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all, $(NAME), $(OBJS), clean, fclean, re
-
 DEF = \033[0m
 GRA = \033[1m
 SOU = \033[4m
@@ -105,7 +103,7 @@ SRCS  =	ft_abs.c \
 		ft_swap.c \
 		ft_quicksort.c
 
-OBJS=$(SRCS:.c=.o)
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME) libft.h
 
