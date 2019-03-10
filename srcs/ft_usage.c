@@ -35,7 +35,7 @@ int		ft_usage(int type, char wrong, char *wrong_name, int usage)
 	if (usage == 1)
 	{
 		ft_write_buff(NULL, 0, 0, 1);
-		ft_putstr_fd("usage: ./ft_ls [-laRrtfS] [file ...]\n", 2);
+		ft_putstr_fd("usage: ./ft_ls [-laRrtfSpm1] [file ...]\n", 2);
 		exit (EXIT_FAILURE);
 	}
 	return (0);

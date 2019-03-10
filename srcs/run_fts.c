@@ -64,13 +64,6 @@ int		ft_nohiddens(int nbf, void **add)
 	return (new_nbf);
 }
 
-int		ft_flags(t_file *node, int mask)
-{
-	(void)node;
-	(void)mask;
-	return (1);
-}
-
 int		ft_find_biggest(void **add, int nbf)
 {
 	int		i;

@@ -47,9 +47,9 @@ void	**ft_addresses(t_file *lst, int len)
 	tmp = lst;
 	while (tmp)
 	{
-			add[i] = &(*tmp);
-			tmp = tmp->next;
-			i++;
+		add[i] = &(*tmp);
+		tmp = tmp->next;
+		i++;
 	}
 	add[i] = NULL;
 	return (add);

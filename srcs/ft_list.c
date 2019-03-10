@@ -103,7 +103,6 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	if (!(new = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	new->name_len = ft_strlen(name);
-	new->name = ft_strdup(name);
 	if (!(new->file_path = ft_strjoin(path, name)))
 		return (NULL);
 	if (lstat(new->file_path, &file) < 0)
@@ -119,6 +118,14 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	else
 		new->nope = 0;
 	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
+	if (mask & O_P && new->dir == 1)
+	{
+		if (!(new->name = ft_strjoin(name, "/\0")))
+			return (NULL);
+	}
+	else
+		if (!(new->name = ft_strdup(name)))
+			return (NULL);
 	new->perms = ft_make_perms(&file); // Permissions
 	if (S_ISLNK(file.st_mode))
 	{

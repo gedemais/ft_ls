@@ -49,8 +49,9 @@ SRCS_NAME = 		fts.c \
 			ft_address.c    \
 			ft_datecmp.c     \
 			ft_parsing.c      \
-			ft_quicksort.c     \
-			ft_singletons.c     \
+			ft_displays.c      \
+			ft_quicksort.c      \
+			ft_singletons.c      \
 
 SRCS_PATH = srcs/
 

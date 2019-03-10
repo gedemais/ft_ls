@@ -52,6 +52,9 @@
 # define O_F 32
 # define O_SMAJ 64
 # define O_P 128
+# define O_M 256
+# define O_1 512
+
 
 # include "../libft/libft.h"
 # include <stdbool.h>
@@ -119,6 +122,11 @@ int		ft_calculus(t_date *d1, t_date *d2);
 int		ft_datecmp(char *d1, char *d2, char *n1, char *n2);
 
 /*
+** ft_displays.c
+*/
+int		ft_display_stream(void **add, int nbf, int mask, int t_len);
+
+/*
 ** ft_free.c
 */
 char		**ft_tabdel(char **tab);
@@ -154,7 +162,7 @@ int		ft_params(char **params, int mask, char *path);
 ** ft_parsing.c
 */
 int		ft_is_flag(char c);
-int             ft_add_mask(int mask, char c);
+int             ft_add_mask(int *mask, char c);
 int             ft_count(int ac, char **av);
 int             ft_make_mask(char *flags);
 int             ft_get_options(int ac, char **av);
@@ -181,6 +189,7 @@ int		ft_ls_quicksort(void **add, int start, int end, int mask);
 /*
 ** ft_run.c
 */
+int		ft_display_one(void **add, int nbf, int mask);
 int		ft_nonope(int nbf, void **add);
 int		ft_display_cols(int mask, void **add, int nbf, int minw);
 int		ft_display_lines(void **add, int nbf, int mask);
@@ -203,6 +212,7 @@ int		ft_usage(int type, char wrong, char *wrong_name, int usage);
 */
 int		ft_tablen(char **tab);
 int		ft_get_screen_length(void);
+void		ft_print_flags(int mask);
 
 /*
 ** lines_fts.c

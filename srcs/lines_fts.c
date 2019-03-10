@@ -35,6 +35,7 @@ void	ft_add_uid(char *uid, int uid_len, int len)
 			uid_len++;
 		}
 	}
+	ft_write_buff("  ", 0, 0, 0);
 }
 
 void	ft_add_links(int nb, int max)
@@ -50,6 +51,7 @@ void	ft_add_links(int nb, int max)
 	}
 	tmp = ft_itoa(nb); // Trouver mieux
 	ft_write_buff(tmp, 0, 0, 0);
+	ft_write_buff(NULL, ' ', 1, 0);
 	ft_strdel(&tmp);
 }
 
@@ -57,6 +59,7 @@ void	ft_add_date(char *date)
 {	
 	date[16] = '\0';
 	ft_write_buff(&date[4], 0, 0, 0);
+	ft_write_buff(NULL, ' ', 1, 0);
 }
 
 void	ft_get_lines_data(void **add, int *max, int nbf)

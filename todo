@@ -3,3 +3,5 @@ LEAKS
 Split lstnew
 Split ft_quicksort.c
 Access Denied
+/dev/fd/
+
