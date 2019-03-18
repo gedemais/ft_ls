@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:16:50 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/07 20:29:37 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:27:41 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		ft_is_flag(char c)
 {
 	if (c != 'l' && c != 'R' && c != 'a' && c != 'r' && c != 't'
-	&& c != 'f' && c != 'S' && c != 'p' && c != 'm' && c != '1')
+	&& c != 'f' && c != 'S' && c != 'A' && c != 'm' && c != '1')
 		return (0);
 	return (1);
 }
@@ -42,8 +42,8 @@ int		ft_add_mask(int *mask, char c)
 		return (!(*mask & O_A) ? O_F + O_A : O_F);
 	else if (c == 'S' && !(*mask & O_SMAJ) && !(*mask & O_T))
 		return (O_SMAJ);
-	else if (c == 'p' && !(*mask & O_P))
-		return (O_P);
+	else if (c == 'A' && !(*mask & O_AMAJ))
+		return (O_AMAJ);
 	else if (c == 'm' && !(*mask & O_M))
 	{
 		if (*mask & O_L)

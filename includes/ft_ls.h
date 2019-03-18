@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/07 21:49:30 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:42:29 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define O_T 16
 # define O_F 32
 # define O_SMAJ 64
-# define O_P 128
+# define O_AMAJ 128
 # define O_M 256
 # define O_1 512
 
@@ -74,7 +74,6 @@ struct		s_file
 	char	*name;
 	int	name_len;
 	char	*file_path;
-	char	*perms;
 	char	*uid;
 	int	uid_len;
 	char	*gid;
@@ -88,6 +87,7 @@ struct		s_file
 	int	blocksize;
 	int	nope;
 	int	nsfd;
+	char	*perms;
 	t_file	*next;
 };
 
@@ -131,12 +131,11 @@ int		ft_display_stream(void **add, int nbf, int mask, int t_len);
 */
 char		**ft_tabdel(char **tab);
 int		ft_free_add(void **add, int nbf);
-int		ft_ls_lstdel(t_file *lst);
+int		ft_ls_lstdel(t_file *lst, int mask);
 
 /*
 ** ft_list.c
 */
-int		ft_ls_lstdel(t_file *lst);
 int		ft_lstlen(t_file *lst);
 char		*ft_make_perms(struct stat *file);
 char		*ft_getlink(t_file *file);

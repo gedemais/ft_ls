@@ -39,9 +39,7 @@ void	ft_relaunch(void **add, int nbf, int mask)
 		{
 			ft_write_buff(TF->file_path, 0, 0, 0);
 			ft_write_buff(":\n", 0, 0, 0);
-			if (!(TF->file_path = ft_new_path(TF->file_path, "/\0")))
-				return ;
-			ft_ls(NULL, mask, TF->file_path);
+			ft_ls(NULL, mask, ft_new_path(TF->file_path, "/\0"));
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:35:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/28 19:24:42 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:28:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void		ft_print_flags(int mask)
 		ft_putchar('f');
 	if (mask & O_SMAJ)
 		ft_putchar('S');
-	if (mask & O_P)
-		ft_putchar('p');
+	if (mask & O_AMAJ)
+		ft_putchar('A');
 	if (mask & O_M)
 		ft_putchar('m');
 	if (mask & O_1)

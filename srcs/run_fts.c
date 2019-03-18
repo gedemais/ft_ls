@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 00:41:51 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/22 06:56:22 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/13 12:32:38 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		ft_relaunch_check(t_file *file, int mask)
 		return (0);
 	if (file->nope == 1)
 		return (0);
-	if (file->perms[0] == 'l')
+	if (file->link != NULL)
 		return (0);
 	return (1);
 }

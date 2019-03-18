@@ -9,8 +9,8 @@ char	*ft_new_path(char *path, char *param)
 	if (param[0] == '/' && ft_strcmp(path, "./") == 0)
 	{
 		if (param[ft_strlen(param) - 1] == '/')
-			return (param);
-		return (ft_strjoin(param, "/\0"));
+			return (ft_strdup(param));
+		return (ft_strjoin(param, "/"));
 	}
 	if (path[ft_strlen(path) - 1] == '/')
 	{
@@ -27,6 +27,6 @@ char	*ft_new_path(char *path, char *param)
 	len = ft_strlen(dest);
 	if (dest[len - 1] == '/' && dest[len - 2] == '/')
 		dest[len - 1] = '\0';
-	ft_memdel((void**)&tmp);
+	ft_strdel(&tmp);
 	return (dest);
 }

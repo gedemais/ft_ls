@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/07 22:15:25 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:39:38 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	ft_swap(&n1->gid_len, &n2->gid_len);
 	ft_swap(&n1->size, &n2->size);
 	ft_swap(&n1->uid_len, &n2->uid_len);
-	
 	ft_swap_str(&n1->name, &n2->name);
 	ft_swap_str(&n1->file_path, &n2->file_path);
-	
 	ft_swap_str(&n1->link, &n2->link);
 	ft_swap_str(&n1->perms, &n2->perms);
 	ft_swap_str(&n1->uid, &n2->uid);

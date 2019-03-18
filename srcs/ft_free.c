@@ -16,27 +16,33 @@ char	**ft_tabdel(char **tab)
 	return (tab);
 }
 
-int	ft_free_add(void **add, int nbf)
+int		ft_ls_lstdel(t_file *lst, int mask)
 {
-	int		i;
+	char	*tmp;
 
-	i = 0;
-	while (i < nbf)
-	{
-		free(TF->name);
-		i++;
-	}
-	free(add);
-	return (0);
-}
-
-int		ft_ls_lstdel(t_file *lst)
-{
 	if (lst->next)
+		ft_ls_lstdel(lst->next, mask);
+	ft_strdel(&lst->name);
+	if (mask & O_L)
 	{
-		ft_ls_lstdel(lst->next);
-		free(lst->next);
+		if (lst->uid)
+			ft_strdel(&lst->uid);
+		if (lst->gid)
+			ft_strdel(&lst->gid);
+		if (lst->perms)
+		{
+			tmp = lst->perms - 1;
+			ft_strdel(&tmp);
+		}
 	}
+	if (lst->link)
+		ft_strdel(&lst->link);
+	if (lst->file_path)
+		ft_strdel(&lst->file_path);
+	if (mask & O_T)
+		ft_strdel(&lst->secstime);
+	if (lst->date)
+		ft_strdel(&lst->date);
 	free(lst);
 	return (0);
 }

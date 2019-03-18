@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/07 20:37:41 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/18 17:08:09 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,12 @@ int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
 		{
 			if (!(new_path = ft_new_path(path, tmp)))
 				return (-1);
+			ft_strdel(&tmp);
 			if (len > 1)
 				ft_display_dir(new_path);
-			ft_ls(NULL, mask, ft_strjoin(new_path, "/\0"));
+			ft_ls(NULL, mask, (tmp = ft_strjoin(new_path, "/\0")));
 			if (tmp != NULL)
-				ft_strdel(&tmp);
+				ft_strdel(&new_path);
 			ft_write_buff(NULL, '\n', 1, 0);
 		}
 		i++;
@@ -196,7 +197,8 @@ int		ft_params(char **params, int mask, char *path)
 		ft_write_buff(NULL, '\n', 1, 0);
 	}
 	ft_params_relaunch(lst, params, path, mask);
-	ft_strdel(&path);
+	free(add);
+	ft_ls_lstdel(lst, mask);
 	return (0);
 }
 
