@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/13 16:42:29 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 18:37:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void		ft_print_flags(int mask);
 */
 void		ft_add_total(int total);
 void		ft_add_uid(char *uid, int uid_len, int len);
-void		ft_add_links(int nb, int max);
+int			ft_add_links(int nb, int max);
 void		ft_add_date(char *date);
 void		ft_get_lines_data(void **add, int *max, int nbf);
 int		ft_add_linkings(t_file *file);

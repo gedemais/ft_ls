@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 00:32:07 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/07 21:49:05 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 18:37:51 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_add_uid(char *uid, int uid_len, int len)
 	ft_write_buff("  ", 0, 0, 0);
 }
 
-void	ft_add_links(int nb, int max)
+int		ft_add_links(int nb, int max)
 {
 	char	*tmp;
 	int		len;
@@ -49,14 +49,16 @@ void	ft_add_links(int nb, int max)
 		ft_write_buff(NULL, ' ', 1, 0);
 		len++;
 	}
-	tmp = ft_itoa(nb); // Trouver mieux
+	if (!(tmp = ft_itoa(nb)))
+		return (-1);
 	ft_write_buff(tmp, 0, 0, 0);
 	ft_write_buff(NULL, ' ', 1, 0);
 	ft_strdel(&tmp);
+	return (0);
 }
 
 void	ft_add_date(char *date)
-{	
+{
 	date[16] = '\0';
 	ft_write_buff(&date[4], 0, 0, 0);
 	ft_write_buff(NULL, ' ', 1, 0);

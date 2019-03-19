@@ -6,12 +6,12 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/18 17:13:04 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 18:06:03 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-
+#include <time.h>
 void		ft_write_buff(char *str, char c, int cat, int flush)
 {
 	static char	buff[WBUFF_SIZE];
@@ -58,7 +58,6 @@ int		ft_ls(char **params, int mask, char *path)
 	if (params)
 	{
 		ft_params(params, mask, path);
-		ft_write_buff(NULL, 0, 0, 1);
 		ft_tabdel(params);
 		return (0);
 	}
@@ -73,10 +72,9 @@ int		ft_ls(char **params, int mask, char *path)
 		return (-1);
 	if (!(mask & O_F))
 		ft_ls_quicksort(add, 0, len + 1, mask);
-	if (mask & O_R || mask & O_F)
+	if (mask & O_R)
 		ft_addrev(add, mask);
 	ft_run(mask, len + 1, add);
-	ft_strdel(&path);
 	free(add);
 	ft_ls_lstdel(lst, mask);
 	return (0);

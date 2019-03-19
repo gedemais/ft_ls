@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/11 16:39:38 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 15:13:36 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int			ft_sort_params(char **argv, int argc)
 
 int			ft_ls_quicksort(void **add, int start, int end, int mask)
 {
-	int		j;
+	int			j;
 
 	if (start < end - 1)
 	{

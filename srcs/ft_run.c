@@ -28,6 +28,7 @@ int		ft_nonope(int nbf, void **add)
 
 void	ft_relaunch(void **add, int nbf, int mask)
 {
+	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -39,7 +40,9 @@ void	ft_relaunch(void **add, int nbf, int mask)
 		{
 			ft_write_buff(TF->file_path, 0, 0, 0);
 			ft_write_buff(":\n", 0, 0, 0);
-			ft_ls(NULL, mask, ft_new_path(TF->file_path, "/\0"));
+			ft_ls(NULL, mask, (tmp = ft_new_path(TF->file_path, "/")));
+			if (tmp != NULL)
+				ft_strdel(&tmp);
 		}
 		i++;
 	}

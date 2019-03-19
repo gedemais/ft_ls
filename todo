@@ -1,7 +1,5 @@
 Remplacer les itoa
-LEAKS
 Split lstnew
 Split ft_quicksort.c
-Access Denied
-/dev/fd/
-Permissions c
+Display /dev/fd/
+Permissions S s t T

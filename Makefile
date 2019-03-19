@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/05 00:59:17 by gedemais          #+#    #+#              #
-#    Updated: 2019/03/18 15:06:15 by gedemais         ###   ########.fr        #
+#    Updated: 2019/03/19 15:36:31 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ ORG = \033[1;31m
 
 NAME = ft_ls
 
-CC = @gcc -g
+CC = @gcc
 
 FLAGS = -g -fsanitize=address
 

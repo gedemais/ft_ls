@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:14:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/02 18:40:38 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 15:15:38 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ void	**ft_addresses(t_file *lst, int len)
 	void	**add;
 	int		i;
 
-	i = 0;
+	i = len;
 	if (len == 0)
 		return (NULL);
 	if (!(add = (void**)malloc(sizeof(void*) * (len + 2))))
 		return (NULL);
 	tmp = lst;
-	while (tmp)
+	add[i] = NULL;
+	while (tmp && i >= 0)
 	{
+		i--;
 		add[i] = &(*tmp);
 		tmp = tmp->next;
-		i++;
 	}
-	add[i] = NULL;
 	return (add);
 }
