@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:06:03 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 21:41:08 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,17 @@ int		ft_ls(char **params, int mask, char *path)
 	void	**add;
 	int		len;
 
+	PUT1
 	if (params)
 	{
 		ft_params(params, mask, path);
 		ft_tabdel(params);
 		return (0);
 	}
+	PUT2
 	if (!(lst = ft_make_list(path, mask, 0)))
 	{
+		PUT3
 		if (mask & O_RMAJ)
 			ft_write_buff(NULL, '\n', 1, 0);
 		return (0);

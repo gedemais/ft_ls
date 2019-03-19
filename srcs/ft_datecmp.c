@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 05:45:05 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/17 02:11:19 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 18:43:59 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,8 @@ int		ft_datecmp(char *d1, char *d2, char *n1, char *n2)
 	t_date	d[2];
 
 	ft_set_date(&d[0], &d[1]);
-	if (ft_strcmp(&d1[21], &d2[21]) != 0)
-	{
-		d[0].year = ft_atoi(&d1[21]);
+	if (ft_strcmp(&d1[21], &d2[21]) != 0 && (d[0].year = ft_atoi(&d1[21])))
 		d[1].year = ft_atoi(&d2[21]);
-	}
 	if (ft_strncmp(&d1[5], &d2[5], 3) != 0)
 	{
 		d[0].month = ft_get_month(&d1[4]);

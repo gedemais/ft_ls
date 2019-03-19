@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_path.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/19 18:52:49 by gedemais          #+#    #+#             */
+/*   Updated: 2019/03/19 18:56:19 by gedemais         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ls.h"
 
 char	*ft_new_path(char *path, char *param)
@@ -14,18 +26,14 @@ char	*ft_new_path(char *path, char *param)
 	}
 	if (path[ft_strlen(path) - 1] == '/')
 	{
-		if (!(tmp = ft_strjoin(path, param)))
-			return (NULL);
-		if (!(dest = ft_strjoin(tmp, "/")))
+		if (!(tmp = ft_strjoin(path, param))
+			|| !(dest = ft_strjoin(tmp, "/")))
 			return (NULL);
 	}
-	else
-		if (!(tmp = ft_strjoin(path, "/\0")))
+	else if (!(tmp = ft_strjoin(path, "/\0"))
+		|| !(dest = ft_strjoin(tmp, param)))
 			return (NULL);
-		else if (!(dest = ft_strjoin(tmp, param)))
-			return (NULL);
-	len = ft_strlen(dest);
-	if (dest[len - 1] == '/' && dest[len - 2] == '/')
+	if ((len = ft_strlen(dest)) && dest[len - 1] == '/' && dest[len - 2] == '/')
 		dest[len - 1] = '\0';
 	ft_strdel(&tmp);
 	return (dest);

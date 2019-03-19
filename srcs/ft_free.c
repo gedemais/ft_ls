@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/19 18:46:59 by gedemais          #+#    #+#             */
+/*   Updated: 2019/03/19 21:06:58 by gedemais         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ls.h"
 
 char	**ft_tabdel(char **tab)
@@ -29,11 +41,8 @@ int		ft_ls_lstdel(t_file *lst, int mask)
 			ft_strdel(&lst->uid);
 		if (lst->gid)
 			ft_strdel(&lst->gid);
-		if (lst->perms)
-		{
-			tmp = lst->perms - 1;
+		if (lst->perms && (tmp = lst->perms - 1))
 			ft_strdel(&tmp);
-		}
 	}
 	if (lst->link)
 		ft_strdel(&lst->link);

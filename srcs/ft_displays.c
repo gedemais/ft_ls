@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_displays.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/19 18:44:05 by gedemais          #+#    #+#             */
+/*   Updated: 2019/03/19 18:46:36 by gedemais         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ls.h"
 
 int		ft_display_line(int mask, void **add, int nbf, int minw)
@@ -57,7 +69,8 @@ int		ft_display_cols(int mask, void **add, int nbf, int minw)
 {
 	int	vars[8];
 
-	vars[0] = ((vars[0] = ft_get_screen_length() / minw) > 0) ? vars[0] : 1;
+	vars[0] = ft_get_screen_length() / minw;
+	vars[0] = (vars[0] > 0) ? vars[0] : 1;
 	vars[1] = (mask & O_A) ? nbf : ft_nohiddens(nbf, add) - 1;
 	vars[2] = vars[1] / vars[0] + 1;
 	vars[3] = nbf / vars[0] + 1;

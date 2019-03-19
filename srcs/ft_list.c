@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:30:58 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/19 21:41:33 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ t_file	*ft_make_list(char *path, int mask, int params)
 	struct dirent	*dir;
 	int				i;
 
-	i = -1;
+	i = -1;	
 	if (!(d = opendir(path)))
 	{
 		ft_usage(errno, 0, ft_delspath(path), 0);
