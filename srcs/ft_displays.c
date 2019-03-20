@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:44:05 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:46:36 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 17:56:41 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		ft_display_one(void **add, int nbf, int mask)
 	return (0);
 }
 
-int		ft_display_lines(void **add, int nbf, int mask)
+void	ft_display_lines(void **add, int nbf, int mask)
 {
 	int		maxs[5];
 	int		i;
@@ -118,7 +118,6 @@ int		ft_display_lines(void **add, int nbf, int mask)
 	ft_get_lines_data(add, maxs, nbf);
 	ft_add_total(maxs[2]);
 	while (++i < nbf)
-	{
 		if (TF->nope == 0)
 		{
 			ft_write_buff(TF->perms, 0, 0, 0);
@@ -126,14 +125,15 @@ int		ft_display_lines(void **add, int nbf, int mask)
 			ft_add_links(TF->nlinks, maxs[0]);
 			ft_add_uid(TF->uid, TF->uid_len, maxs[3]);
 			ft_add_uid(TF->gid, TF->gid_len, maxs[4]);
-			ft_add_links(TF->size, maxs[1]);
+			if (TF->perms[0] == 'c' || TF->perms[0] == 'b')
+				ft_minor_major(TF->minor, TF->major, maxs[1]);
+			else
+				ft_add_links(TF->size, maxs[1]);
 			ft_add_date(TF->date);
 			ft_write_buff(TF->name, 0, 0, 0);
 			ft_add_linkings(TF);
 			ft_write_buff(NULL, '\n', 1, 0);
 		}
-	}
 	if (*ft_last_endl() >= 1 || (mask & O_RMAJ))
 		ft_write_buff(NULL, '\n', 1, 0);
-	return (0);
 }

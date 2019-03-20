@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:41:42 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 17:54:43 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,12 +184,46 @@ int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
 	return (0);
 }
 
+int		ft_check_param(char *param)
+{
+	struct stat		file;
+
+	if (lstat(param, &file) < 0)
+		return (0);
+	return (1);
+}
+
+t_file	*ft_make_params_list(char **params, int mask)
+{
+	t_file	*lst;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = -1;
+	while (params[i])
+	{
+		if (ft_check_param(params[i]) == 0 && ++i)
+			continue ;
+		else if (j == -1 && ++j == 0)
+		{
+			if (!(lst = ft_ls_lstnew(NULL, params[i], mask, 1)))
+				return (NULL);
+		}
+		else
+			if (ft_ls_pushfront(&lst, ft_ls_lstnew(NULL, params[i], mask, 1)) == -1)
+				return (NULL);
+		i++;
+	}
+	return (lst);
+}
+
 int		ft_params(char **params, int mask, char *path)
 {
 	t_file	*lst;
 	void	**add;
 
-	if (!(lst = ft_make_list(path, ((mask & O_A) ? mask : mask + O_A), 1)))
+	if (!(lst = ft_make_params_list(params, ((mask & O_A) ? mask : mask + O_A))))
 		return (-1);
 	if (!(add = ft_make_add(lst, ft_lstlen(lst) + 1, mask)))
 		return (-1);
@@ -202,7 +236,7 @@ int		ft_params(char **params, int mask, char *path)
 	}
 	ft_params_relaunch(lst, params, path, mask);
 	free(add);
+	ft_tabdel(params);
 	ft_ls_lstdel(lst, mask);
 	return (0);
 }
-

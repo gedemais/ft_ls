@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 21:41:33 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 17:59:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ int		ft_lstlen(t_file *files)
 		ret++;
 	}
 	return (ret);
-}
-
-void	ft_display_ls_lst(t_file *top)
-{
-	t_file	*tmp;
-	int	i;
-
-	tmp = top;
-	i = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		i++;
-	}
 }
 
 char	ft_makefperms(struct stat *file)
@@ -89,7 +75,7 @@ char	*ft_make_perms(struct stat *file)
 char	*ft_getlink(t_file *file)
 {
 	char	*dest;
-	int	i;
+	int		i;
 
 	i = 2;
 	if (!(dest = (char*)malloc(sizeof(char) * 1024)))
@@ -124,7 +110,8 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	if (!(new->name = ft_strdup(name)))
 		return (NULL);
 	new->name_len = ft_strlen(name);
-	if (!(new->file_path = ft_strjoin(path, name)))
+	new->file_path = (params == 1) ? ft_strdup(name) : ft_strjoin(path, name);
+	if (!new->file_path)
 		return (NULL);
 	if (lstat(new->file_path, &file) < 0)
 	{
@@ -143,19 +130,20 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
 	if (mask & O_L)
 	{
-		new->perms = ft_make_perms(&file); // Permissions
+		new->perms = ft_make_perms(&file);
+		new->major = ((int)((char)((int32_t)(((u_int32_t)(file.st_rdev) >> 24)
+			& 0xff))));
+		new->minor = ((int)((char)file.st_rdev));
 		if ((psswd = getpwuid(file.st_uid)) != NULL)
 		{
-			if (!(new->uid = ft_strdup(psswd->pw_name))) // UID
+			if (!(new->uid = ft_strdup(psswd->pw_name)))
 				return (NULL);
 		}
-		else
-			if (!(new->uid = ft_strdup("root"))) // UID
+		else if (!(new->uid = ft_strdup("root")))
 				return (NULL);
-
 		new->uid_len = ft_strlen(new->uid);
 		if ((gid = getgrgid(file.st_gid)))
-			if (!(new->gid = ft_strdup(gid->gr_name))) // GID
+			if (!(new->gid = ft_strdup(gid->gr_name)))
 				return (NULL);
 		new->gid_len = ft_strlen(new->gid);
 	}
@@ -166,9 +154,9 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	}
 	else
 		new->link = NULL;
-	new->nlinks = (int)file.st_nlink; // nombre de liens
-	new->size = file.st_size; // Taille en octets
-	new->date = ft_strdup(ctime(&file.st_ctime)); // Date
+	new->nlinks = (int)file.st_nlink;
+	new->size = file.st_size;
+	new->date = ft_strdup(ctime(&file.st_ctime));
 	new->blocksize = file.st_blocks;
 	if (mask & O_T)
 		new->secstime = ft_strdup(ctime(&file.st_mtime));
@@ -212,14 +200,14 @@ char	*ft_delspath(char *path)
 	return (path);
 }
 
-t_file	*ft_make_list(char *path, int mask, int params)
+t_file	*ft_make_list(char *path, int mask)
 {
 	t_file			*lst;
 	DIR				*d;
 	struct dirent	*dir;
 	int				i;
 
-	i = -1;	
+	i = -1;
 	if (!(d = opendir(path)))
 	{
 		ft_usage(errno, 0, ft_delspath(path), 0);
@@ -233,11 +221,11 @@ t_file	*ft_make_list(char *path, int mask, int params)
 			continue ;
 		else if (i == -1 && ++i == 0)
 		{
-			if (!(lst = ft_ls_lstnew(path, dir->d_name, mask, params)))
+			if (!(lst = ft_ls_lstnew(path, dir->d_name, mask, 0)))
 				return (NULL);
 		}
 		else
-			if (ft_ls_pushfront(&lst, ft_ls_lstnew(path, dir->d_name, mask, params)) == -1)
+			if (ft_ls_pushfront(&lst, ft_ls_lstnew(path, dir->d_name, mask, 0)) == -1)
 				return (NULL);
 	}
 	if (i == -1)
@@ -245,4 +233,3 @@ t_file	*ft_make_list(char *path, int mask, int params)
 	closedir(d);
 	return (lst);
 }
-

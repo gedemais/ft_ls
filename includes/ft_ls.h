@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 21:01:54 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 17:50:31 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define TFAJ ((t_file*)add[j])
 # define TFAP ((t_file*)add[pivot])
 
-# define WBUFF_SIZE 8192
+# define WBUFF_SIZE 16384
 
 # define DEBUG 0
 # define PUT ft_putstr("There\n");
@@ -72,22 +72,24 @@ typedef struct	s_file t_file;
 struct		s_file
 {
 	char	*name;
-	int	name_len;
+	int		name_len;
 	char	*file_path;
 	char	*uid;
-	int	uid_len;
+	int		uid_len;
 	char	*gid;
-	int	gid_len;
+	int		gid_len;
 	char	*link;
-	int	nlinks;
+	int		nlinks;
 	char	*secstime;
 	char	*date;
-	int	dir;
-	int	size;
-	int	blocksize;
-	int	nope;
-	int	nsfd;
+	int		dir;
+	int		size;
+	int		blocksize;
+	int		nope;
+	int		nsfd;
 	char	*perms;
+	int		minor;
+	int		major;
 	t_file	*next;
 };
 
@@ -119,6 +121,7 @@ void		**ft_addresses(t_file *lst, int len);
 void		ft_set_date(t_date *d1, t_date *d2);
 int		ft_get_month(char *month);
 int		ft_calculus(t_date *d1, t_date *d2);
+void	ft_putnbr_buff(int n);
 int		ft_datecmp(char *d1, char *d2, char *n1, char *n2);
 
 /*
@@ -141,7 +144,7 @@ char		*ft_make_perms(struct stat *file);
 char		*ft_getlink(t_file *file);
 t_file		*ft_ls_lstnew(char *path, char *name, int mask, int params);
 int		ft_ls_pushfront(t_file **file, t_file *new);
-t_file		*ft_make_list(char *path, int mask, int params);
+t_file		*ft_make_list(char *path, int mask);
 
 /*
 ** ft_params.c
@@ -191,7 +194,7 @@ int		ft_ls_quicksort(void **add, int start, int end, int mask);
 int		ft_display_one(void **add, int nbf, int mask);
 int		ft_nonope(int nbf, void **add);
 int		ft_display_cols(int mask, void **add, int nbf, int minw);
-int		ft_display_lines(void **add, int nbf, int mask);
+void	ft_display_lines(void **add, int nbf, int mask);
 int             ft_display_line(int mask, void **add, int nbf, int minw);
 void    	ft_relaunch(void **add, int nbf, int mask);
 void		ft_run(int mask, int nbf, void **add);
@@ -221,7 +224,8 @@ void		ft_add_uid(char *uid, int uid_len, int len);
 int			ft_add_links(int nb, int max);
 void		ft_add_date(char *date);
 void		ft_get_lines_data(void **add, int *max, int nbf);
-int		ft_add_linkings(t_file *file);
+int			ft_add_linkings(t_file *file);
+void		ft_minor_major(int minor, int major, int max);
 
 /*
 ** run_fts.c

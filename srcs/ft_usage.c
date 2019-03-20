@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:18:55 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:31:41 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 10:13:36 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int		ft_usage(int type, char wrong, char *wrong_name, int usage)
 	}
 	else if (type == EACCES)
 	{
-		ft_putstr_fd("ft_ls: ", 2);
-		ft_putstr_fd(wrong_name, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		write(2, "ft_ls: ", 7);
+		write(2, wrong_name, ft_strlen(wrong_name));
+		write(2, ": Permission denied\n", 20);
 	}
 	if (usage == 1)
 	{

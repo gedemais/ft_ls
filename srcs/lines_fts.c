@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 00:32:07 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:37:51 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 17:50:16 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	ft_add_uid(char *uid, int uid_len, int len)
 
 int		ft_add_links(int nb, int max)
 {
-	char	*tmp;
 	int		len;
 
 	len = ft_nb_len(nb);
@@ -49,11 +48,8 @@ int		ft_add_links(int nb, int max)
 		ft_write_buff(NULL, ' ', 1, 0);
 		len++;
 	}
-	if (!(tmp = ft_itoa(nb)))
-		return (-1);
-	ft_write_buff(tmp, 0, 0, 0);
+	ft_putnbr_buff(nb);
 	ft_write_buff(NULL, ' ', 1, 0);
-	ft_strdel(&tmp);
 	return (0);
 }
 
@@ -99,4 +95,30 @@ int		ft_add_linkings(t_file *file)
 	}
 	else
 		return (0);
+}
+
+void	ft_minor_major(int minor, int major, int max)
+{
+	int		i;
+	int		len;
+
+	i = 0;
+	len = ft_nb_len(minor);
+	while (i < max - len)
+	{
+		ft_write_buff(NULL, ' ', 1, 0);
+		i++;
+	}
+	ft_putnbr_buff(major);
+	ft_write_buff(NULL, ',', 1, 0);
+	ft_write_buff(NULL, ' ', 1, 0);
+	i = 0;
+	len = ft_nb_len(major);
+	while (i < len)
+	{
+		ft_write_buff(NULL, ' ', 1, 0);
+		i++;
+	}	
+	ft_putnbr_buff(minor);
+	ft_write_buff(NULL, ' ', 1, 0);
 }

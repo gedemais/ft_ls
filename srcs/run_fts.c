@@ -6,11 +6,29 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 00:41:51 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/13 12:32:38 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 14:12:10 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+void	ft_putnbr_buff(int n)
+{
+	if (n == -2147483648)
+	{
+		ft_write_buff(NULL, '-', 1, 0);
+		ft_write_buff(NULL, '2', 1, 0);
+		n = 147483648;
+	}
+	if (n < 0)
+	{
+		ft_write_buff(NULL, '-', 1, 0);
+		n = n * -1;
+	}
+	if (n >= 10)
+		ft_putnbr_buff(n / 10);
+	ft_write_buff(NULL, (n % 10) + '0', 1, 0);
+}
 
 void	ft_cpy_string(char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:16:50 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 21:21:12 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 11:03:51 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ int		ft_check_doubles(char *flags, char c)
 
 	i = 0;
 	ret = 0;
-	while (flags[i])
+	while (flags[i] != '\0')
 	{
-		if (flags[i] == c && c != 'l' && c != 'm' && c != '1')
+		if (flags[i] && flags[i] == c && c != 'l' && c != 'm' && c != '1')
 			ret++;
 		i++;
 	}
@@ -126,20 +126,18 @@ int		ft_get_options(int ac, char **av)
 
 	i = 1;
 	k = 0;
-	if (!(flags = (char*)malloc(sizeof(char) * 8)))
+	if (!(flags = (char*)malloc(sizeof(char) * 1024)))
 		return (-1);
 	while (i < ac && av[i][0] == '-' && av[i][1] != '\0')
 	{
 		j = 0;
 		while (av[i][++j] != '\0')
-		{
 			if (ft_strcmp(av[i], "--") == 0 && ++i)
 				break ;
-			if (ft_is_flag(av[i][j]) == 1 && ft_check_doubles(flags, av[i][j]) == 0)
+			else if (ft_is_flag(av[i][j]) == 1 && ft_check_doubles(flags, av[i][j]) == 0)
 				flags[k++] = av[i][j];
 			else if (ft_is_flag(av[i][j]) == 0)
 				ft_usage(1, av[i][j], NULL, 1);
-		}
 		i++;
 	}
 	flags[k++] = '\0';
