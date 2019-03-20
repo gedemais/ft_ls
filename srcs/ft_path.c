@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:52:49 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:56:19 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 20:12:06 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_new_path(char *path, char *param)
 	}
 	else if (!(tmp = ft_strjoin(path, "/\0"))
 		|| !(dest = ft_strjoin(tmp, param)))
-			return (NULL);
+		return (NULL);
 	if ((len = ft_strlen(dest)) && dest[len - 1] == '/' && dest[len - 2] == '/')
 		dest[len - 1] = '\0';
 	ft_strdel(&tmp);

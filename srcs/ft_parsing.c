@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:16:50 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 11:03:51 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 20:10:05 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int		ft_add_mask(int *mask, char c)
 		return (O_L);
 	}
 	else if (c == 'R' && !(*mask & O_RMAJ))
-		return (O_RMAJ); 
+		return (O_RMAJ);
 	else if (c == 'a' && !(*mask & O_A))
-		return (O_A); 
+		return (O_A);
 	else if (c == 'r' && !(*mask & O_R))
-		return (O_R); 
+		return (O_R);
 	else if (c == 't' && !(*mask & O_T) && !(*mask & O_SMAJ))
 		return (O_T);
 	else if (c == 'f' && !(*mask & O_SMAJ) && !(*mask & O_T))
@@ -120,9 +120,9 @@ int		ft_check_doubles(char *flags, char c)
 int		ft_get_options(int ac, char **av)
 {
 	char	*flags;
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	int		j;
+	int		k;
 
 	i = 1;
 	k = 0;
@@ -134,7 +134,8 @@ int		ft_get_options(int ac, char **av)
 		while (av[i][++j] != '\0')
 			if (ft_strcmp(av[i], "--") == 0 && ++i)
 				break ;
-			else if (ft_is_flag(av[i][j]) == 1 && ft_check_doubles(flags, av[i][j]) == 0)
+			else if (ft_is_flag(av[i][j]) == 1
+				&& ft_check_doubles(flags, av[i][j]) == 0)
 				flags[k++] = av[i][j];
 			else if (ft_is_flag(av[i][j]) == 0)
 				ft_usage(1, av[i][j], NULL, 1);
@@ -188,7 +189,7 @@ int		ft_check_brackets(int ac, char **av)
 
 char	**ft_parse_input(int ac, char **av, int *mask)
 {
-	char	**params = NULL;
+	char	**params;
 	int		s;
 	int		i;
 
@@ -197,7 +198,7 @@ char	**ft_parse_input(int ac, char **av, int *mask)
 	if (ft_check_brackets(ac, av) == 1)
 	{
 		ft_usage(2, 0, "Empty Quotes/Brackets", 1);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	if ((s = ft_count(ac, av)) > 0)
 	{

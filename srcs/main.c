@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 17:56:16 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:57:56 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		ft_ls(char **params, int mask, char *path)
 		ft_params(params, mask, path);
 		return (0);
 	}
-	if (!(lst = ft_make_list(path, mask)))
+	if (!(lst = ft_make_list(path, mask, -1)))
 	{
 		ft_write_buff(NULL, (mask & O_RMAJ) ? '\n' : 0, 1, 0);
 		return (0);

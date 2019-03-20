@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 17:50:31 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:58:19 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ char		*ft_make_perms(struct stat *file);
 char		*ft_getlink(t_file *file);
 t_file		*ft_ls_lstnew(char *path, char *name, int mask, int params);
 int		ft_ls_pushfront(t_file **file, t_file *new);
-t_file		*ft_make_list(char *path, int mask);
+t_file		*ft_make_list(char *path, int mask, int i);
 
 /*
 ** ft_params.c

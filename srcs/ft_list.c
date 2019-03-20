@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 17:59:25 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 20:01:13 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 				return (NULL);
 		}
 		else if (!(new->uid = ft_strdup("root")))
-				return (NULL);
+			return (NULL);
 		new->uid_len = ft_strlen(new->uid);
 		if ((gid = getgrgid(file.st_gid)))
 			if (!(new->gid = ft_strdup(gid->gr_name)))
@@ -176,9 +176,11 @@ int		ft_ls_pushfront(t_file **file, t_file *new)
 
 int		ft_check_file(char *name, int mask)
 {
-	if ((mask & O_AMAJ) && (ft_strcmp(".", name) == 0 || ft_strcmp("..", name) == 0))
+	if ((mask & O_AMAJ) && (ft_strcmp(".", name) == 0
+		|| ft_strcmp("..", name) == 0))
 		return (1);
-	if ((ft_strcmp(name, "..") == 0 || ft_strcmp(name, ".") == 0) && (!(mask & O_A) || (mask & O_AMAJ)))
+	if ((ft_strcmp(name, "..") == 0 || ft_strcmp(name, ".") == 0)
+		&& (!(mask & O_A) || (mask & O_AMAJ)))
 		return (1);
 	if (name[0] == '.' && !(mask & O_A) && !(mask & O_AMAJ))
 		return (1);
@@ -200,23 +202,19 @@ char	*ft_delspath(char *path)
 	return (path);
 }
 
-t_file	*ft_make_list(char *path, int mask)
+t_file	*ft_make_list(char *path, int mask, int i)
 {
 	t_file			*lst;
 	DIR				*d;
 	struct dirent	*dir;
-	int				i;
 
-	i = -1;
 	if (!(d = opendir(path)))
 	{
 		ft_usage(errno, 0, ft_delspath(path), 0);
 		return (NULL);
 	}
-	if ((mask & O_AMAJ) && (mask & O_A))
-		mask -= O_AMAJ;
+	mask -= ((mask & O_AMAJ) && (mask & O_A)) ? O_AMAJ : 0;
 	while ((dir = readdir(d)))
-	{
 		if (ft_check_file(dir->d_name, mask) == 1)
 			continue ;
 		else if (i == -1 && ++i == 0)
@@ -224,10 +222,9 @@ t_file	*ft_make_list(char *path, int mask)
 			if (!(lst = ft_ls_lstnew(path, dir->d_name, mask, 0)))
 				return (NULL);
 		}
-		else
-			if (ft_ls_pushfront(&lst, ft_ls_lstnew(path, dir->d_name, mask, 0)) == -1)
-				return (NULL);
-	}
+		else if (ft_ls_pushfront(&lst,
+			ft_ls_lstnew(path, dir->d_name, mask, 0)) == -1)
+			return (NULL);
 	if (i == -1)
 		return (NULL);
 	closedir(d);

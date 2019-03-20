@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 17:54:43 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 20:07:45 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_count_files(char *path)
 	if (!(d = opendir(path)))
 		return (-1);
 	while ((dir = readdir(d)))
-			ret++;
+		ret++;
 	closedir(d);
 	return (ret);
 }
@@ -35,16 +35,15 @@ char	**ft_get_files(char *path)
 	int				i;
 
 	i = 0;
-	
 	if (!(files = (char**)malloc(sizeof(char*) * (ft_count_files(path) + 1))))
 		return (NULL);
 	if (!(d = opendir(path)))
 		return (NULL);
 	while ((dir = readdir(d)))
 	{
-			if (!(files[i] = ft_strdup(dir->d_name)))
-				return (NULL);
-			i++;
+		if (!(files[i] = ft_strdup(dir->d_name)))
+			return (NULL);
+		i++;
 	}
 	files[i] = NULL;
 	closedir(d);
@@ -80,10 +79,10 @@ int		ft_find_param(t_file *lst, char *name)
 
 int		ft_nsfd(t_file *lst, char **params)
 {
-	struct stat		dir;
-	int				i;
-	int				j;
-	
+	struct stat	dir;
+	int			i;
+	int			j;
+
 	i = 0;
 	j = -1;
 	while (params[i])
@@ -91,8 +90,8 @@ int		ft_nsfd(t_file *lst, char **params)
 		if (ft_find_param(lst, params[i]) == 0 && lstat(params[i], &dir) < 0)
 		{
 			if (errno == EACCES)
-				ft_usage(errno, 0, params[i], 0);	
-			else 
+				ft_usage(errno, 0, params[i], 0);
+			else
 				ft_usage(2, 0, params[i], 0);
 		}
 		i++;
@@ -115,7 +114,8 @@ int		ft_set_add(void **add, char **params)
 		ret = 0;
 		while (params[++i])
 		{
-			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0 && ++result)
+			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0
+				&& ++result)
 				ret++;
 		}
 		TFJ->nope = (ret > 0) ? 0 : 1;
@@ -161,10 +161,9 @@ int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
 	int			i;
 	int			len;
 
-	i = 0;
+	i = -1;
 	len = ft_tablen(params);
-	while (params[i])
-	{
+	while (params[++i])
 		if ((tmp = ft_relaunch_condition(lst, params[i], tmp)))
 		{
 			if (!(new_path = ft_new_path(path, tmp)))
@@ -179,8 +178,6 @@ int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
 				ft_strdel(&tmp);
 			ft_strdel(&new_path);
 		}
-		i++;
-	}
 	return (0);
 }
 
@@ -210,9 +207,9 @@ t_file	*ft_make_params_list(char **params, int mask)
 			if (!(lst = ft_ls_lstnew(NULL, params[i], mask, 1)))
 				return (NULL);
 		}
-		else
-			if (ft_ls_pushfront(&lst, ft_ls_lstnew(NULL, params[i], mask, 1)) == -1)
-				return (NULL);
+		else if (ft_ls_pushfront(&lst,
+			ft_ls_lstnew(NULL, params[i], mask, 1)) == -1)
+			return (NULL);
 		i++;
 	}
 	return (lst);
@@ -223,7 +220,7 @@ int		ft_params(char **params, int mask, char *path)
 	t_file	*lst;
 	void	**add;
 
-	if (!(lst = ft_make_params_list(params, ((mask & O_A) ? mask : mask + O_A))))
+	if (!(lst = ft_make_params_list(params, (mask & O_A) ? mask : mask + O_A)))
 		return (-1);
 	if (!(add = ft_make_add(lst, ft_lstlen(lst) + 1, mask)))
 		return (-1);

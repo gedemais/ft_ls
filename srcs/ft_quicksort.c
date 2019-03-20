@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 17:41:03 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/20 20:13:14 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		ft_ls_partition(void **add, int start, int end, int mask)
 	return (i + 1);
 }
 
-int			ft_sort_params(char **argv, int argc)
+int		ft_sort_params(char **argv, int argc)
 {
 	char	*tmp;
 	int		i;
@@ -116,7 +116,7 @@ int			ft_sort_params(char **argv, int argc)
 	return (0);
 }
 
-int			ft_ls_quicksort(void **add, int start, int end, int mask)
+int		ft_ls_quicksort(void **add, int start, int end, int mask)
 {
 	int			j;
 
