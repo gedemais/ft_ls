@@ -116,7 +116,7 @@ void	ft_display_lines(void **add, int nbf, int mask)
 
 	i = -1;
 	ft_get_lines_data(add, maxs, nbf);
-	ft_add_total(maxs[2]);
+	ft_add_total((nbf > 1) ? maxs[2] : -1);
 	while (++i < nbf)
 		if (TF->nope == 0)
 		{

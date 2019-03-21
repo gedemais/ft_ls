@@ -14,14 +14,11 @@
 
 void	ft_add_total(int total)
 {
-	char	*tmp;
-
-	ft_write_buff("total ", 0, 0, 0);
-	if (!(tmp = ft_itoa(total)))
+	if (total == -1)
 		return ;
-	ft_write_buff(tmp, 0, 0, 0);
+	ft_write_buff("total ", 0, 0, 0);
+	ft_putnbr_buff(total);
 	ft_write_buff(NULL, '\n', 1, 0);
-	ft_strdel(&tmp);
 }
 
 void	ft_add_uid(char *uid, int uid_len, int len)
