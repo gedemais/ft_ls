@@ -6,63 +6,11 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:16:50 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 20:10:05 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:57:12 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-
-int		ft_is_flag(char c)
-{
-	if (c != 'l' && c != 'R' && c != 'a' && c != 'r' && c != 't'
-	&& c != 'f' && c != 'S' && c != 'A' && c != 'm' && c != '1')
-		return (0);
-	return (1);
-}
-
-int		ft_add_mask(int *mask, char c)
-{
-	if (c == 'l' && !(*mask & O_L))
-	{
-		if (*mask & O_1)
-			*mask -= O_1;
-		if (*mask & O_M)
-			*mask -= O_M;
-		return (O_L);
-	}
-	else if (c == 'R' && !(*mask & O_RMAJ))
-		return (O_RMAJ);
-	else if (c == 'a' && !(*mask & O_A))
-		return (O_A);
-	else if (c == 'r' && !(*mask & O_R))
-		return (O_R);
-	else if (c == 't' && !(*mask & O_T) && !(*mask & O_SMAJ))
-		return (O_T);
-	else if (c == 'f' && !(*mask & O_SMAJ) && !(*mask & O_T))
-		return (!(*mask & O_A) ? O_F + O_A : O_F);
-	else if (c == 'S' && !(*mask & O_SMAJ) && !(*mask & O_T))
-		return (O_SMAJ);
-	else if (c == 'A' && !(*mask & O_AMAJ))
-		return (O_AMAJ);
-	else if (c == 'm' && !(*mask & O_M))
-	{
-		if (*mask & O_L)
-			*mask -= O_L;
-		if (*mask & O_1)
-			*mask -= O_1;
-		return (O_M);
-	}
-	else if (c == '1' && !(*mask & O_1))
-	{
-		if (*mask & O_L)
-			*mask -= O_L;
-		else if (*mask & O_M)
-			*mask -= O_M;
-		return (O_1);
-	}
-	else
-		return (0);
-}
 
 int		ft_count(int ac, char **av)
 {
@@ -83,38 +31,6 @@ int		ft_count(int ac, char **av)
 		i++;
 	}
 	return (size);
-}
-
-int		ft_make_mask(char *flags)
-{
-	int		i;
-	int		mask;
-
-	i = 0;
-	mask = 0;
-	while (flags[i])
-	{
-		mask += ft_add_mask(&mask, flags[i]);
-		i++;
-	}
-	ft_strdel(&flags);
-	return (mask);
-}
-
-int		ft_check_doubles(char *flags, char c)
-{
-	int		i;
-	int		ret;
-
-	i = 0;
-	ret = 0;
-	while (flags[i] != '\0')
-	{
-		if (flags[i] && flags[i] == c && c != 'l' && c != 'm' && c != '1')
-			ret++;
-		i++;
-	}
-	return (ret);
 }
 
 int		ft_get_options(int ac, char **av)

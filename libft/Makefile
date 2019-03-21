@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 17:34:45 by gedemais          #+#    #+#              #
-#    Updated: 2019/03/07 21:01:38 by gedemais         ###   ########.fr        #
+#    Updated: 2019/03/21 15:43:28 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,10 @@ SRCS  =	ft_abs.c \
 		ft_nblen.c \
 		ft_strndup.c \
 		ft_swap.c \
-		ft_quicksort.c
+		ft_quicksort.c \
+		ft_swap_str.c \
+		ft_swap_strs.c \
+		ft_screenlen.c
 
 OBJS = $(SRCS:.c=.o)
 

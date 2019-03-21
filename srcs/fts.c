@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:35:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/11 16:28:25 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:43:48 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,86 @@ int		ft_tablen(char **tab)
 	return (i);
 }
 
-int		ft_get_screen_length(void)
+char	*ft_delspath(char *path)
 {
-	struct ttysize	screen;
+	int		i;
 
-	ioctl(0, TIOCGSIZE, &screen);
-	return (screen.ts_cols);
+	i = ft_strlen(path) - 1;
+	while (path[i] == '/')
+	{
+		path[i] = '\0';
+		i--;
+	}
+	if (path[0] == '.' && path[1] == '/' && path[2])
+		return (&path[2]);
+	return (path);
 }
 
-void		ft_print_flags(int mask)
+void	ft_get_lines_data(void **add, int *max, int nbf)
 {
-	if (mask & O_L)
-		ft_putchar('l');
-	if (mask & O_A)
-		ft_putchar('a');
-	if (mask & O_RMAJ)
-		ft_putchar('R');
-	if (mask & O_R)
-		ft_putchar('r');
-	if (mask & O_T)
-		ft_putchar('t');
-	if (mask & O_F)
-		ft_putchar('f');
-	if (mask & O_SMAJ)
-		ft_putchar('S');
-	if (mask & O_AMAJ)
-		ft_putchar('A');
-	if (mask & O_M)
-		ft_putchar('m');
-	if (mask & O_1)
-		ft_putchar('1');
-	ft_putchar('\n');
+	int		i;
+
+	i = -1;
+	while (++i < 5)
+		max[i] = 0;
+	i = 0;
+	while (i < nbf)
+	{
+		if (TF->nlinks > max[0])
+			max[0] = TF->nlinks;
+		if (TF->size > max[1])
+			max[1] = TF->size;
+		if (TF->uid_len > max[3])
+			max[3] = TF->uid_len;
+		if (TF->gid_len > max[4])
+			max[4] = TF->gid_len;
+		max[2] += TF->blocksize;
+		i++;
+	}
+	max[0] = ft_nb_len(max[0]);
+	max[1] = ft_nb_len(max[1]);
+}
+
+void	ft_minor_major(int minor, int major, int max)
+{
+	int		i;
+	int		len;
+
+	i = 0;
+	len = ft_nb_len(minor);
+	while (i < max - len)
+	{
+		ft_write_buff(NULL, ' ', 1, 0);
+		i++;
+	}
+	ft_putnbr_buff(major);
+	ft_write_buff(NULL, ',', 1, 0);
+	ft_write_buff(NULL, ' ', 1, 0);
+	i = 0;
+	len = ft_nb_len(major);
+	while (i < len)
+	{
+		ft_write_buff(NULL, ' ', 1, 0);
+		i++;
+	}
+	ft_putnbr_buff(minor);
+	ft_write_buff(NULL, ' ', 1, 0);
+}
+
+void	ft_putnbr_buff(int n)
+{
+	if (n == -2147483648)
+	{
+		ft_write_buff(NULL, '-', 1, 0);
+		ft_write_buff(NULL, '2', 1, 0);
+		n = 147483648;
+	}
+	if (n < 0)
+	{
+		ft_write_buff(NULL, '-', 1, 0);
+		n = n * -1;
+	}
+	if (n >= 10)
+		ft_putnbr_buff(n / 10);
+	ft_write_buff(NULL, (n % 10) + '0', 1, 0);
 }

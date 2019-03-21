@@ -6,104 +6,14 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 20:01:13 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:55:36 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-int		ft_lstlen(t_file *files)
+t_file	*ft_init_new(char *name, char *path, int params, t_file *new)
 {
-	t_file	*tmp;
-	int		ret;
-
-	tmp = files;
-	ret = 0;
-	if (!files)
-		return (0);
-	while (tmp->next)
-	{
-		tmp = tmp->next;
-		ret++;
-	}
-	return (ret);
-}
-
-char	ft_makefperms(struct stat *file)
-{
-	if (S_ISBLK(file->st_mode))
-		return ('b');
-	else if (S_ISCHR(file->st_mode))
-		return ('c');
-	else if (S_ISDIR(file->st_mode))
-		return ('d');
-	else if (S_ISLNK(file->st_mode))
-		return ('l');
-	else if (S_ISSOCK(file->st_mode))
-		return ('s');
-	else if (S_ISFIFO(file->st_mode))
-		return ('p');
-	else if (S_ISREG(file->st_mode))
-		return ('-');
-	return (0);
-}
-
-char	*ft_make_perms(struct stat *file)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	if (!(str = (char*)malloc(sizeof(char) * 12)))
-		return (NULL);
-	str[0] = '\0';
-	if ((str[1] = ft_makefperms(file)) == 0)
-		return (NULL);
-	str[2] = (file->st_mode & S_IRUSR) ? 'r' : '-';
-	str[3] = (file->st_mode & S_IWUSR) ? 'w' : '-';
-	str[4] = (file->st_mode & S_IXUSR) ? 'x' : '-';
-	str[5] = (file->st_mode & S_IRGRP) ? 'r' : '-';
-	str[6] = (file->st_mode & S_IWGRP) ? 'w' : '-';
-	str[7] = (file->st_mode & S_IXGRP) ? 'x' : '-';
-	str[8] = (file->st_mode & S_IROTH) ? 'r' : '-';
-	str[9] = (file->st_mode & S_IWOTH) ? 'w' : '-';
-	str[10] = (file->st_mode & S_IXOTH) ? 'x' : '-';
-	str[11] = '\0';
-	return (&str[1]);
-}
-
-char	*ft_getlink(t_file *file)
-{
-	char	*dest;
-	int		i;
-
-	i = 2;
-	if (!(dest = (char*)malloc(sizeof(char) * 1024)))
-		return (NULL);
-	while (readlink(file->file_path, dest, 1024) == -1)
-	{
-		if (errno == EFAULT)
-		{
-			if (!(dest = ft_strrealloc(dest, 1024 * i)))
-				return (NULL);
-		}
-		else
-		{
-			ft_strdel(&dest);
-			return (NULL);
-		}
-		i++;
-	}
-	return (dest);
-}
-
-t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
-{
-	t_file			*new;
-	struct stat		file;
-	struct passwd	*psswd;
-	struct group	*gid;
-
 	if (!(new = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	new->next = NULL;
@@ -113,12 +23,15 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	new->file_path = (params == 1) ? ft_strdup(name) : ft_strjoin(path, name);
 	if (!new->file_path)
 		return (NULL);
-	if (lstat(new->file_path, &file) < 0)
+	return (new);
+}
+
+t_file	*ft_load_states(t_file *new, struct stat *file, int params)
+{
+	if (lstat(new->file_path, file) < 0)
 	{
 		if (errno == EACCES && params == 0)
-		{
 			ft_usage(errno, 0, new->file_path, 0);
-		}
 		else if (errno == EACCES && params == 1)
 			new->nsfd = 1;
 		else
@@ -127,39 +40,44 @@ t_file	*ft_ls_lstnew(char *path, char *name, int mask, int params)
 	}
 	else
 		new->nope = 0;
-	new->dir = (S_ISDIR(file.st_mode) && !(S_ISLNK(file.st_mode))) ? 1 : 0;
-	if (mask & O_L)
-	{
-		new->perms = ft_make_perms(&file);
-		new->major = ((int)((char)((int32_t)(((u_int32_t)(file.st_rdev) >> 24)
-			& 0xff))));
-		new->minor = ((int)((char)file.st_rdev));
-		if ((psswd = getpwuid(file.st_uid)) != NULL)
-		{
-			if (!(new->uid = ft_strdup(psswd->pw_name)))
-				return (NULL);
-		}
-		else if (!(new->uid = ft_strdup("root")))
-			return (NULL);
-		new->uid_len = ft_strlen(new->uid);
-		if ((gid = getgrgid(file.st_gid)))
-			if (!(new->gid = ft_strdup(gid->gr_name)))
-				return (NULL);
-		new->gid_len = ft_strlen(new->gid);
-	}
-	if (S_ISLNK(file.st_mode))
-	{
-		if (!(new->link = ft_getlink(new)))
-			return (NULL);
-	}
-	else
+	new->dir = (S_ISDIR(file->st_mode) && !(S_ISLNK(file->st_mode))) ? 1 : 0;
+	new->nlinks = (int)file->st_nlink;
+	new->size = file->st_size;
+	new->date = ft_strdup(ctime(&file->st_ctime));
+	new->blocksize = file->st_blocks;
+	new->secstime = file->st_mtime;
+	if (S_ISLNK(file->st_mode) && !(new->link = ft_getlink(new)))
+		return (NULL);
+	else if (!(S_ISLNK(file->st_mode)))
 		new->link = NULL;
-	new->nlinks = (int)file.st_nlink;
-	new->size = file.st_size;
-	new->date = ft_strdup(ctime(&file.st_ctime));
-	new->blocksize = file.st_blocks;
-	if (mask & O_T)
-		new->secstime = ft_strdup(ctime(&file.st_mtime));
+	return (new);
+}
+
+t_file	*ft_ls_lstnew(char *path, char *name, int params)
+{
+	t_file			*new;
+	struct stat		file;
+	struct passwd	*psswd;
+	struct group	*gid;
+
+	new = NULL;
+	if (!(new = ft_init_new(name, path, params, new))
+		|| !(new = ft_load_states(new, &file, params))
+		|| !(new->perms = ft_make_perms(&file)))
+		return (NULL);
+	new->major = ((int)((char)((int32_t)(((u_int32_t)(file.st_rdev) >> 24)
+		& 0xff))));
+	new->minor = ((int)((char)file.st_rdev));
+	if (!(psswd = getpwuid(file.st_uid))
+		&& !(new->uid = ft_strdup(psswd->pw_name)))
+		return (NULL);
+	else if (!(new->uid = ft_strdup("root")))
+		return (NULL);
+	new->uid_len = ft_strlen(new->uid);
+	if ((gid = getgrgid(file.st_gid)))
+		if (!(new->gid = ft_strdup(gid->gr_name)))
+			return (NULL);
+	new->gid_len = ft_strlen(new->gid);
 	return (new);
 }
 
@@ -172,34 +90,6 @@ int		ft_ls_pushfront(t_file **file, t_file *new)
 	if (!(*file = new))
 		return (-1);
 	return (0);
-}
-
-int		ft_check_file(char *name, int mask)
-{
-	if ((mask & O_AMAJ) && (ft_strcmp(".", name) == 0
-		|| ft_strcmp("..", name) == 0))
-		return (1);
-	if ((ft_strcmp(name, "..") == 0 || ft_strcmp(name, ".") == 0)
-		&& (!(mask & O_A) || (mask & O_AMAJ)))
-		return (1);
-	if (name[0] == '.' && !(mask & O_A) && !(mask & O_AMAJ))
-		return (1);
-	return (0);
-}
-
-char	*ft_delspath(char *path)
-{
-	int		i;
-
-	i = ft_strlen(path) - 1;
-	while (path[i] == '/')
-	{
-		path[i] = '\0';
-		i--;
-	}
-	if (path[0] == '.' && path[1] == '/' && path[2])
-		return (&path[2]);
-	return (path);
 }
 
 t_file	*ft_make_list(char *path, int mask, int i)
@@ -219,11 +109,11 @@ t_file	*ft_make_list(char *path, int mask, int i)
 			continue ;
 		else if (i == -1 && ++i == 0)
 		{
-			if (!(lst = ft_ls_lstnew(path, dir->d_name, mask, 0)))
+			if (!(lst = ft_ls_lstnew(path, dir->d_name, 0)))
 				return (NULL);
 		}
 		else if (ft_ls_pushfront(&lst,
-			ft_ls_lstnew(path, dir->d_name, mask, 0)) == -1)
+			ft_ls_lstnew(path, dir->d_name, 0)) == -1)
 			return (NULL);
 	if (i == -1)
 		return (NULL);

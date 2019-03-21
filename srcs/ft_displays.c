@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:44:05 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 17:56:41 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:47:52 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		ft_display_cols(int mask, void **add, int nbf, int minw)
 {
 	int	vars[8];
 
-	vars[0] = ft_get_screen_length() / minw;
+	vars[0] = ft_screenlen() / minw;
 	vars[0] = (vars[0] > 0) ? vars[0] : 1;
 	vars[1] = (mask & O_A) ? nbf : ft_nohiddens(nbf, add) - 1;
 	vars[2] = vars[1] / vars[0] + 1;

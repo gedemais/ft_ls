@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:46:59 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 21:06:58 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:56:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int		ft_ls_lstdel(t_file *lst, int mask)
 		ft_strdel(&lst->link);
 	if (lst->file_path)
 		ft_strdel(&lst->file_path);
-	if (mask & O_T)
-		ft_strdel(&lst->secstime);
 	if (lst->date)
 		ft_strdel(&lst->date);
 	free(lst);

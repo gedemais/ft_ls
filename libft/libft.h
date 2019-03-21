@@ -6,7 +6,7 @@
 /*   By: gedemais <gedemais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 09:05:11 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/10 00:27:36 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:47:23 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-# include <stdio.h>
+# include <sys/ioctl.h>
+# include <dirent.h>
 
 /*
 ** Strings functions
@@ -56,6 +57,8 @@ int					ft_strfind(const char *str, int c);
 char				*ft_strrealloc(char *s, size_t size);
 int					get_next_line(const int fd, char **line);
 char				*ft_convert_base(long long nb, char *base);
+void				ft_swap_strs(char *s1, char *s2);
+void				ft_swap_str(char **s1, char **s2);
 /*
 ** Strings functions
 */
@@ -114,14 +117,17 @@ void				ft_memdel(void **ap);
 int					ft_abs(int nb);
 int					ft_nb_len(long long int nb);
 void				ft_swap(int *a, int *b);
-int			ft_quicksort(int *tab, int start, int end);
+int					ft_quicksort(int *tab, int start, int end);
+
+
+int					ft_screenlen(void);
 
 /*
 ** Maths functions
 */
 
 /*
-** Chained Lists functions & structs
+** Linked Lists functions & structs
 */
 typedef struct		s_list
 {
@@ -137,6 +143,8 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 /*
-** Chained Lists functions & structs
+** Linked Lists functions & structs
 */
+int		ft_screenlen(void);
+
 #endif

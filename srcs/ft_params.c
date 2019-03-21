@@ -6,135 +6,11 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 20:07:45 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:51:19 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-
-int		ft_count_files(char *path)
-{
-	DIR				*d;
-	struct dirent	*dir;
-	int				ret;
-
-	ret = 0;
-	if (!(d = opendir(path)))
-		return (-1);
-	while ((dir = readdir(d)))
-		ret++;
-	closedir(d);
-	return (ret);
-}
-
-char	**ft_get_files(char *path)
-{
-	DIR				*d;
-	struct dirent	*dir;
-	char			**files;
-	int				i;
-
-	i = 0;
-	if (!(files = (char**)malloc(sizeof(char*) * (ft_count_files(path) + 1))))
-		return (NULL);
-	if (!(d = opendir(path)))
-		return (NULL);
-	while ((dir = readdir(d)))
-	{
-		if (!(files[i] = ft_strdup(dir->d_name)))
-			return (NULL);
-		i++;
-	}
-	files[i] = NULL;
-	closedir(d);
-	return (files);
-}
-
-void	**ft_make_add(t_file *lst, int len, int mask)
-{
-	void	**add;
-
-	if (!(add = ft_addresses(lst, len)))
-		return (NULL);
-	if (!(mask & O_F))
-		ft_ls_quicksort(add, 0, len, mask);
-	if (mask & O_R)
-		ft_addrev(add, mask);
-	return (add);
-}
-
-int		ft_find_param(t_file *lst, char *name)
-{
-	t_file	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, name) == 0)
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-int		ft_nsfd(t_file *lst, char **params)
-{
-	struct stat	dir;
-	int			i;
-	int			j;
-
-	i = 0;
-	j = -1;
-	while (params[i])
-	{
-		if (ft_find_param(lst, params[i]) == 0 && lstat(params[i], &dir) < 0)
-		{
-			if (errno == EACCES)
-				ft_usage(errno, 0, params[i], 0);
-			else
-				ft_usage(2, 0, params[i], 0);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int		ft_set_add(void **add, char **params)
-{
-	int		i;
-	int		j;
-	int		ret;
-	int		result;
-
-	j = 0;
-	result = 0;
-	while (TFJ)
-	{
-		i = -1;
-		ret = 0;
-		while (params[++i])
-		{
-			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0
-				&& ++result)
-				ret++;
-		}
-		TFJ->nope = (ret > 0) ? 0 : 1;
-		j++;
-	}
-	return (result);
-}
-
-int		ft_display_dir(char *new_path)
-{
-	if (new_path[ft_strlen(new_path) - 1] == '/')
-		new_path[ft_strlen(new_path) - 1] = '\0';
-	if (new_path[0] == '.' && new_path[1] == '/')
-		ft_write_buff(&new_path[2], 0, 0, 0);
-	else
-		ft_write_buff(new_path, 0, 0, 0);
-	ft_write_buff(":\n", 0, 0, 0);
-	return (0);
-}
 
 char	*ft_relaunch_condition(t_file *lst, char *param, char *name)
 {
@@ -190,7 +66,7 @@ int		ft_check_param(char *param)
 	return (1);
 }
 
-t_file	*ft_make_params_list(char **params, int mask)
+t_file	*ft_make_params_list(char **params)
 {
 	t_file	*lst;
 	int		i;
@@ -204,11 +80,11 @@ t_file	*ft_make_params_list(char **params, int mask)
 			continue ;
 		else if (j == -1 && ++j == 0)
 		{
-			if (!(lst = ft_ls_lstnew(NULL, params[i], mask, 1)))
+			if (!(lst = ft_ls_lstnew(NULL, params[i], 1)))
 				return (NULL);
 		}
 		else if (ft_ls_pushfront(&lst,
-			ft_ls_lstnew(NULL, params[i], mask, 1)) == -1)
+			ft_ls_lstnew(NULL, params[i], 1)) == -1)
 			return (NULL);
 		i++;
 	}
@@ -220,7 +96,7 @@ int		ft_params(char **params, int mask, char *path)
 	t_file	*lst;
 	void	**add;
 
-	if (!(lst = ft_make_params_list(params, (mask & O_A) ? mask : mask + O_A)))
+	if (!(lst = ft_make_params_list(params)))
 		return (-1);
 	if (!(add = ft_make_add(lst, ft_lstlen(lst) + 1, mask)))
 		return (-1);

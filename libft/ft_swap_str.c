@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pctab.c                                         :+:      :+:    :+:   */
+/*   ft_swap_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 19:44:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:46:17 by gedemais         ###   ########.fr       */
+/*   Created: 2019/03/21 15:34:50 by gedemais          #+#    #+#             */
+/*   Updated: 2019/03/21 15:36:50 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_pctab(char **tab)
+void	ft_swap_str(char **s1, char **s2)
 {
-	int		i;
+	char	*tmp;
 
-	i = 0;
-	while (tab[i])
-	{
-		ft_putstr("tab[");
-		ft_putnbr(i);
-		ft_putstr("] = ");
-		ft_putendl(tab[i]);
-		i++;
-	}
+	tmp = *s1;
+	*s1 = *s2;
+	*s2 = tmp;
 }

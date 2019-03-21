@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pctab.c                                         :+:      :+:    :+:   */
+/*   ft_screenlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 19:44:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:46:17 by gedemais         ###   ########.fr       */
+/*   Created: 2019/03/21 15:43:02 by gedemais          #+#    #+#             */
+/*   Updated: 2019/03/21 15:47:09 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_pctab(char **tab)
+int		ft_screenlen(void)
 {
-	int		i;
+	struct ttysize	screen;
 
-	i = 0;
-	while (tab[i])
-	{
-		ft_putstr("tab[");
-		ft_putnbr(i);
-		ft_putstr("] = ");
-		ft_putendl(tab[i]);
-		i++;
-	}
+	ioctl(0, TIOCGSIZE, &screen);
+	return (screen.ts_cols);
 }
+

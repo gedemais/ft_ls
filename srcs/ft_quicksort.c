@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 20:13:14 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:56:21 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,11 @@
 int		ft_cmp(int mask, t_file *n1, t_file *n2)
 {
 	if (mask & O_T)
-		return (ft_datecmp(n1->secstime, n2->secstime, n1->name, n2->name));
+		return (n2->secstime - n1->secstime);
 	else if (mask & O_SMAJ)
 		return (n2->size - n1->size);
 	else
-		return (ft_strcmp(n1->name, n2->name));		
-}
-
-void	ft_swap_strs(char *s1, char *s2)
-{
-	char	*tmp;
-
-	tmp = s1;
-	s1 = s2;
-	s2 = tmp;
-}
-
-void	ft_swap_str(char **s1, char **s2)
-{
-	char	*tmp;
-
-	tmp = *s1;
-	*s1 = *s2;
-	*s2 = tmp;
+		return (ft_strcmp(n1->name, n2->name));
 }
 
 void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
@@ -60,7 +42,7 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	ft_swap_str(&n1->uid, &n2->uid);
 	ft_swap_str(&n1->gid, &n2->gid);
 	ft_swap_str(&n1->date, &n2->date);
-	ft_swap_str(&n1->secstime, &n2->secstime);
+	ft_swap(&n1->secstime, &n2->secstime);
 }
 
 int		ft_ls_partition(void **add, int start, int end, int mask)

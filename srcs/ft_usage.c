@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:18:55 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 10:13:36 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:56:45 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_usage(int type, char wrong, char *wrong_name, int usage)
 	{
 		ft_write_buff(NULL, 0, 0, 1);
 		ft_putstr_fd("usage: ./ft_ls [-laRrtfSAm1] [file ...]\n", 2);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	return (0);
 }

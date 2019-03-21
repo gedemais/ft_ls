@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 20:12:38 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 20:12:41 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:48:33 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,16 @@ void	ft_run(int mask, int nbf, void **add)
 
 	if (!add)
 		return ;
-	t_len = ft_get_screen_length();
+	t_len = ft_screenlen();
 	minw = ft_find_biggest(add, nbf) + 1;
 	if (mask & O_M)
 		ft_display_stream(add, nbf, mask, t_len);
 	else if (mask & O_1)
-		ft_display_one(add, nbf, mask);	
+		ft_display_one(add, nbf, mask);
 	else if (mask & O_L)
 		ft_display_lines(add, nbf, mask);
-	else if (minw * ((mask & O_A) ? ft_nonope(nbf, add) : ft_nohiddens(ft_nonope(nbf, add), add)) <= t_len)
+	else if (minw * ((mask & O_A) ? ft_nonope(nbf, add) :
+		ft_nohiddens(ft_nonope(nbf, add), add)) <= t_len)
 		ft_display_line(mask, add, nbf, minw);
 	else
 		ft_display_cols(mask, add, ft_nonope(nbf, add), minw);

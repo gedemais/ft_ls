@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/05 00:59:17 by gedemais          #+#    #+#              #
-#    Updated: 2019/03/20 12:23:58 by gedemais         ###   ########.fr        #
+#    Updated: 2019/03/21 16:20:24 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ LIB_PATH = libft/
 
 LIB = libft/libft.a
 
-SRCS_NAME = 		fts.c \
+SRCS_NAME = fts.c \
 			main.c \
 			ft_run.c\
 			run_fts.c\
@@ -47,11 +47,13 @@ SRCS_NAME = 		fts.c \
 			lines_fts.c   \
 			ft_params.c    \
 			ft_address.c    \
-			ft_datecmp.c     \
-			ft_parsing.c      \
-			ft_displays.c      \
-			ft_quicksort.c      \
+			ft_parsing.c     \
+			ft_displays.c     \
+			ft_quicksort.c     \
+			ft_ls_lstnew.c      \
 			ft_singletons.c      \
+			ft_params_bis.c       \
+			ft_parsing_bis.c       \
 
 SRCS_PATH = srcs/
 
@@ -86,8 +88,5 @@ clean :
 fclean : clean
 	@make fclean -C $(LIB_PATH)
 	@rm -rf $(NAME)
-
-fsanitize : $(LIB) $(SRCS)
-			$(CC) $(FLAGS) $(SRCS) $(LIB)
 
 re : fclean all

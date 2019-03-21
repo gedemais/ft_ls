@@ -6,34 +6,34 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 19:57:56 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:18:53 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		ft_write_buff(char *str, char c, int cat, int flush)
+void	ft_flush(char b[WBUFF_SIZE], int *k)
+{
+	write(1, b, (b[*k - 1] == '\n' && b[*k - 2] == '\n') ? *k - 1 : *k);
+	*k = 0;
+}
+
+void	ft_write_buff(char *str, char c, int cat, int flush)
 {
 	static char	buff[WBUFF_SIZE];
 	static int	k = 0;
-	int		i;
+	int			i;
 
 	i = 0;
 	if (cat == 1 && c > 0)
 	{
 		buff[k++] = c;
 		if (k == WBUFF_SIZE)
-		{
-			write(1, buff, (buff[k - 1] == '\n' && buff[k - 2] == '\n') ? k - 1 : k);
-			k = 0;
-		}
+			ft_flush(buff, &k);
 		return ;
 	}
 	if (flush)
-	{
-		write(1, buff, (buff[k - 1] == '\n' && buff[k - 2] == '\n') ? k - 1 : k);
-		k = 0;
-	}
+		ft_flush(buff, &k);
 	if (!str || c < 0 || (cat && flush))
 		return ;
 	while (str[i] && k < WBUFF_SIZE)
@@ -42,10 +42,7 @@ void		ft_write_buff(char *str, char c, int cat, int flush)
 		i++;
 		k++;
 		if (k == WBUFF_SIZE)
-		{
-			write(1, buff, (buff[k - 1] == '\n' && buff[k - 2] == '\n') ? k - 1 : k);
-			k = 0;
-		}
+			ft_flush(buff, &k);
 	}
 }
 
