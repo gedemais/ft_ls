@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 16:18:53 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:42:55 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		ft_ls(char **params, int mask, char *path)
 	if (!(mask & O_F))
 		ft_ls_quicksort(add, 0, len + 1, mask);
 	if (mask & O_R)
-		ft_addrev(add, mask);
+		ft_addrev(add);
 	ft_run(mask, len + 1, add);
 	free(add);
 	ft_ls_lstdel(lst, mask);

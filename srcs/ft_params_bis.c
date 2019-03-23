@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 14:50:45 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 14:54:43 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:43:12 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	**ft_make_add(t_file *lst, int len, int mask)
 	if (!(mask & O_F))
 		ft_ls_quicksort(add, 0, len, mask);
 	if (mask & O_R)
-		ft_addrev(add, mask);
+		ft_addrev(add);
 	return (add);
 }
 

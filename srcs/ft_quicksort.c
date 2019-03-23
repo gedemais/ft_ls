@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:56:21 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/23 18:58:28 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 int		ft_cmp(int mask, t_file *n1, t_file *n2)
 {
 	if (mask & O_T)
-		return (n2->secstime - n1->secstime);
+		return ((n2->secstime - n1->secstime == 0) ? ft_strcmp(n1->name, n2->name) :
+			n2->secstime - n1->secstime);
 	else if (mask & O_SMAJ)
-		return (n2->size - n1->size);
+		return ((n2->size - n1->size == 0) ? ft_strcmp(n1->name, n2->name) :
+			n2->size - n1->size);
 	else
 		return (ft_strcmp(n1->name, n2->name));
 }
 
-void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
+void	ft_swap_nodes(t_file *n1, t_file *n2)
 {
-	(void)mask;
+	ft_swap(&n1->secstime, &n2->secstime);
 	ft_swap(&n1->dir, &n2->dir);
 	ft_swap(&n1->nope, &n2->nope);
 	ft_swap(&n1->nsfd, &n2->nsfd);
@@ -42,7 +44,6 @@ void	ft_swap_nodes(t_file *n1, t_file *n2, int mask)
 	ft_swap_str(&n1->uid, &n2->uid);
 	ft_swap_str(&n1->gid, &n2->gid);
 	ft_swap_str(&n1->date, &n2->date);
-	ft_swap(&n1->secstime, &n2->secstime);
 }
 
 int		ft_ls_partition(void **add, int start, int end, int mask)
@@ -57,7 +58,7 @@ int		ft_ls_partition(void **add, int start, int end, int mask)
 	if (end - start == 2)
 	{
 		if (ft_cmp(mask, TFAS, TFAE) > 0)
-			ft_swap_nodes(TFAS, TFAE, mask);
+			ft_swap_nodes(TFAS, TFAE);
 		return (0);
 	}
 	while (i < end - 1 && j < end - 1)
@@ -65,11 +66,11 @@ int		ft_ls_partition(void **add, int start, int end, int mask)
 		if (ft_cmp(mask, TFAJ, TFAP) < 0)
 		{
 			i++;
-			ft_swap_nodes(((t_file*)add[i]), TFAJ, mask);
+			ft_swap_nodes(((t_file*)add[i]), TFAJ);
 		}
 		j++;
 	}
-	ft_swap_nodes(((t_file*)add[i + 1]), TFAJ, mask);
+	ft_swap_nodes(((t_file*)add[i + 1]), TFAJ);
 	return (i + 1);
 }
 

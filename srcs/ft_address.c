@@ -6,13 +6,13 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:14:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/19 18:42:00 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:42:18 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	**ft_addrev(void **add, int mask)
+void	**ft_addrev(void **add)
 {
 	int		i;
 	int		j;
@@ -26,7 +26,7 @@ void	**ft_addrev(void **add, int mask)
 	j--;
 	while (i < j)
 	{
-		ft_swap_nodes(add[i], add[j], mask);
+		ft_swap_nodes(add[i], add[j]);
 		i++;
 		j--;
 	}

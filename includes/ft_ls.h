@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 16:27:42 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:42:30 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct	s_date
 
 void			ft_write_buff(char *str, char c, int cat, int flush);
 int				ft_ls(char **params, int mask, char *path);
-void			**ft_addrev(void **add, int mask);
+void			**ft_addrev(void **add);
 void			**ft_addresses(t_file *lst, int len);
 void			**ft_make_add(t_file *lst, int len, int mask);
 int				ft_find_param(t_file *lst, char *name);
@@ -136,7 +136,7 @@ char			*ft_new_path(char *path, char *param);
 int				ft_cmp(int mask, t_file *n1, t_file *n2);
 void			ft_swap_strs(char *s1, char *s2);
 void			ft_swap_str(char **s1, char **s2);
-void			ft_swap_nodes(t_file *n1, t_file *n2, int mask);
+void			ft_swap_nodes(t_file *n1, t_file *n2);
 int				ft_ls_partition(void **add, int start, int end, int mask);
 int				ft_sort_params(char **argv, int argc);
 int				ft_ls_quicksort(void **add, int start, int end, int mask);

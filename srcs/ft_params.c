@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 14:51:19 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 17:37:26 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int		ft_check_param(char *param)
 	struct stat		file;
 
 	if (lstat(param, &file) < 0)
+	{
+		ft_usage(errno, 0, param, 0);
 		return (0);
+	}
 	return (1);
 }
 

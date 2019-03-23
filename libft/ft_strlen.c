@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 17:26:56 by gedemais          #+#    #+#             */
-/*   Updated: 2019/02/19 00:16:32 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:59:22 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 inline static size_t	ft_sus_addr(unsigned long *longword_ptr, const char *s)
 {
-
 	char *tmp;
 
 	tmp = (char *)(longword_ptr - 1);
@@ -38,7 +37,6 @@ inline static size_t	ft_sus_addr(unsigned long *longword_ptr, const char *s)
 
 size_t					ft_strlen(const char *s)
 {
-
 	unsigned long	*longword_ptr;
 	unsigned char	*tmp;
 	unsigned long	longword;
@@ -50,7 +48,6 @@ size_t					ft_strlen(const char *s)
 	tmp = (unsigned char*)s;
 	while ((unsigned long)tmp & (sizeof(unsigned long) - 1))
 	{
-
 		if (!*tmp)
 			return ((unsigned char *)tmp - (unsigned char*)s);
 		++tmp;
@@ -58,7 +55,6 @@ size_t					ft_strlen(const char *s)
 	longword_ptr = (unsigned long*)tmp;
 	while (1)
 	{
-
 		longword = *longword_ptr++;
 		if (((longword + magicbit) ^ ~longword) & tester)
 			return (ft_sus_addr(longword_ptr, s));

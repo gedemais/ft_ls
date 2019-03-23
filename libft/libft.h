@@ -6,7 +6,7 @@
 /*   By: gedemais <gedemais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 09:05:11 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:47:23 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:59:59 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int					ft_nb_len(long long int nb);
 void				ft_swap(int *a, int *b);
 int					ft_quicksort(int *tab, int start, int end);
 
-
 int					ft_screenlen(void);
 
 /*
@@ -145,6 +144,6 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 /*
 ** Linked Lists functions & structs
 */
-int		ft_screenlen(void);
+int					ft_screenlen(void);
 
 #endif

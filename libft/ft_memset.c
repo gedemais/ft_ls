@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 17:22:48 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/18 16:17:17 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:58:09 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	*ft_memset(void *b, int c, size_t len)
 {
-
 	unsigned int	i;
 	unsigned char	tmp_c;
 	unsigned long	*longword_ptr;
@@ -28,7 +27,6 @@ void	*ft_memset(void *b, int c, size_t len)
 	longword_ptr = (unsigned long*)(b + i);
 	while (i < len)
 	{
-
 		*longword_ptr++ = magicbit;
 		i += 8;
 	}

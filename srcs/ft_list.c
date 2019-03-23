@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:55:36 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:34:29 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ t_file	*ft_ls_lstnew(char *path, char *name, int params)
 	new->major = ((int)((char)((int32_t)(((u_int32_t)(file.st_rdev) >> 24)
 		& 0xff))));
 	new->minor = ((int)((char)file.st_rdev));
-	if (!(psswd = getpwuid(file.st_uid))
-		&& !(new->uid = ft_strdup(psswd->pw_name)))
+	if (!(psswd = getpwuid(file.st_uid)))
 		return (NULL);
-	else if (!(new->uid = ft_strdup("root")))
+	else if (!(new->uid = ft_strdup(psswd->pw_name)))
+		return (NULL);
+	else if (!psswd && !(new->uid = ft_strdup("root")))
 		return (NULL);
 	new->uid_len = ft_strlen(new->uid);
 	if ((gid = getgrgid(file.st_gid)))
