@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 16:42:30 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 21:08:34 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@
 # include <sys/ioctl.h>
 # include <time.h>
 # include <errno.h>
+# include <limits.h>
+# include <stdio.h>
 # include <pwd.h>
 # include <grp.h>
 
@@ -97,7 +99,6 @@ void			**ft_addresses(t_file *lst, int len);
 void			**ft_make_add(t_file *lst, int len, int mask);
 int				ft_find_param(t_file *lst, char *name);
 int				ft_nsfd(t_file *lst, char **params);
-int				ft_set_add(void **add, char **params);
 int				ft_display_dir(char *new_path);
 void			ft_putnbr_buff(int n);
 int				ft_display_stream(void **add, int nbf, int mask, int t_len);
@@ -116,7 +117,7 @@ void			**ft_make_add(t_file *lst, int len, int mask);
 int				ft_find_param(t_file *lst, char *name);
 int				ft_nsfd(t_file *lst, char **params);
 int				ft_is_flag(char c);
-int				ft_set_add(void **add, char **params);
+int				ft_set_add(void **add, char **params, int mask);
 int				ft_display_dir(char *new_path);
 int				ft_add_mask(int *mask, char c);
 char			*ft_relaunch_condition(t_file *lst, char *param, char *name);

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 16:34:29 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 19:56:14 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,7 @@ t_file	*ft_make_list(char *path, int mask, int i)
 		else if (ft_ls_pushfront(&lst,
 			ft_ls_lstnew(path, dir->d_name, 0)) == -1)
 			return (NULL);
-	if (i == -1)
+	if (closedir(d) == -1 || i == -1)
 		return (NULL);
-	closedir(d);
 	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 14:50:45 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 16:43:12 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 21:15:12 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,13 @@ int		ft_nsfd(t_file *lst, char **params)
 	while (params[i])
 	{
 		if (ft_find_param(lst, params[i]) == 0 && lstat(params[i], &dir) < 0)
-		{
-			if (errno == EACCES)
 				ft_usage(errno, 0, params[i], 0);
-			else
-				ft_usage(2, 0, params[i], 0);
-		}
 		i++;
 	}
 	return (0);
 }
 
-int		ft_set_add(void **add, char **params)
+int		ft_set_add(void **add, char **params, int mask)
 {
 	int		i;
 	int		j;
@@ -70,6 +65,7 @@ int		ft_set_add(void **add, char **params)
 
 	j = 0;
 	result = 0;
+	(void)mask;
 	while (TFJ)
 	{
 		i = -1;
@@ -78,7 +74,7 @@ int		ft_set_add(void **add, char **params)
 		{
 			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0
 				&& ++result)
-				ret++;
+					ret++;
 		}
 		TFJ->nope = (ret > 0) ? 0 : 1;
 		j++;

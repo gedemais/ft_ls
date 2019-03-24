@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 14:55:35 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:28:01 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 21:52:09 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ int		ft_is_flag(char c)
 	&& c != 'f' && c != 'S' && c != 'A' && c != 'm' && c != '1')
 		return (0);
 	return (1);
+}
+
+int		ft_add_sorts(int mask_val, int *mask, char c)
+{
+	if (c == 't' && !(mask_val & O_T))
 }
 
 int		ft_add_mlo(int *mask, int mask_val, char c)

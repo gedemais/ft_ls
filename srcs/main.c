@@ -6,11 +6,19 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 16:42:55 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 19:24:12 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+#include <stdio.h>
+
+void	ft_getleak(char *str)
+{
+	ft_putendl(str);
+	system("leaks ft_ls");
+	getchar();
+}
 
 void	ft_flush(char b[WBUFF_SIZE], int *k)
 {
@@ -52,11 +60,8 @@ int		ft_ls(char **params, int mask, char *path)
 	void	**add;
 	int		len;
 
-	if (params)
-	{
-		ft_params(params, mask, path);
+	if (params && ft_params(params, mask, path) != 1)
 		return (0);
-	}
 	if (!(lst = ft_make_list(path, mask, -1)))
 	{
 		ft_write_buff(NULL, (mask & O_RMAJ) ? '\n' : 0, 1, 0);

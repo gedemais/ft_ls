@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:46:59 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:56:25 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 16:57:44 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,12 @@ int		ft_ls_lstdel(t_file *lst, int mask)
 	if (lst->next)
 		ft_ls_lstdel(lst->next, mask);
 	ft_strdel(&lst->name);
-	if (mask & O_L)
-	{
-		if (lst->uid)
-			ft_strdel(&lst->uid);
-		if (lst->gid)
-			ft_strdel(&lst->gid);
-		if (lst->perms && (tmp = lst->perms - 1))
-			ft_strdel(&tmp);
-	}
+	if (lst->uid)
+		ft_strdel(&lst->uid);
+	if (lst->gid)
+		ft_strdel(&lst->gid);
+	if (lst->perms && (tmp = lst->perms - 1))
+		ft_strdel(&tmp);
 	if (lst->link)
 		ft_strdel(&lst->link);
 	if (lst->file_path)

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 17:37:26 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 21:31:47 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,29 @@
 char	*ft_relaunch_condition(t_file *lst, char *param, char *name)
 {
 	struct stat	dir;
+//	char		*param;
 
+//	if (!(param = ft_strjoin(params, "/")))
+//		return (NULL);
 	if (ft_find_param(lst, param) > 1)
 		return (NULL);
 	else if (lstat(param, &dir) == -1)
 		return (NULL);
 	else if (S_ISDIR(dir.st_mode) == 0)
 		return (NULL);
+	else if (S_ISLNK(dir.st_mode) == 1)
+	{
+		if (!(name = ft_strnew(OPEN_MAX)))
+			return (NULL);
+		if (readlink(param, name, OPEN_MAX) == -1)
+			return (NULL);
+	}
 	else
 	{
 		if (!(name = ft_strdup(param)))
 			return (NULL);
-		return (name);
 	}
+	return (name);
 }
 
 int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
@@ -91,6 +101,11 @@ t_file	*ft_make_params_list(char **params)
 			return (NULL);
 		i++;
 	}
+	if (j == -1)
+	{
+		ft_tabdel(params);
+		return (NULL);
+	}
 	return (lst);
 }
 
@@ -105,7 +120,7 @@ int		ft_params(char **params, int mask, char *path)
 		return (-1);
 	ft_sort_params(params, ft_tablen(params) + 1);
 	ft_nsfd(lst, params);
-	if (ft_set_add(add, params) > 0)
+	if (ft_set_add(add, params, mask) > 0)
 	{
 		ft_run(mask, ft_lstlen(lst) + 1, add);
 		ft_write_buff(NULL, '\n', 1, 0);

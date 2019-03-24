@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:52:49 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/20 20:12:06 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/24 21:52:15 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,4 @@ char	*ft_new_path(char *path, char *param)
 	ft_strdel(&tmp);
 	return (dest);
 }
+
