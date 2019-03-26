@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:35:15 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/21 15:43:48 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/25 11:28:57 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_delspath(char *path)
 		path[i] = '\0';
 		i--;
 	}
-	if (path[0] == '.' && path[1] == '/' && path[2])
+	if (path[0] == '.' && path[1] == '/' && path[2] && i > 1)
 		return (&path[2]);
 	return (path);
 }

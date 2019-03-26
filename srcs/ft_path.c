@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:52:49 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/24 21:52:15 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:06:45 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,13 @@ char	*ft_new_path(char *path, char *param)
 		dest[len - 1] = '\0';
 	ft_strdel(&tmp);
 	return (dest);
+}
+
+int		ft_is_flag(char c)
+{
+	if (c != 'l' && c != 'R' && c != 'a' && c != 'r' && c != 't'
+	&& c != 'f' && c != 'S' && c != 'A' && c != 'm' && c != '1')
+		return (0);
+	return (1);
 }
 

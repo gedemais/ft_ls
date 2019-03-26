@@ -6,37 +6,38 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/24 21:31:47 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/26 13:35:57 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-char	*ft_relaunch_condition(t_file *lst, char *param, char *name)
+char	*ft_relaunch_condition(t_file *lst, char *params, char *name, int mask)
 {
 	struct stat	dir;
-//	char		*param;
+	char		*param;
 
-//	if (!(param = ft_strjoin(params, "/")))
-//		return (NULL);
+	(void)mask;
+	if (!(param = ft_strjoin(params, "/")))
+		return (NULL);
 	if (ft_find_param(lst, param) > 1)
+	{
+		ft_strdel(&param);
 		return (NULL);
+	}
 	else if (lstat(param, &dir) == -1)
-		return (NULL);
-	else if (S_ISDIR(dir.st_mode) == 0)
-		return (NULL);
-	else if (S_ISLNK(dir.st_mode) == 1)
 	{
-		if (!(name = ft_strnew(OPEN_MAX)))
-			return (NULL);
-		if (readlink(param, name, OPEN_MAX) == -1)
-			return (NULL);
+		ft_strdel(&param);
+		return (NULL);
 	}
-	else
+	else if (S_ISDIR(dir.st_mode) == 0 || (ft_check_link(lst, params) == 1 && mask & O_L))
 	{
-		if (!(name = ft_strdup(param)))
-			return (NULL);
+		ft_strdel(&param);
+		return (NULL);
 	}
+	else if (!(name = ft_strdup(param)))
+			return (NULL);
+	ft_strdel(&param);
 	return (name);
 }
 
@@ -50,7 +51,7 @@ int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask)
 	i = -1;
 	len = ft_tablen(params);
 	while (params[++i])
-		if ((tmp = ft_relaunch_condition(lst, params[i], tmp)))
+		if ((tmp = ft_relaunch_condition(lst, params[i], tmp, mask)))
 		{
 			if (!(new_path = ft_new_path(path, tmp)))
 				return (-1);
@@ -73,7 +74,10 @@ int		ft_check_param(char *param)
 
 	if (lstat(param, &file) < 0)
 	{
-		ft_usage(errno, 0, param, 0);
+		if (lstat(ft_delspath(param), &file) != -1)
+			ft_usage(786568, 0, param, 0);
+		else
+			ft_usage(errno, 0, param, 0);
 		return (0);
 	}
 	return (1);

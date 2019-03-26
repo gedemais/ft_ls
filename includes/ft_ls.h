@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/24 21:08:34 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/26 15:46:59 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,85 +92,129 @@ typedef struct	s_date
 	int			secs;
 }				t_date;
 
-void			ft_write_buff(char *str, char c, int cat, int flush);
-int				ft_ls(char **params, int mask, char *path);
-void			**ft_addrev(void **add);
-void			**ft_addresses(t_file *lst, int len);
-void			**ft_make_add(t_file *lst, int len, int mask);
-int				ft_find_param(t_file *lst, char *name);
-int				ft_nsfd(t_file *lst, char **params);
-int				ft_display_dir(char *new_path);
-void			ft_putnbr_buff(int n);
-int				ft_display_stream(void **add, int nbf, int mask, int t_len);
-char			**ft_tabdel(char **tab);
-int				ft_free_add(void **add, int nbf);
-int				ft_ls_lstdel(t_file *lst, int mask);
-int				ft_lstlen(t_file *lst);
-char			*ft_make_perms(struct stat *file);
-char			*ft_getlink(t_file *file);
-t_file			*ft_ls_lstnew(char *path, char *name, int params);
-int				ft_ls_pushfront(t_file **file, t_file *new);
-t_file			*ft_make_list(char *path, int mask, int i);
-int				ft_count_files(char *path);
-char			**ft_get_files(char *path);
-void			**ft_make_add(t_file *lst, int len, int mask);
-int				ft_find_param(t_file *lst, char *name);
-int				ft_nsfd(t_file *lst, char **params);
-int				ft_is_flag(char c);
-int				ft_set_add(void **add, char **params, int mask);
-int				ft_display_dir(char *new_path);
-int				ft_add_mask(int *mask, char c);
-char			*ft_relaunch_condition(t_file *lst, char *param, char *name);
-int				ft_make_mask(char *flags);
-int				ft_params_relaunch(t_file *lst, char **p, char *path, int m);
-int				ft_params(char **params, int mask, char *path);
-int				ft_is_flag(char c);
-int				ft_add_mask(int *mask, char c);
-int				ft_check_doubles(char *flags, char c);
-int				ft_count(int ac, char **av);
-int				ft_make_mask(char *flags);
-int				ft_get_options(int ac, char **av);
-char			**ft_make_params(int ac, char **av, int size);
-int				ft_check_brackets(int ac, char **av);
-char			**ft_parse_input(int ac, char **av, int *mask);
-char			*ft_new_path(char *path, char *param);
-int				ft_cmp(int mask, t_file *n1, t_file *n2);
-void			ft_swap_strs(char *s1, char *s2);
-void			ft_swap_str(char **s1, char **s2);
-void			ft_swap_nodes(t_file *n1, t_file *n2);
-int				ft_ls_partition(void **add, int start, int end, int mask);
-int				ft_sort_params(char **argv, int argc);
-int				ft_ls_quicksort(void **add, int start, int end, int mask);
-t_file			*ft_loadstrings(char *path, char *name, int mask, t_file *new);
-char			ft_makefperms(struct stat *file);
-char			*ft_make_perms(struct stat *file);
-char			*ft_getlink(t_file *file);
-int				ft_check_file(char *name, int mask);
-int				ft_display_one(void **add, int nbf, int mask);
-int				ft_nonope(int nbf, void **add);
-int				ft_display_cols(int mask, void **add, int nbf, int minw);
-void			ft_display_lines(void **add, int nbf, int mask);
-int				ft_display_line(int mask, void **add, int nbf, int minw);
-void			ft_relaunch(void **add, int nbf, int mask);
-void			ft_run(int mask, int nbf, void **add);
-char			*ft_delspath(char *path);
-int				*ft_last_endl(void);
-int				ft_usage(int type, char wrong, char *wrong_name, int usage);
-int				ft_tablen(char **tab);
-int				ft_get_screen_length(void);
-void			ft_print_flags(int mask);
-void			ft_add_total(int total);
-void			ft_add_uid(char *uid, int uid_len, int len);
-int				ft_add_links(int nb, int max);
-void			ft_add_date(char *date);
-void			ft_get_lines_data(void **add, int *max, int nbf);
-int				ft_add_linkings(t_file *file);
-void			ft_minor_major(int minor, int major, int max);
-void			ft_cpy_string(char *str);
-void			ft_pad_string(int minw, int name_len);
-int				ft_nohiddens(int nbf, void **add);
-int				ft_flags(t_file *node, int mask);
-int				ft_find_biggest(void **add, int nbf);
-int				ft_relaunch_check(t_file *file, int mask);
+int		ft_ls(char **params, int mask, char *path);
+
+void	ft_write_buff(char *str, char c, int cat, int flush);
+
+/*
+** ft_address.c
+*/
+void	**ft_addrev(void **add);
+void	**ft_addresses(t_file *lst, int len);
+/*
+** ft_displays.c
+*/
+int		ft_display_line(int mask, void **add, int nbf, int minw);
+int		ft_display_stream(void **add, int nbf, int mask, int t_len);
+int		ft_display_cols(int mask, void **add, int nbf, int minw);
+int		ft_display_one(void **add, int nbf, int mask);
+void	ft_display_lines(void **add, int nbf, int mask);
+/*
+** ft_free.c
+*/
+char	**ft_tabdel(char **tab);
+int		ft_ls_lstdel(t_file *lst, int mask);
+/*
+** ft_list.c
+*/
+t_file	*ft_init_new(char *name, char *path, int params, t_file *new);
+t_file	*ft_load_states(t_file *new, struct stat *file, int params);
+t_file	*ft_ls_lstnew(char *path, char *name, int params);
+int		ft_ls_pushfront(t_file **file, t_file *new);
+t_file	*ft_make_list(char *path, int mask, int i);
+/*
+** ft_ls_lstnew.c
+*/
+char	*ft_getlink(t_file *file);
+int		ft_lstlen(t_file *files);
+int		ft_check_file(char *name, int mask);
+int		ft_check_link(t_file *lst, char *param);
+/*
+** ft_params.c
+*/
+char	*ft_relaunch_condition(t_file *lst, char *params, char *name, int mask);
+int		ft_params_relaunch(t_file *lst, char **params, char *path, int mask);
+int		ft_check_param(char *param);
+t_file	*ft_make_params_list(char **params);
+int		ft_params(char **params, int mask, char *path);
+/*
+** ft_params_bis.c
+*/
+void	**ft_make_add(t_file *lst, int len, int mask);
+int		ft_find_param(t_file *lst, char *name);
+int		ft_nsfd(t_file *lst, char **params);
+int		ft_set_add(void **add, char **params, int mask);
+int		ft_display_dir(char *new_path);
+/*
+** ft_parsing.c
+*/
+int		ft_count(int ac, char **av);
+int		ft_get_options(int ac, char **av);
+char	**ft_make_params(int ac, char **av, int size);
+int		ft_check_brackets(int ac, char **av);
+char	**ft_parse_input(int ac, char **av, int *mask);
+/*
+** ft_parsing_bis.c
+*/
+int		ft_add_sorts(int mask_val, int *mask, char c);
+int		ft_add_mlo(int *mask, int mask_val, char c);
+int		ft_add_mask(int *mask, char c);
+int		ft_make_mask(char *flags);
+int		ft_check_doubles(char *flags, char c);
+/*
+** ft_path.c
+*/
+char	*ft_new_path(char *path, char *param);
+int		ft_is_flag(char c);
+/*
+** ft_perms.c
+*/
+char	*ft_make_perms(struct stat *file);
+/*
+** ft_quicksort.c
+*/
+int		ft_cmp(int mask, t_file *n1, t_file *n2);
+void	ft_swap_nodes(t_file *n1, t_file *n2);
+int		ft_ls_partition(void **add, int start, int end, int mask);
+int		ft_sort_params(char **argv, int argc);
+int		ft_ls_quicksort(void **add, int start, int end, int mask);
+/*
+** ft_run.c
+*/
+int		ft_nonope(int nbf, void **add);
+void	ft_relaunch(void **add, int nbf, int mask);
+void	ft_run(int mask, int nbf, void **add);
+/*
+** ft_singletons.c
+*/
+int		*ft_last_endl(void);
+/*
+** ft_usage.c
+*/
+int		ft_usage(int type, char wrong, char *wrong_name, int usage);
+/*
+** fts.c
+*/
+int		ft_tablen(char **tab);
+char	*ft_delspath(char *path);
+void	ft_get_lines_data(void **add, int *max, int nbf);
+void	ft_minor_major(int minor, int major, int max);
+void	ft_putnbr_buff(int n);
+/*
+** lines_fts.c
+*/
+void	ft_add_total(int total);
+void	ft_add_uid(char *uid, int uid_len, int len);
+int		ft_add_links(int nb, int max);
+void	ft_add_date(char *date);
+int		ft_add_linkings(t_file *file);
+/*
+** run_fts.c
+*/
+void	ft_cpy_string(char *str);
+void	ft_pad_string(int minw, int name_len);
+int		ft_nohiddens(int nbf, void **add);
+int		ft_find_biggest(void **add, int nbf);
+int		ft_relaunch_check(t_file *file, int mask);
 
 #endif

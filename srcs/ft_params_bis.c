@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 14:50:45 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/24 21:15:12 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/25 11:53:37 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		ft_set_add(void **add, char **params, int mask)
 	{
 		i = -1;
 		ret = 0;
+		if (TFJ->link != NULL && !(mask & O_L) && ++j)
+			continue ;
 		while (params[++i])
 		{
 			if (ft_strcmp(TFJ->name, params[i]) == 0 && TFJ->dir == 0

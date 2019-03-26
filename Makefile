@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/05 00:59:17 by gedemais          #+#    #+#              #
-#    Updated: 2019/03/21 17:00:56 by gedemais         ###   ########.fr        #
+#    Updated: 2019/03/26 15:08:29 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,15 +45,16 @@ SRCS_NAME = fts.c \
 			ft_path.c   \
 			ft_usage.c   \
 			lines_fts.c   \
-			ft_params.c    \
-			ft_address.c    \
-			ft_parsing.c     \
-			ft_displays.c     \
-			ft_quicksort.c     \
-			ft_ls_lstnew.c      \
-			ft_singletons.c      \
-			ft_params_bis.c       \
-			ft_parsing_bis.c       \
+			ft_perms.c    \
+			ft_params.c     \
+			ft_address.c     \
+			ft_parsing.c      \
+			ft_displays.c      \
+			ft_quicksort.c      \
+			ft_ls_lstnew.c       \
+			ft_singletons.c       \
+			ft_params_bis.c        \
+			ft_parsing_bis.c        \
 
 SRCS_PATH = srcs/
 

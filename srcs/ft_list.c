@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 08:47:21 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/24 19:56:14 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/25 11:32:52 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_file	*ft_load_states(t_file *new, struct stat *file, int params)
 	{
 		if (errno == EACCES && params == 0)
 			ft_usage(errno, 0, new->file_path, 0);
+		else if (lstat(ft_delspath(new->file_path), file) != -1)
+			ft_usage(786568, 0, new->file_path, 0);
 		else if (errno == EACCES && params == 1)
 			new->nsfd = 1;
 		else

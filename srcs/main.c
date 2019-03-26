@@ -6,19 +6,12 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:59:27 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/24 19:24:12 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/26 15:45:20 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 #include <stdio.h>
-
-void	ft_getleak(char *str)
-{
-	ft_putendl(str);
-	system("leaks ft_ls");
-	getchar();
-}
 
 void	ft_flush(char b[WBUFF_SIZE], int *k)
 {
