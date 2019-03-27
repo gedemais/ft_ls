@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 01:38:54 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/26 13:35:57 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/27 14:10:48 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*ft_relaunch_condition(t_file *lst, char *params, char *name, int mask)
 	struct stat	dir;
 	char		*param;
 
-	(void)mask;
 	if (!(param = ft_strjoin(params, "/")))
 		return (NULL);
 	if (ft_find_param(lst, param) > 1)
@@ -30,13 +29,14 @@ char	*ft_relaunch_condition(t_file *lst, char *params, char *name, int mask)
 		ft_strdel(&param);
 		return (NULL);
 	}
-	else if (S_ISDIR(dir.st_mode) == 0 || (ft_check_link(lst, params) == 1 && mask & O_L))
+	else if (S_ISDIR(dir.st_mode) == 0
+		|| (ft_check_link(lst, params) == 1 && mask & O_L))
 	{
 		ft_strdel(&param);
 		return (NULL);
 	}
 	else if (!(name = ft_strdup(param)))
-			return (NULL);
+		return (NULL);
 	ft_strdel(&param);
 	return (name);
 }
@@ -105,11 +105,8 @@ t_file	*ft_make_params_list(char **params)
 			return (NULL);
 		i++;
 	}
-	if (j == -1)
-	{
+	if (j == -1 && (lst = NULL) == NULL)
 		ft_tabdel(params);
-		return (NULL);
-	}
 	return (lst);
 }
 

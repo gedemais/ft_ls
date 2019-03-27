@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 01:17:14 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/24 17:00:50 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/27 14:24:08 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int		ft_cmp(int mask, t_file *n1, t_file *n2)
 {
 	if (mask & O_T)
-		return ((n2->secstime - n1->secstime == 0) ? ft_strcmp(n1->name, n2->name) :
-			n2->secstime - n1->secstime);
+		return ((n2->secstime - n1->secstime == 0)
+			? ft_strcmp(n1->name, n2->name) : n2->secstime - n1->secstime);
 	else if (mask & O_SMAJ)
 		return ((n2->size - n1->size == 0) ? ft_strcmp(n1->name, n2->name) :
 			n2->size - n1->size);

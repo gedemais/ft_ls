@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 14:55:35 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/25 13:03:56 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/27 13:08:50 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		ft_add_sorts(int mask_val, int *mask, char c)
 {
 	if (c == 't' && !(mask_val & O_T))
-	{	
+	{
 		if (*mask & O_F)
 			*mask -= (O_F + O_A);
 		if (*mask & O_SMAJ)
@@ -23,7 +23,7 @@ int		ft_add_sorts(int mask_val, int *mask, char c)
 		return (O_T);
 	}
 	else if (c == 'f' && !(mask_val & O_F))
-	{	
+	{
 		if (*mask & O_T)
 			*mask -= O_T;
 		if (*mask & O_SMAJ)
@@ -31,7 +31,7 @@ int		ft_add_sorts(int mask_val, int *mask, char c)
 		return (!(*mask & O_A) ? O_F + O_A : O_F);
 	}
 	else if (c == 'S' && !(mask_val & O_SMAJ))
-	{	
+	{
 		if (*mask & O_F)
 			*mask -= (O_F + O_A);
 		if (*mask & O_T)

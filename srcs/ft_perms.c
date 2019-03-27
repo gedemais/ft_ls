@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 10:08:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/03/26 12:54:09 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/03/27 14:17:01 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,27 @@ static char		ft_makefperms(struct stat *file)
 static char		ft_makethperms(struct stat *file, int nb)
 {
 	if (nb == 1)
-	{	
+	{
 		if ((!(S_IXUSR & file->st_mode) && (S_ISUID & file->st_mode)))
-				return ('S');
+			return ('S');
 		else if ((S_IXUSR & file->st_mode && (S_ISUID & file->st_mode)))
-				return ('s');
+			return ('s');
 		else if (S_IXUSR & file->st_mode)
 			return ('x');
 		else
 			return ('-');
 	}
+	else if ((!(S_IXGRP & file->st_mode) && (S_ISGID & file->st_mode)))
+		return ('S');
+	else if ((S_IXGRP & file->st_mode) && (S_ISGID & file->st_mode))
+		return ('s');
+	else if (S_IXGRP & file->st_mode)
+		return ('x');
 	else
-		if ((!(S_IXGRP & file->st_mode) && (S_ISGID & file->st_mode)))
-				return ('S');
-		else if ((S_IXGRP & file->st_mode) && (S_ISGID & file->st_mode))
-				return ('s');
-		else if (S_IXGRP & file->st_mode)
-			return ('x');
-		else
-			return ('-');
+		return ('-');
 	if ((S_IXUSR & file->st_mode && S_ISUID & file->st_mode)
 		|| ((S_IXGRP & file->st_mode) && S_ISGID & file->st_mode))
-			return ('s');
+		return ('s');
 	else
 		return ('-');
 }
